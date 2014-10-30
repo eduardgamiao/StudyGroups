@@ -1,0 +1,50 @@
+.section-1 {
+  text-align: center;
+  background-size: cover;
+  padding: 100px;
+}
+
+.section-1 h1 {
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.section-2 > h1 {
+  margin: 10px 20px 20px 20px;
+}
+
+.section-2 {
+  padding: 20px;
+  
+}
+
+.well-color {
+  padding: 40px;
+}
+
+h1 {
+  margin: 0;
+}
+
+.listHeader {
+  text-align: center;
+  background-size: cover;
+  padding: 20px;
+}
+
+.chat {
+  background-color: beige;
+}
+
+.list-page {
+    padding: 20px;
+}
+
+.list-page h1 {
+    font-size: 60px;
+    font-weight: bold;
+}
+.sub {
+    font-size: 20px;
+    padding: 1px;
+}

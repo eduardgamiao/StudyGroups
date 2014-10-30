@@ -1,0 +1,29 @@
+@(message: String, courses: List[models.Course])
+
+@Main(message) {
+    
+    <div class="list-page">
+      <h1>List of Courses</h1>
+    </div>
+    
+    <!-- Note: When I run this page, it shows up as one column rather than two.  Don't know why. AP -->
+    <div class = "well">
+        <div class="row">
+            <div class="col-md-6">
+            <ul>
+                @for(index <- 0 to 77) {
+                  <li class="sub"><a href="@routes.Application.viewCourse(courses.get(index).getId())">(@courses.get(index).getId()) @courses.get(index).getCourseName()</a></li>
+                }
+             </ul>
+             </div>
+             
+             <div class="col-md-6">
+             <ul>
+                @for(index <- 78 to 154) {
+                  <li class="sub"><a href="@routes.Application.viewCourse(courses.get(index).getId())">(@courses.get(index).getId()) @courses.get(index).getCourseName()</a></li>
+                }
+             </ul>
+             </div>
+        </div>
+    </div>
+}

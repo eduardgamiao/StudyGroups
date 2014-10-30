@@ -3,13 +3,13 @@
 
 # --- !Ups
 
-create table page_retrieval (
-  id                        bigint not null,
-  timestamp                 bigint,
-  constraint pk_page_retrieval primary key (id))
+create table course (
+  id                        varchar(255) not null,
+  course_name               varchar(255),
+  constraint pk_course primary key (id))
 ;
 
-create sequence page_retrieval_seq;
+create sequence course_seq;
 
 
 
@@ -18,9 +18,9 @@ create sequence page_retrieval_seq;
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table if exists page_retrieval;
+drop table if exists course;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
-drop sequence if exists page_retrieval_seq;
+drop sequence if exists course_seq;
 

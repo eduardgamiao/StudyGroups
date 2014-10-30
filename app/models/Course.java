@@ -18,7 +18,7 @@ public class Course extends Model {
   public Course() {
   }
 
-  public Course(String courseName, String id) {
+  public Course(String id, String courseName) {
     this.id = id;
     this.courseName = courseName;
   }

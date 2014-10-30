@@ -8,12 +8,13 @@
     
     <!-- Note: When I run this page, it shows up as one column rather than two.  Don't know why. AP -->
     <!-- Note: Works fine for me. AW -->
+    <!-- Yeah, sorry, meant to delete the comment after I figured it out. AP -->
     <div class = "well">
         <div class="row">
             <div class="col-md-6">
             <ul>
                 @for(index <- 0 to 77) {
-                  <li class="sub"><a href="@routes.Application.viewCourse(courses.get(index).getId())">(@courses.get(index).getId()) @courses.get(index).getCourseName()</a></li>
+                  <li class="sub"><a href="@routes.Courses.viewCourse(courses.get(index).getId())">(@courses.get(index).getId()) @courses.get(index).getCourseName()</a></li>
                 }
              </ul>
              </div>
@@ -21,7 +22,7 @@
              <div class="col-md-6">
              <ul>
                 @for(index <- 78 to 154) {
-                  <li class="sub"><a href="@routes.Application.viewCourse(courses.get(index).getId())">(@courses.get(index).getId()) @courses.get(index).getCourseName()</a></li>
+                  <li class="sub"><a href="@routes.Courses.viewCourse(courses.get(index).getId())">(@courses.get(index).getId()) @courses.get(index).getCourseName()</a></li>
                 }
              </ul>
              </div>

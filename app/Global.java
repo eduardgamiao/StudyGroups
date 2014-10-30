@@ -35,7 +35,7 @@ public class Global extends GlobalSettings {
       while ((line = br.readLine()) != null) {
         String[] split = line.split("[()]");
 
-        Course course = new Course(split[0].trim(), split[1].trim());
+        Course course = new Course(split[1].trim(), split[0].trim());
 
         course.save();
       }

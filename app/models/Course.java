@@ -12,8 +12,8 @@ public class Course extends Model {
    */
   private static final long serialVersionUID = -5763824393646461390L;
   @Id
-  public String id;
-  public String courseName;
+  private String id;
+  private String courseName;
 
   public Course() {
   }

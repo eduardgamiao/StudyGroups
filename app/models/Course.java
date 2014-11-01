@@ -1,5 +1,6 @@
 package models;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.db.ebean.Model;
@@ -33,6 +34,16 @@ public class Course extends Model {
 
   public static Finder<String, Course> find() {
     return new Finder<String, Course>(String.class, Course.class);
+  }
+
+  public static boolean isCourse(String course) {
+    List<Course> byId = find().where().contains("id", course.toUpperCase()).findList();
+    List<Course> byName = find().where().eq("courseName", course).findList();
+
+    if ((byId.size() == 0) && (byName.size() == 0)) {
+      return false;
+    }
+    return true;
   }
 
 }

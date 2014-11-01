@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import models.Course;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 
@@ -13,7 +14,7 @@ public class StudyGroupForm {
   @Id
   @GeneratedValue
   public long id;
-  
+
   @Constraints.Required(message = "A course level is required.")
   public String courseLevel;
 
@@ -48,6 +49,22 @@ public class StudyGroupForm {
   public List<ValidationError> validate() {
 
     List<ValidationError> errors = new ArrayList<>();
+
+    int index = 0;
+
+    while (!Character.isDigit(courseLevel.charAt(index)) && (index < (courseLevel.length() - 1))) {
+      index++;
+    }
+
+    String subCourse = courseLevel.substring(0, index).trim();
+
+    if (!Course.isCourse(subCourse)) {
+      errors.add(new ValidationError("courseLevel", "Not a valid course"));
+    }
+
+    if (index == courseLevel.length() - 1) {
+      errors.add(new ValidationError("courseLevel", "Please include a course level."));
+    }
 
     int year = Calendar.getInstance().get(Calendar.YEAR);
     int mon = -1;

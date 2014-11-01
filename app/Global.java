@@ -4,7 +4,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import models.Course;
-import play.*;
+import play.Application;
+import play.GlobalSettings;
+import play.libs.F.Promise;
+import play.mvc.Http.RequestHeader;
+import play.mvc.SimpleResult;
+import views.html.InvalidUrl;
+import static play.mvc.Results.notFound;
+import static play.mvc.Results.badRequest;
 
 public class Global extends GlobalSettings {
 
@@ -17,6 +24,14 @@ public class Global extends GlobalSettings {
       loadCourses(courses);
     }
 
+  }
+
+  public Promise<SimpleResult> onHandlerNotFound(RequestHeader request) {
+    return Promise.<SimpleResult> pure(notFound(InvalidUrl.render("Error 404")));
+  }
+
+  public Promise<SimpleResult> onBadRequest(RequestHeader request, String error) {
+    return Promise.<SimpleResult> pure(badRequest("Don't try to hack the URL!"));
   }
 
   private void loadCourses(File file) {

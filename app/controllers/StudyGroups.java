@@ -7,6 +7,7 @@ import play.mvc.Result;
 import views.formdata.StudyGroupForm;
 import views.html.studyGroup.CreateStudyGroup;
 import views.html.studyGroup.ViewStudyGroup;
+import views.html.InvalidUrl;
 
 public class StudyGroups extends Controller {
 
@@ -33,7 +34,6 @@ public class StudyGroups extends Controller {
 
       sg.save();
 
-      System.out.println("\nFORM ID: " + sg.getId() + "\n");
       return redirect(routes.StudyGroups.viewStudyGroup(sg.getId()));
     }
   }
@@ -41,7 +41,10 @@ public class StudyGroups extends Controller {
   public static Result viewStudyGroup(long id) {
     StudyGroup sg = StudyGroup.find().where().eq("id", id).findUnique();
 
-    System.out.println("\nPRINTING " + sg + "\n");
+    if (sg == null) {
+      return ok(InvalidUrl.render("Error 404"));
+    }
+
     return ok(ViewStudyGroup.render(sg.getCourseLevel(), sg));
   }
 

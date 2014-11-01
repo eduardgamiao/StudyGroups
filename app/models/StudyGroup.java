@@ -1,8 +1,6 @@
 package models;
 
-import java.util.Calendar;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.joda.time.DateTime;
 import play.db.ebean.Model;
@@ -24,9 +22,8 @@ public class StudyGroup extends Model {
   private String location;
   private String topics;
 
-  private int year = Calendar.getInstance().get(Calendar.YEAR);
-
-  public StudyGroup(long id, String courseLevel, String location, int month, int day, int hour, int min, String topics) {
+  public StudyGroup(long id, String courseLevel, String location, int month, int day, int year, int hour, int min,
+      String topics) {
     this.id = id;
     this.courseLevel = courseLevel;
     this.location = location;
@@ -42,7 +39,12 @@ public class StudyGroup extends Model {
     return meetTime;
   }
 
-  public void setMeetTime(int month, int day, int hour, int min) {
+  public String getDay() {
+    String day = meetTime.dayOfWeek().getAsText();
+    return day;
+  }
+
+  public void setMeetTime(int month, int day, int year, int hour, int min) {
     this.meetTime = new DateTime(year, month, day, hour, min);
   }
 

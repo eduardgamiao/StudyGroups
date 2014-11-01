@@ -1,6 +1,11 @@
 @(message: String, courses: List[models.Course])
 
-@Main(message) {
+@scripts = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/courses.css")">
+}
+	
+
+@Main(message, scripts) {
     
     <div class="list-page">
       <h1>List of Courses</h1>

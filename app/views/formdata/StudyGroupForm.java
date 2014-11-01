@@ -27,7 +27,7 @@ public class StudyGroupForm {
   @Constraints.Required(message = "A day is required.")
   public String day;
 
-  public String year;
+  public int year = Calendar.getInstance().get(Calendar.YEAR);
 
   @Constraints.Required(message = "An hour is required.")
   public String hour;

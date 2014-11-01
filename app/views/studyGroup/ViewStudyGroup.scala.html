@@ -1,10 +1,17 @@
 @(title: String, sg: models.StudyGroup)
 
+@scripts = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/studyGroups.css")">
+}
 
-@Main(title) {
+@Main(title, scripts) {
     
-  <h1>@sg.getCourseLevel()</h1>
+  <div class="title">
+  	<h1>@sg.getCourseLevel() - @sg.getTopics()</h1>
+  </div>
   
+  <hr>
+  <br/>
   <div class="well">
   
   </div>

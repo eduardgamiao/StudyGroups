@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String, scripts: Html = Html(""))(content: Html)
 <!DOCTYPE html>
 
 <html>
@@ -10,6 +10,7 @@
 <!--  Load site-specific customizations after bootstrap. -->
 <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/book.png")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+@scripts
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>

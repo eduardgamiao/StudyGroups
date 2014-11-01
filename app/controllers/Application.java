@@ -5,7 +5,7 @@ import models.Course;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.Index;
-import views.html.ListOfCourses;
+import views.html.course.ListOfCourses;
 
 public class Application extends Controller {
 

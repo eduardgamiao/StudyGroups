@@ -3,7 +3,7 @@ package controllers;
 import models.Course;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.ViewCourse;
+import views.html.course.ViewCourse;
 
 public class Courses extends Controller {
 

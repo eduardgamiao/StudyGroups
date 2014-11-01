@@ -1,10 +1,12 @@
 package controllers;
 
+import models.StudyGroup;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.formdata.StudyGroupForm;
-import views.html.CreateStudyGroup;
+import views.html.studyGroup.CreateStudyGroup;
+import views.html.studyGroup.ViewStudyGroup;
 
 public class StudyGroups extends Controller {
 
@@ -15,14 +17,32 @@ public class StudyGroups extends Controller {
   }
 
   public static Result addStudyGroup() {
+
     Form<StudyGroupForm> sgf = Form.form(StudyGroupForm.class).bindFromRequest();
 
     if (sgf.hasErrors()) {
       return badRequest(CreateStudyGroup.render("CreateStudyGroup", sgf));
     }
     else {
-      return redirect(routes.Application.index());
+
+      StudyGroupForm form = sgf.get();
+
+      StudyGroup sg =
+          new StudyGroup(form.id, form.courseLevel, form.location, form.intMonth, form.intDay, form.intHours,
+              form.intMinutes, form.topics);
+
+      sg.save();
+
+      System.out.println("\nFORM ID: " + sg.getId() + "\n");
+      return redirect(routes.StudyGroups.viewStudyGroup(sg.getId()));
     }
+  }
+
+  public static Result viewStudyGroup(long id) {
+    StudyGroup sg = StudyGroup.find().where().eq("id", id).findUnique();
+
+    System.out.println("\nPRINTING " + sg + "\n");
+    return ok(ViewStudyGroup.render(sg.getCourseLevel(), sg));
   }
 
 }

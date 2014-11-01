@@ -12,6 +12,7 @@ GET     /course/:id                 controllers.Courses.viewCourse(id: String)
 # Study Group
 GET     /create/studyGroup          controllers.StudyGroups.createStudyGroup()
 GET     /create/new/studyGroup      controllers.StudyGroups.addStudyGroup()
+GET     /view/studyGroup/:id        controllers.StudyGroups.viewStudyGroup(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

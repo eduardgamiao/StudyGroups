@@ -11,20 +11,39 @@
 <hr>
 </br>
     
-    @form(routes.StudyGroups.addStudyGroup(), 'class -> "form-horizontal") {
-    
-    <!--  Still need to add other required parts of the form -->
+    @form(routes.StudyGroups.addStudyGroup(), 'class -> "form-horizontal") {  
+
         @bootstrap3.text(
             sgf("courseLevel"),
-            label = "Course & Level",
+            label = "Level",
             placeholder = "ICS 311", 
             help = "")
         
+        @bootstrap3.text(
+            sgf("location"),
+            label = "Location",
+            placeholder = "Sinclair Library",
+            help = "")
         
-    
-        
-              
-    
+        @bootstrap3.text(
+            sgf("topics"),
+            label = "Topics",
+            placeholder = "Sorting, Maps, Trees",
+            help = "")
+            
+        @bootstrap3.textDate(
+            sgf("month"),
+            label = "Date",
+            placeholder = "MM",
+            help = "",
+            sgf("day"),
+            placeholder2 = "DD",
+            help2 = "",
+            sgf("year"),
+            placeholder3 = "YYYY",
+            help3 = "")
+            
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button id="submitButton" type="submit" class="btn btn-primary">

@@ -18,7 +18,7 @@ public class StudyGroup extends Model {
   private long id;
 
   private DateTime meetTime;
-
+  
   private String courseLevel;
   private String location;
   private String topics;
@@ -43,7 +43,7 @@ public class StudyGroup extends Model {
   public void setMeetTime(int month, int day, int hour, int min) {
     this.meetTime = new DateTime(year, month, day, hour, min);
   }
-
+  
   public String getCourseLevel() {
     return courseLevel;
   }

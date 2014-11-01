@@ -13,7 +13,7 @@ public class StudyGroupForm {
 
   @Id
   public long id;
-
+  
   @Constraints.Required(message = "A course level is required.")
   public String courseLevel;
 

@@ -9,8 +9,8 @@
 
 <h2>Create A Study Group</h2>
 <hr>
-</br>
-    
+
+<div class="well">  
     @form(routes.StudyGroups.addStudyGroup(), 'class -> "form-horizontal") {
     
     <!--  Still need to add other required parts of the form -->
@@ -51,13 +51,13 @@
             sgf("topics"),
             label = "Topics",
             placeholder = "BFS, DFS",
-            help = "Please separte topics with a comma")
+            help = "Please separate topics with a comma")
         
         
     
         
               
-    
+</div>  
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button id="submitButton" type="submit" class="btn btn-primary">

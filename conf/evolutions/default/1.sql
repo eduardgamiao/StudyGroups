@@ -12,7 +12,8 @@ create table course (
 create table study_group (
   id                        bigint not null,
   meet_time                 timestamp,
-  course_level              varchar(255),
+  course                    varchar(255),
+  level                     integer,
   location                  varchar(255),
   topics                    varchar(255),
   constraint pk_study_group primary key (id))

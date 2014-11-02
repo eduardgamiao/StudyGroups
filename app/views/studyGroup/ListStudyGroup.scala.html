@@ -1,0 +1,16 @@
+@(title: String, course: models.Course, list: List[String])
+
+@scripts = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/studyGroups.css")">
+}
+
+@Main(title, scripts) {
+
+	@for(classes <- list) {
+		@classes.toString()
+		</br>
+	}
+    
+  <h5>Can't find your course?  <a href="@routes.StudyGroups.createSgForCourse(course.getId)">Create One</a></h5>
+
+}

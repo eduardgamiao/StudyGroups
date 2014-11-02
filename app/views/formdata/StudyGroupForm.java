@@ -15,8 +15,11 @@ public class StudyGroupForm {
   @GeneratedValue
   public long id;
 
-  @Constraints.Required(message = "A course level is required.")
-  public String courseLevel;
+  @Constraints.Required(message = "A course is required.")
+  public String course;
+
+  @Constraints.Required(message = "A level is required.")
+  public String level;
 
   @Constraints.Required(message = "A location is required.")
   public String location;
@@ -37,10 +40,23 @@ public class StudyGroupForm {
 
   public String topics;
 
+  public int intLevel;
   public int intHours;
   public int intMinutes;
   public int intMonth;
   public int intDay;
+
+  public StudyGroupForm() {
+  }
+
+  public StudyGroupForm(String course) {
+    this.course = course;
+  }
+
+  public StudyGroupForm(String course, String level) {
+    this.course = course;
+    this.level = level;
+  }
 
   public long getId() {
     return id;
@@ -50,20 +66,15 @@ public class StudyGroupForm {
 
     List<ValidationError> errors = new ArrayList<>();
 
-    int index = 0;
-
-    while (!Character.isDigit(courseLevel.charAt(index)) && (index < (courseLevel.length() - 1))) {
-      index++;
+    if (!Course.isCourse(course.trim())) {
+      errors.add(new ValidationError("course", "Not a valid course"));
     }
 
-    String subCourse = courseLevel.substring(0, index).trim();
-
-    if (!Course.isCourse(subCourse)) {
-      errors.add(new ValidationError("courseLevel", "Not a valid course"));
+    try {
+      intLevel = Integer.parseInt(level);
     }
-
-    if (index == courseLevel.length() - 1) {
-      errors.add(new ValidationError("courseLevel", "Please include a course level."));
+    catch (NumberFormatException nfe) {
+      errors.add(new ValidationError("level", "Course level must be a number."));
     }
 
     int year = Calendar.getInstance().get(Calendar.YEAR);

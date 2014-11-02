@@ -1,0 +1,19 @@
+@(title: String, course: models.Course)
+
+@scripts = {
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/lectures.css")">
+}
+
+@Main(title, scripts) {
+    
+  <div class="title">
+    <h1>@course.getCourseName()  (@course.getId()) - Lectures</h1>
+  </div>
+  
+  <hr>
+  <br/>
+  <div class="well">
+  
+  </div>
+
+}

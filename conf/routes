@@ -9,6 +9,9 @@ GET     /list                       controllers.Application.listOfCourses()
 # Course
 GET     /course/:id                 controllers.Courses.viewCourse(id: String)
 
+# Lecture
+GET     /lecture/:id                controllers.Lectures.viewLecture(id: String)
+
 # Study Group
 GET     /create/studyGroup          controllers.StudyGroups.createStudyGroup()
 POST    /create/new/studyGroup      controllers.StudyGroups.addStudyGroup()

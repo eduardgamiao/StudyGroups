@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -66,6 +67,19 @@ public class Course extends Model {
   }
 
   public String getClasses() {
+    return classes;
+  }
+
+  public List<ClassLevel> getClassesAsList() {
+    List<ClassLevel> classes = new ArrayList<>();
+
+    String[] cl = this.classes.split("\\|");
+
+    for (int x = 0; x < cl.length; x++) {
+      ClassLevel cLevel = ClassLevel.getCL(cl[x]);
+      classes.add(cLevel);
+    }
+
     return classes;
   }
 

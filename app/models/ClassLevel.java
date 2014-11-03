@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.db.ebean.Model;
@@ -48,6 +50,19 @@ public class ClassLevel extends Model {
 
   public String getStudyGroups() {
     return studyGroupId;
+  }
+
+  public List<StudyGroup> getStudyGroupAsList() {
+    List<StudyGroup> studyGroups = new ArrayList<>();
+
+    String[] ids = studyGroupId.split("\\|");
+
+    for (int x = 0; x < ids.length; x++) {
+      StudyGroup sg = StudyGroup.getSG(Long.parseLong(ids[x]));
+      studyGroups.add(sg);
+    }
+
+    return studyGroups;
   }
 
   public String getCourse() {

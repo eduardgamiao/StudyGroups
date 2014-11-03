@@ -19,28 +19,14 @@ import views.html.studyGroup.ViewStudyGroup;
 public class StudyGroups extends Controller {
 
   public static Result listStudyGroups(String course) {
-
     Course courseName = Course.getCourse(course);
-    String[] courses = courseName.getClasses().split("\\|");
-    List<ClassLevel> classes = new ArrayList<>();
-
-    for (int x = 0; x < courses.length; x++) {
-      ClassLevel cl = ClassLevel.getCL(courses[x]);
-      classes.add(cl);
-    }
-
+    List<ClassLevel> classes = courseName.getClassesAsList();
     return ok(ListStudyGroup.render(course + "- list of Study Groups", courseName, classes));
   }
 
   public static Result viewClassStudyGroup(String classLevel) {
     ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
-    String[] studyGroups = cl.getStudyGroups().split("\\|");
-    List<StudyGroup> sg = new ArrayList<>();
-
-    for (int x = 0; x < studyGroups.length; x++) {
-      StudyGroup group = StudyGroup.getSG(Long.parseLong(studyGroups[x]));
-      sg.add(group);
-    }
+    List<StudyGroup> sg = cl.getStudyGroupAsList();
     return ok(StudyGroupsForClass.render(Misc.unSlugify(classLevel), cl, sg));
   }
 
@@ -80,13 +66,21 @@ public class StudyGroups extends Controller {
 
       sg.save();
 
-      ClassLevel cl = new ClassLevel(form.course, form.intLevel);
-      cl.addStudyGroup(sg.getId());
-      cl.save();
-
+      String courseLevel = form.course + " " + form.intLevel;
+      ClassLevel cl = ClassLevel.getCL(courseLevel);
       Course course = Course.getCourse(form.course);
-      course.addClass(cl);
-      course.save();
+
+      if (cl == null) {
+        cl = new ClassLevel(form.course, form.intLevel);
+        cl.addStudyGroup(sg.getId());
+        cl.save();
+        course.addClass(cl);
+        course.save();
+      }
+      else {
+        cl.addStudyGroup(sg.getId());
+        cl.save();
+      }
 
       return redirect(routes.StudyGroups.viewStudyGroup(sg.getId(), Misc.slugify(sg.classToString())));
     }

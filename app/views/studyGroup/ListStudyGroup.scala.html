@@ -1,4 +1,4 @@
-@(title: String, course: models.Course, list: List[String])
+@(title: String, course: models.Course, list: List[models.ClassLevel])
 
 @scripts = {
 	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/studyGroups.css")">
@@ -6,11 +6,20 @@
 
 @Main(title, scripts) {
 
+	<div class="title">
+		<h1>Study Groups - @course.toString()</h1>
+	</div>
+	<hr>
+	<div class="well">
+	<ul>
 	@for(classes <- list) {
-		@classes.toString()
+		@if(classes != null) {
+			<li class="sub"><a href="@routes.StudyGroups.viewClassStudyGroup(Misc.slugify(classes.toString()))">@classes.toString()</a></li>
+		}
 		</br>
 	}
-    
-  <h5>Can't find your course?  <a href="@routes.StudyGroups.createSgForCourse(course.getId)">Create One</a></h5>
+    </ul>
+    </div>
+  <h5>Can't find your class?  <a href="@routes.StudyGroups.createSgForCourse(Misc.slugify(course.getId))">Create A Study Group for it.</a></h5>
 
 }

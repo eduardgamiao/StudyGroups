@@ -16,6 +16,7 @@ public class Course extends Model {
   @Id
   private String id;
   private String courseName;
+  private String classes = "";
 
   public Course() {
   }
@@ -23,6 +24,11 @@ public class Course extends Model {
   public Course(String id, String courseName) {
     this.id = id;
     this.courseName = courseName;
+  }
+
+  @Override
+  public String toString() {
+    return courseName + " (" + id + ")";
   }
 
   public String getId() {
@@ -37,6 +43,10 @@ public class Course extends Model {
     return new Finder<String, Course>(String.class, Course.class);
   }
 
+  public static Course getCourse(String id) {
+    return find().where().eq("id", id.toUpperCase()).findUnique();
+  }
+
   public static boolean isCourse(String course) {
     List<Course> byId = find().where().contains("id", course.toUpperCase()).findList();
     List<Course> byName = find().where().eq("courseName", course).findList();
@@ -45,6 +55,18 @@ public class Course extends Model {
       return false;
     }
     return true;
+  }
+
+  public void addClass(ClassLevel cl) {
+    if (!classes.contains(cl.toString())) {
+      StringBuilder sb = new StringBuilder(classes);
+      sb.append(cl.toString() + "|");
+      classes = sb.toString();
+    }
+  }
+
+  public String getClasses() {
+    return classes;
   }
 
 }

@@ -3,9 +3,18 @@
 
 # --- !Ups
 
+create table class_level (
+  course_level              varchar(255) not null,
+  course                    varchar(255),
+  level                     integer,
+  study_group_id            varchar(255),
+  constraint pk_class_level primary key (course_level))
+;
+
 create table course (
   id                        varchar(255) not null,
   course_name               varchar(255),
+  classes                   varchar(255),
   constraint pk_course primary key (id))
 ;
 
@@ -19,6 +28,8 @@ create table study_group (
   constraint pk_study_group primary key (id))
 ;
 
+create sequence class_level_seq;
+
 create sequence course_seq;
 
 create sequence study_group_seq;
@@ -30,11 +41,15 @@ create sequence study_group_seq;
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
+drop table if exists class_level;
+
 drop table if exists course;
 
 drop table if exists study_group;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists class_level_seq;
 
 drop sequence if exists course_seq;
 

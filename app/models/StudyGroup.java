@@ -26,7 +26,7 @@ public class StudyGroup extends Model {
   public StudyGroup(long id, String course, int level, String location, int month, int day, int year, int hour,
       int min, String topics) {
     this.id = id;
-    this.course = course;
+    this.setCourse(course);
     this.level = level;
     this.location = location;
     this.meetTime = new DateTime(year, month, day, hour, min);
@@ -34,11 +34,15 @@ public class StudyGroup extends Model {
   }
 
   public String classToString() {
-    return course + " " + level;
+    return getCourse() + " " + level;
   }
 
   public static Finder<Long, StudyGroup> find() {
     return new Finder<Long, StudyGroup>(Long.class, StudyGroup.class);
+  }
+
+  public static StudyGroup getSG(long id) {
+    return find().where().eq("id", id).findUnique();
   }
 
   public DateTime getMeetTime() {
@@ -72,6 +76,14 @@ public class StudyGroup extends Model {
 
   public long getId() {
     return id;
+  }
+
+  public String getCourse() {
+    return course;
+  }
+
+  public void setCourse(String course) {
+    this.course = course;
   }
 
 }

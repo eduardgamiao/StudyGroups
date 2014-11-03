@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import models.ClassLevel;
 import models.Course;
 import models.Misc;
 import models.StudyGroup;
@@ -12,17 +13,35 @@ import views.formdata.StudyGroupForm;
 import views.html.InvalidUrl;
 import views.html.studyGroup.CreateStudyGroup;
 import views.html.studyGroup.ListStudyGroup;
+import views.html.studyGroup.StudyGroupsForClass;
 import views.html.studyGroup.ViewStudyGroup;
 
 public class StudyGroups extends Controller {
 
   public static Result listStudyGroups(String course) {
-    Course courseName = Course.find().where().eq("id", course).findUnique();
 
-    List<String> classes = new ArrayList<>();
-    classes.add("SDLKFJLKDSFJ");
-    classes.add("SLKDFJLKDSFJl");
+    Course courseName = Course.getCourse(course);
+    String[] courses = courseName.getClasses().split("\\|");
+    List<ClassLevel> classes = new ArrayList<>();
+
+    for (int x = 0; x < courses.length; x++) {
+      ClassLevel cl = ClassLevel.getCL(courses[x]);
+      classes.add(cl);
+    }
+
     return ok(ListStudyGroup.render(course + "- list of Study Groups", courseName, classes));
+  }
+
+  public static Result viewClassStudyGroup(String classLevel) {
+    ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
+    String[] studyGroups = cl.getStudyGroups().split("\\|");
+    List<StudyGroup> sg = new ArrayList<>();
+
+    for (int x = 0; x < studyGroups.length; x++) {
+      StudyGroup group = StudyGroup.getSG(Long.parseLong(studyGroups[x]));
+      sg.add(group);
+    }
+    return ok(StudyGroupsForClass.render(Misc.unSlugify(classLevel), cl, sg));
   }
 
   public static Result createStudyGroup() {
@@ -32,7 +51,14 @@ public class StudyGroups extends Controller {
   }
 
   public static Result createSgForCourse(String courseName) {
-    StudyGroupForm sgf = new StudyGroupForm(courseName);
+    StudyGroupForm sgf = new StudyGroupForm(Misc.unSlugify(courseName));
+    Form<StudyGroupForm> sgForm = Form.form(StudyGroupForm.class).fill(sgf);
+    return ok(CreateStudyGroup.render("Create Study Group", sgForm));
+  }
+
+  public static Result createSgForClass(String classLevel) {
+    ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
+    StudyGroupForm sgf = new StudyGroupForm(cl.getCourse(), Integer.toString(cl.getLevel()));
     Form<StudyGroupForm> sgForm = Form.form(StudyGroupForm.class).fill(sgf);
     return ok(CreateStudyGroup.render("Create Study Group", sgForm));
   }
@@ -46,7 +72,6 @@ public class StudyGroups extends Controller {
     }
     else {
 
-      System.out.println("CRASHING");
       StudyGroupForm form = sgf.get();
 
       StudyGroup sg =
@@ -54,6 +79,14 @@ public class StudyGroups extends Controller {
               form.intHours, form.intMinutes, form.topics);
 
       sg.save();
+
+      ClassLevel cl = new ClassLevel(form.course, form.intLevel);
+      cl.addStudyGroup(sg.getId());
+      cl.save();
+
+      Course course = Course.getCourse(form.course);
+      course.addClass(cl);
+      course.save();
 
       return redirect(routes.StudyGroups.viewStudyGroup(sg.getId(), Misc.slugify(sg.classToString())));
     }

@@ -1,0 +1,27 @@
+@(title: String, cl: models.ClassLevel, sg: List[models.StudyGroup])
+
+@scripts = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/studyGroups.css")">
+}
+
+@Main(title, scripts) {
+
+	<div class="title">
+		<h1>Study Groups for - @cl.getCourseLevel()</h1>
+	</div>
+	<hr>
+
+	<div class="well">
+	<ul>
+	@for(classes <- sg) {
+		@if(classes != null) {
+			<li class="sub"><a href="@routes.StudyGroups.viewStudyGroup(classes.getId(), classes.getCourse())">@classes.getTopics()</a></li>
+		}
+		</br>
+	}
+	</ul>
+	</div>
+    
+  <h5>Want to create a new study group?  <a href="@routes.StudyGroups.createSgForClass(Misc.slugify(cl.getCourseLevel))">Go Here</a></h5>
+
+}

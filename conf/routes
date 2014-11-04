@@ -17,7 +17,7 @@ GET     /create/study-group          controllers.StudyGroups.createStudyGroup()
 GET		/create/study-group/course/:course	controllers.StudyGroups.createSgForCourse(course: String)
 GET		/create/study-group/class/:class	controllers.StudyGroups.createSgForClass(class: String)
 POST    /add/study-group      controllers.StudyGroups.addStudyGroup()
-GET     /view/study-group/:course/:id        controllers.StudyGroups.viewStudyGroup(id: Long, course: String)
+GET     /view/:course/study-group/:id        controllers.StudyGroups.viewStudyGroup(id: Long, course: String)
 GET		/view/:course/study-group	controllers.StudyGroups.listStudyGroups(course: String)
 GET		/view/:class/study-group/list	controllers.StudyGroups.viewClassStudyGroup(class: String)
 

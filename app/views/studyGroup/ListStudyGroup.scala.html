@@ -4,39 +4,67 @@
 	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/studyGroups.css")">
 }
 
-@Main(title, scripts) {
+@js = {
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/rowlink.js")"></script>
+}
 
-	<div class="title">
-		<h1>Study Groups - @course.toString()</h1>
-	</div>
-	<hr>
-	<div class="well">
-  
-    <!--  AP -->
-    <div class="panel-group" id="accordian" role="tablist" aria-multiselectable="true">
-     @for(classes <- list) {
-        @if(classes != null) {
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="@classes.getLevel">
-                <h4 class="panel-title">
-                    <a class="collapsed sub" data-toggle="collapse" data-parent="#accordian" href="#@classes.getLevel-panel" aria-expanded="false" aria-controls="@classes.getLevel-panel">
-                        @classes.getCourseLevel()
-                    </a>
-                </h4>
-            </div>
-            <div id="@classes.getLevel-panel" class="panel-collapse collapse" role="tabpanel" aria-labeleddby="@classes.getLevel">
-                <div class="panel-body">
-                    @for(sg <- classes.getStudyGroupAsList) {
-                      <ul>
-                           <li class="sg"><a href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.classToString))">@sg.getTopics()</a></li>
-                      </ul>
-                    }
-                </div>
-            </div>
-        </div>
-        }
+@Main(title, scripts, js) {
+
+    <div class="title">
+        <h1>Study Groups - @course.toString()</h1>
+    </div>
+    <hr>
+    
+    <div class="well">
+     <!--  AP -->
+        <div class="panel-group" id="accordian" role="tablist" aria-multiselectable="true">
+            @for(classes <- list) {
+                @if(classes != null) {
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="@classes.getLevel">
+                        <h4 class="panel-title">
+                            <a class="collapsed sub" data-toggle="collapse" data-parent="#accordian" href="#@classes.getLevel-panel" aria-expanded="false" aria-controls="@classes.getLevel-panel">
+                                @classes.getCourseLevel()<div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div>
+                            </a>
+                        </h4>
+                        </div>
+                        <div id="@classes.getLevel-panel" class="panel-collapse collapse" role="tabpanel" aria-labeleddby="@classes.getLevel">
+                            <div class="panel-body">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Topics</th>
+                                          <th>Date</th>
+                                          <th>Time</th>
+                                          <th>Location</th>
+                                          <th>Creator</th>
+                                    </tr>
+                                </thead>
+                                <!-- Rowlink not working, will look into later. -AP -->
+                                <tbody data-link="row" class="rowlink">
+                                    @for(sg <- classes.getStudyGroupAsList) {
+                                        <tr>
+                                          <td><a href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.classToString))">@sg.getTopics()</a></td>
+                                          <td>@sg.getDay(), @sg.getDateString()</td>
+                                          <td>@sg.getTimeString()</td>
+                                          <td>@sg.getLocation()</td>
+                                          <td>TO BE IMPLEMENTED</td>
+                                         </tr>
+                                    }      
+                                </tbody>
+                              </table>
+                              </div>
+                             <h6><a href="@routes.StudyGroups.createSgForClass(Misc.slugify(classes.getCourseLevel))">Create Another Study Group for this class</a></h6>
+                              
+                            </div>
+                           </div>
+                 }
+                 
         }    
-    </div>
-  <h5>Can't find your class?  <a href="@routes.StudyGroups.createSgForCourse(Misc.slugify(course.getId))">Create A Study Group for it.</a></h5>
-    </div>
+        </div>
+        <hr>
+        <div>
+            <h5>Can't find your class?  <a href="@routes.StudyGroups.createSgForCourse(Misc.slugify(course.getId))">Create a study group for it.</a></h5>                           
+        </div>
+        </div>           
 }

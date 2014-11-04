@@ -3,6 +3,8 @@ package models;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import play.db.ebean.Model;
 
 @Entity
@@ -26,7 +28,7 @@ public class StudyGroup extends Model {
   public StudyGroup(long id, String course, int level, String location, int month, int day, int year, int hour,
       int min, String topics) {
     this.id = id;
-    this.setCourse(course);
+    this.course = course;
     this.level = level;
     this.location = location;
     this.meetTime = new DateTime(year, month, day, hour, min);
@@ -56,6 +58,20 @@ public class StudyGroup extends Model {
 
   public void setMeetTime(int month, int day, int year, int hour, int min) {
     this.meetTime = new DateTime(year, month, day, hour, min);
+  }
+
+  public String getDateString() {
+    String pattern = "MM-dd-yy";
+    DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
+    String dateString = fmt.print(meetTime);
+    return dateString;
+  }
+
+  public String getTimeString() {
+    String pattern = "hh : mm aa";
+    DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
+    String timeString = fmt.print(meetTime);
+    return timeString;
   }
 
   public String getLocation() {

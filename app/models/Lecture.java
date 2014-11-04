@@ -9,13 +9,15 @@ public class Lecture extends Model{
    */
   private static final long serialVersionUID = 1L;
   
+  private String topic;
   private String description;
   private String youtubeURL;
   
   public Lecture(){
   }
   
-  public Lecture(String description, String youtubeURL) {
+  public Lecture(String topic, String description, String youtubeURL) {
+    this.setTopic(topic);
     this.setDescription(description);
     this.setYoutubeURL(youtubeURL);
   }
@@ -46,6 +48,20 @@ public class Lecture extends Model{
    */
   public void setYoutubeURL(String youtubeURL) {
     this.youtubeURL = youtubeURL;
+  }
+
+  /**
+   * @return the topic
+   */
+  public String getTopic() {
+    return topic;
+  }
+
+  /**
+   * @param topic the topic to set
+   */
+  public void setTopic(String topic) {
+    this.topic = topic;
   }
 
 }

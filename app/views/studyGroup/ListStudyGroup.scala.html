@@ -23,7 +23,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="@classes.getLevel">
                         <h4 class="panel-title">
-                            <a class="collapsed sub" data-toggle="collapse" data-parent="#accordian" href="#@classes.getLevel-panel" aria-expanded="false" aria-controls="@classes.getLevel-panel">
+                            <a class="collapsed sub btn-block" data-toggle="collapse" data-parent="#accordian" href="#@classes.getLevel-panel" aria-expanded="false" aria-controls="@classes.getLevel-panel">
                                 @classes.getCourseLevel()<div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div>
                             </a>
                         </h4>
@@ -40,11 +40,10 @@
                                           <th>Creator</th>
                                     </tr>
                                 </thead>
-                                <!-- Rowlink not working, will look into later. -AP -->
                                 <tbody data-link="row" class="rowlink">
                                     @for(sg <- classes.getStudyGroupAsList) {
-                                        <tr>
-                                          <td><a href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.classToString))">@sg.getTopics()</a></td>
+                                        <tr class="tBody">
+                                          <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.classToString))">@sg.getTopics()</a></td>
                                           <td>@sg.getDay(), @sg.getDateString()</td>
                                           <td>@sg.getTimeString()</td>
                                           <td>@sg.getLocation()</td>

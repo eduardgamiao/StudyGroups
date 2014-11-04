@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import models.ClassLevel;
 import models.Course;
@@ -88,13 +87,12 @@ public class StudyGroups extends Controller {
 
   public static Result viewStudyGroup(long id, String courseId) {
 
-    StudyGroup sg = StudyGroup.find().where().eq("id", id).findUnique();
+    StudyGroup sg = StudyGroup.getSG(id);
 
     if (sg == null) {
       return ok(InvalidUrl.render("Error 404"));
     }
 
-    System.out.println(sg.classToString());
     return ok(ViewStudyGroup.render(sg.classToString(), sg));
   }
 

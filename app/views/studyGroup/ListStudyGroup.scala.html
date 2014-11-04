@@ -11,15 +11,32 @@
 	</div>
 	<hr>
 	<div class="well">
-	<ul>
-	@for(classes <- list) {
-		@if(classes != null) {
-			<li class="sub"><a href="@routes.StudyGroups.viewClassStudyGroup(Misc.slugify(classes.toString()))">@classes.toString()</a></li>
-		}
-		</br>
-	}
-    </ul>
+  
+    <!--  AP -->
+    <div class="panel-group" id="accordian" role="tablist" aria-multiselectable="true">
+     @for(classes <- list) {
+        @if(classes != null) {
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="@classes.getLevel">
+                <h4 class="panel-title">
+                    <a class="collapsed sub" data-toggle="collapse" data-parent="#accordian" href="#@classes.getLevel-panel" aria-expanded="false" aria-controls="@classes.getLevel-panel">
+                        @classes.getCourseLevel()
+                    </a>
+                </h4>
+            </div>
+            <div id="@classes.getLevel-panel" class="panel-collapse collapse" role="tabpanel" aria-labeleddby="@classes.getLevel">
+                <div class="panel-body">
+                    @for(sg <- classes.getStudyGroupAsList) {
+                      <ul>
+                           <li class="sg"><a href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.classToString))">@sg.getTopics()</a></li>
+                      </ul>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+        }    
     </div>
   <h5>Can't find your class?  <a href="@routes.StudyGroups.createSgForCourse(Misc.slugify(course.getId))">Create A Study Group for it.</a></h5>
-
+    </div>
 }

@@ -5,9 +5,16 @@ import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import models.Lecture;
+import models.LectureDB;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 
+/**
+ * Java backing class for Lecture's form data.
+ * 
+ * @author Alvin
+ *
+ */
 public class LectureForm {
   private static final Integer VIDEO_ID_LENGTH = 11;
 
@@ -30,10 +37,18 @@ public class LectureForm {
   public String description;
   
   
+  /**
+   * Empty constructor.
+   */
   public LectureForm() {
     
   }
   
+  /**
+   * Creates LectureForm data for an existing lecture.
+   * 
+   * @param lecture an existing lecture
+   */
   public LectureForm(Lecture lecture) {
     this.course = lecture.getCourse();
     this.level = lecture.getLevel();
@@ -42,20 +57,42 @@ public class LectureForm {
     this.description = lecture.getDescription();
   }
   
-  public LectureForm(String course, String level, String topic, String videoId, String description) {
+  /**
+   * Creates new LectureForm data
+   * 
+   * @param course course, e.g. ICS
+   * @param level level, e.g. 311
+   * @param topic topic of lecture video
+   * @param description optional description of video.
+   * @param videoId YouTube video ID
+   */
+  public LectureForm(String course, String level, String topic, String description, String videoId) {
     this.course = course;
     this.level = level;
     this.topic = topic;
-    this.videoId = videoId;
     this.description = description;
+    this.videoId = videoId;
   }
   
   public long getId() {
     return id;
   }
   
+  /**
+   * Checks if all form fields are valid.
+   * 
+   * @return null if valid, a List of ValidationErrors if invalid.
+   */
   public List<ValidationError> validate() {
     List<ValidationError> errors = new ArrayList<>();
+    
+    if (course == null || course.length() == 0) {
+      errors.add(new ValidationError("course", "A course(e.g. 'ICS' is required."));
+    }
+    
+    if (level == null || level.length() == 0) {
+      errors.add(new ValidationError("level", "A level(e.g. '311' is required."));
+    }
     
     if (topic == null || topic.length() == 0) {
       errors.add(new ValidationError("topic", "A topic(title) is required."));
@@ -65,6 +102,10 @@ public class LectureForm {
       errors.add(new ValidationError("videoId", "The Video Id needs to be 11 characters long."));
     }
     
+    if (LectureDB.isRepeatVideo(course, level, videoId)) {
+      errors.add(new ValidationError("videoId", "Video with ID: " + videoId + " already exists for course: "
+                                                   + course + " " + level + "."));
+    }
     return errors.isEmpty() ? null : errors;
   }
 }

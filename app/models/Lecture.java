@@ -1,13 +1,18 @@
 package models;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.db.ebean.Model;
 
+/**
+ * A model for a lecture.
+ * 
+ * @author Alvin
+ *
+ */
+@Entity
 public class Lecture extends Model{
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = 1L;
   
   @Id
@@ -19,15 +24,38 @@ public class Lecture extends Model{
   private String description;
   private String videoId;
   
+  /**
+   * Empty constructor.
+   */
   public Lecture(){
   }
   
-  public Lecture(String topic, String description, String videoId) {
+  /**
+   * Constructs a new lecture.
+   * 
+   * @param course course, e.g. ICS
+   * @param level level, e.g. 311
+   * @param topic topic of lecture video
+   * @param description optional description of video.
+   * @param videoId YouTube video ID
+   */
+  public Lecture(String course, String level, String topic, String description, String videoId) {
+    this.setCourse(course);
+    this.setLevel(level);
     this.setTopic(topic);
     this.setDescription(description);
     this.setVideoId(videoId);
   }
 
+  /**
+   * THe EBean ORM finder method for database queries.
+   * 
+   * @return
+   */
+  public static Finder<Long, Lecture> find() {
+    return new Finder<Long, Lecture>(Long.class, Lecture.class);
+  }
+  
   /**
    * @return the description
    */

@@ -25,6 +25,7 @@ create table study_group (
   level                     integer,
   location                  varchar(255),
   topics                    varchar(255),
+  course_level              varchar(255),
   constraint pk_study_group primary key (id))
 ;
 

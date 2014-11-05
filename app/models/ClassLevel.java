@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.db.ebean.Model;
+import com.avaje.ebean.Page;
 
 @Entity
 public class ClassLevel extends Model {
@@ -53,6 +54,7 @@ public class ClassLevel extends Model {
   }
 
   public List<StudyGroup> getStudyGroupAsList() {
+
     List<StudyGroup> studyGroups = new ArrayList<>();
 
     String[] ids = studyGroupId.split("\\|");
@@ -61,8 +63,11 @@ public class ClassLevel extends Model {
       StudyGroup sg = StudyGroup.getSG(Long.parseLong(ids[x]));
       studyGroups.add(sg);
     }
-
     return studyGroups;
+  }
+
+  public Page<StudyGroup> getStudyGroupPage(int page, int listSize) {
+    return StudyGroup.getPage(courseLevel, page, listSize);
   }
 
   public String getCourse() {

@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.List;
+import com.avaje.ebean.Page;
 import models.ClassLevel;
 import models.Course;
 import models.Misc;
@@ -23,9 +24,9 @@ public class StudyGroups extends Controller {
     return ok(ListStudyGroup.render(course.toUpperCase() + "- list of Study Groups", courseName, classes));
   }
 
-  public static Result viewClassStudyGroup(String classLevel) {
+  public static Result viewClassStudyGroup(String classLevel, int page) {
     ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
-    List<StudyGroup> sg = cl.getStudyGroupAsList();
+    Page<StudyGroup> sg = cl.getStudyGroupPage(page, 10);
     return ok(StudyGroupsForClass.render(Misc.unSlugify(classLevel), cl, sg));
   }
 

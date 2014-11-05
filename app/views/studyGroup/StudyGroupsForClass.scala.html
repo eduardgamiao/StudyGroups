@@ -1,27 +1,74 @@
-@(title: String, cl: models.ClassLevel, sg: List[models.StudyGroup])
+@(title: String, cl: models.ClassLevel, currPage: com.avaje.ebean.Page[StudyGroup])
 
 @scripts = {
 	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/studyGroups.css")">
 }
 
-@Main(title, scripts) {
+@js = {
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/rowlink.js")"></script>
+}
 
-	<div class="title">
-		<h1>Study Groups for - @cl.getCourseLevel()</h1>
-	</div>
-	<hr>
+@Main(title, scripts, js) {
 
-	<div class="well">
-	<ul>
-	@for(classes <- sg) {
-		@if(classes != null) {
-			<li class="sub"><a href="@routes.StudyGroups.viewStudyGroup(classes.getId(), classes.getCourse())">@classes.getTopics()</a></li>
-		}
-		</br>
-	}
-	</ul>
-	</div>
+    <div class="title">
+        <h1>Study Groups for - @cl.getCourseLevel()</h1>
+    </div>
+    <hr>
+
+    <div class="well">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Topics</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Creator</th>
+        </tr>
+        </thead>
+        @for(sg <- currPage.getList()) {
+            @if(sg != null) {
+            <tbody data-link="row" class="rowlink">
+                <tr class="tBody">
+                    <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.classToString))">@sg.getTopics()</a></td>
+                    <td>@sg.getDay(), @sg.getDateString()</td>
+                    <td>@sg.getTimeString()</td>
+                    <td>@sg.getLocation()</td>
+                    <td>TO BE IMPLEMENTED</td>
+                </tr>
+            </tbody>
+            }
+        }
+    </table>
+        
+    <div id="pagination" class="pagination">
+        <ul class="pagination">
+            @if(currPage.hasPrev) {
+                <li class="prev">
+                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourseLevel, currPage.getPageIndex-1)">&laquo;</a>
+                </li>
+            } else {
+                <li class="prev disabled">
+                    <a>&laquo;</a>
+                </li>
+            }
+            @for(index <- 0 until currPage.getTotalPageCount()) {
+                <li class="current">
+                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourseLevel, index)">@(index+1)</a>
+                </li>
+            }
+            @if(currPage.hasNext) {
+                <li class="next">
+                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourseLevel, currPage.getPageIndex+1)">&raquo;</a>
+                </li>
+            } else {
+                <li class="next disabled">
+                    <a> &raquo;</a>
+                </li>
+            }
+        </ul>
+    </div>
     
-  <h5>Want to create a new study group?  <a href="@routes.StudyGroups.createSgForClass(Misc.slugify(cl.getCourseLevel))">Go Here</a></h5>
-
+    <h5>Want to create a new study group?  <a href="@routes.StudyGroups.createSgForClass(Misc.slugify(cl.getCourseLevel))">Go Here</a></h5>
+</div>
 }

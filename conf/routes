@@ -19,7 +19,7 @@ GET		/create/study-group/class/:class	controllers.StudyGroups.createSgForClass(c
 POST    /add/study-group      controllers.StudyGroups.addStudyGroup()
 GET     /view/:course/study-group/:id        controllers.StudyGroups.viewStudyGroup(id: Long, course: String)
 GET		/view/:course/study-group	controllers.StudyGroups.listStudyGroups(course: String)
-GET		/view/:class/study-group/list	controllers.StudyGroups.viewClassStudyGroup(class: String)
+GET		/view/:class/study-group/list/	controllers.StudyGroups.viewClassStudyGroup(class: String, page: Integer)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

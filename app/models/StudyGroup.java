@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import com.avaje.ebean.Page;
 import play.db.ebean.Model;
 
 @Entity
@@ -25,6 +26,9 @@ public class StudyGroup extends Model {
   private String location;
   private String topics;
 
+  // Keep, used for ordering
+  private String courseLevel;
+
   public StudyGroup(long id, String course, int level, String location, int month, int day, int year, int hour,
       int min, String topics) {
     this.id = id;
@@ -33,6 +37,7 @@ public class StudyGroup extends Model {
     this.location = location;
     this.meetTime = new DateTime(year, month, day, hour, min);
     this.topics = topics;
+    this.courseLevel = course + " " + level;
   }
 
   public String classToString() {
@@ -41,6 +46,11 @@ public class StudyGroup extends Model {
 
   public static Finder<Long, StudyGroup> find() {
     return new Finder<Long, StudyGroup>(Long.class, StudyGroup.class);
+  }
+
+  public static Page<StudyGroup> getPage(String courseLevel, int page, int listSize) {
+    return find().where().contains("courseLevel", courseLevel).orderBy("meetTime asc").findPagingList(listSize)
+        .setFetchAhead(false).getPage(page);
   }
 
   public static StudyGroup getSG(long id) {

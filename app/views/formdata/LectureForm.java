@@ -53,8 +53,8 @@ public class LectureForm {
     this.course = lecture.getCourse();
     this.level = lecture.getLevel();
     this.topic = lecture.getTopic();
-    this.videoId = lecture.getVideoId();
     this.description = lecture.getDescription();
+    this.videoId = lecture.getVideoId();
   }
   
   /**

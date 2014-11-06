@@ -25,7 +25,7 @@ public class Lectures extends Controller{
    */
   public static Result viewLecture(String id) {
     Course course = Course.find().byId(id);
-    List<Lecture> lectures = LectureDB.getLectures();
+    List<Lecture> lectures = LectureDB.getLectures(id);
     return ok(ListOfLectures.render(course.getId(), course, lectures));
   }
 }

@@ -13,10 +13,13 @@
 <hr>
 <br />
 <div class="well">
-  <p><b>Number of Videos: <span class="badge">@lectures.size()</span></b></p>
+
+  <p><b>Number of Videos: <span class="badge">@lectures.size()</span></b>
+    <a id="addLecture" class="btn btn-default btn-xs pull-right" href="#">
+    <span class="glyphicon glyphicon-pencil"></span> Add</a>
+  </p>
 
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-
     @for(lecture <- lectures) {
     <div class="panel panel-default">
       <div class="panel-heading" role="tab" id="@lecture.getLevel()">
@@ -42,7 +45,8 @@
         </div>
       </div>
     </div>
-
+    
+    <!-- delete modal -->
     <div id="delete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">

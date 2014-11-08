@@ -4,8 +4,10 @@ import java.util.List;
 import models.Course;
 import models.Lecture;
 import models.LectureDB;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.formdata.LectureForm;
 import views.html.lecture.ListOfLectures;
 
 /**
@@ -26,11 +28,41 @@ public class Lectures extends Controller{
   public static Result viewLecture(String id) {
     Course courseName = Course.find().byId(id);
     List<Lecture> lectures = LectureDB.getLectures(id);
-    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures));
+    LectureForm data = new LectureForm();
+    Form<LectureForm> formData = Form.form(LectureForm.class).fill(data);
+    
+    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures, formData));
+  }
+  
+ 
+  /**
+   * Add lecture to course.
+   * 
+   * @param id
+   * 
+   * @return lecture list page
+   */
+  public static Result addLecture(String id) {
+    Course courseName = Course.find().byId(id);
+    List<Lecture> lectures = LectureDB.getLectures(id);
+    Form<LectureForm> formData = Form.form(LectureForm.class).bindFromRequest();
+    
+    if (formData.hasErrors()) {
+      flash("error", "Login credentials not valid.");
+      return badRequest(ListOfLectures.render(courseName.getId(), courseName, lectures, formData));
+    }
+    else {
+      LectureForm data = formData.get();
+      LectureDB.addLecture(data); 
+      
+      return redirect(routes.Lectures.viewLecture(courseName.getId()));
+    }
   }
 
   /**
    * Delete lecture from repository
+   * 
+   * Issue: Only deletes from the top of the list. -AW
    * 
    * @param course
    * @param level
@@ -40,10 +72,9 @@ public class Lectures extends Controller{
    */
   public static Result deleteLecture(String id, String course, String level, String videoId) {
     Course courseName = Course.find().byId(id);
-    List<Lecture> lectures = LectureDB.getLectures(id);
     Lecture lecture = LectureDB.getLecture(course, level, videoId);
     LectureDB.deleteLecture(lecture); 
     
-    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures));
+    return redirect(routes.Lectures.viewLecture(courseName.getId()));
   }
 }

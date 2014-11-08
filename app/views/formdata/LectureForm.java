@@ -31,7 +31,7 @@ public class LectureForm {
   @Constraints.Required(message = "A topic(title) is requried.")
   public String topic;
   
-  @Constraints.Required(message = "A YouTube's 11 character ID is required.")
+  @Constraints.Required(message = "YouTube's 11 character ID is required.")
   public String videoId;
   
   public String description;

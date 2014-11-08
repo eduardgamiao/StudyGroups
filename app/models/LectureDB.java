@@ -42,18 +42,6 @@ public class LectureDB {
    * @param level level, e.g. 311
    * @param videoId YouTube video ID
    */
-  public static void deleteLecture(String course, String level, String videoId) {
-    Lecture.find().where().and(Expr.and(Expr.eq("course", course), Expr.eq("level", level)), 
-        Expr.eq("videoId", videoId)).findUnique().delete();
-  }
-  
-  /**
-   * Delete a lecture from database with matching course, level, and videoId.
-   * 
-   * @param course course, e.g. ICS
-   * @param level level, e.g. 311
-   * @param videoId YouTube video ID
-   */
   public static void deleteLecture(Lecture lecture) {
     Lecture.find().where().and(Expr.and(Expr.eq("course", lecture.getCourse()), Expr.eq("level", lecture.getLevel())), 
         Expr.eq("videoId", lecture.getVideoId())).findUnique().delete();

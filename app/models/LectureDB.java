@@ -21,12 +21,12 @@ public class LectureDB {
    */
   public static void addLecture(LectureForm data) {
     if (!isRepeatVideo(data.course, data.level, data.videoId)) {
-      Lecture lecture = new Lecture(data.course, data.level, data.topic, data.description, data.videoId);
+      Lecture lecture = new Lecture(data.course.toUpperCase(), data.level, data.topic, data.description, data.videoId);
       lecture.save();
     }
     else {
-      Lecture lecture = getLecture(data.course, data.level, data.videoId);
-      lecture.setCourse(data.course);
+      Lecture lecture = getLecture(data.course.toUpperCase(), data.level, data.videoId);
+      lecture.setCourse(data.course.toUpperCase());
       lecture.setLevel(data.level);
       lecture.setTopic(data.topic);
       lecture.setDescription(data.description);

@@ -30,8 +30,8 @@
     <div class="panel panel-default">
       <div class="panel-heading" role="tab" id="@lecture.getLevel()">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true" aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic() </a>
-          <div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div>
+          <a class="sub btn-block" data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true" aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic()
+          <div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div></a>
         </h4>
       </div>
       <div id="@lecture.getVideoId()" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@lecture.getVideoId()">
@@ -108,8 +108,8 @@
                   
             @text(lectureForm("videoId"),
                   label = "Video ID",
-                  placeholder = "v1ghdc_hwMI",
-                  help = "11 character code found after: https://www.youtube.com/watch?v=***********")
+                  placeholder = "http://www.youtube.com/watch?v=v1ghdc_hwMI",
+                  help = "The YouTube URL of the video")
             
                      
         </div>

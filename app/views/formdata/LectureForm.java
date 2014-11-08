@@ -21,29 +21,28 @@ public class LectureForm {
   @Id
   @GeneratedValue
   public long id;
-  
+
   @Constraints.Required(message = "A course is required.")
   public String course;
 
   @Constraints.Required(message = "A level is required.")
   public String level;
-  
+
   @Constraints.Required(message = "A topic(title) is requried.")
   public String topic;
-  
+
   @Constraints.Required(message = "YouTube's 11 character ID is required.")
   public String videoId;
-  
+
   public String description;
-  
-  
+
   /**
    * Empty constructor.
    */
   public LectureForm() {
-    
+
   }
-  
+
   /**
    * Creates LectureForm data for an existing lecture.
    * 
@@ -54,9 +53,11 @@ public class LectureForm {
     this.level = lecture.getLevel();
     this.topic = lecture.getTopic();
     this.description = lecture.getDescription();
-    this.videoId = lecture.getVideoId();
+    // this.videoId = lecture.getVideoId();
+    this.videoId =
+        lecture.getVideoId().substring(lecture.getVideoId().length() - 11, lecture.getVideoId().length());
   }
-  
+
   /**
    * Creates new LectureForm data
    * 
@@ -71,13 +72,13 @@ public class LectureForm {
     this.level = level;
     this.topic = topic;
     this.description = description;
-    this.videoId = videoId;
+    this.videoId = videoId.substring(videoId.length() - 11, videoId.length());
   }
-  
+
   public long getId() {
     return id;
   }
-  
+
   /**
    * Checks if all form fields are valid.
    * 
@@ -85,26 +86,26 @@ public class LectureForm {
    */
   public List<ValidationError> validate() {
     List<ValidationError> errors = new ArrayList<>();
-    
+
     if (course == null || course.length() == 0) {
       errors.add(new ValidationError("course", "A course(e.g. 'ICS' is required."));
     }
-    
+
     if (level == null || level.length() == 0) {
       errors.add(new ValidationError("level", "A level(e.g. '311' is required."));
     }
-    
+
     if (topic == null || topic.length() == 0) {
       errors.add(new ValidationError("topic", "A topic(title) is required."));
     }
-    
-    if (videoId.length() != VIDEO_ID_LENGTH) {
-      errors.add(new ValidationError("videoId", "The Video Id needs to be 11 characters long."));
-    }
-    
+
+   // if (videoId.length() != VIDEO_ID_LENGTH) {
+   //   errors.add(new ValidationError("videoId", "The Video Id needs to be 11 characters long."));
+   // }
+
     if (LectureDB.isRepeatVideo(course, level, videoId)) {
-      errors.add(new ValidationError("videoId", "Video with ID: " + videoId + " already exists for course: "
-                                                   + course + " " + level + "."));
+      errors.add(new ValidationError("videoId", "Video with ID: " + videoId + " already exists for course: " + course
+          + " " + level + "."));
     }
     return errors.isEmpty() ? null : errors;
   }

@@ -24,8 +24,26 @@ public class Lectures extends Controller{
    * @return the lecture list page.
    */
   public static Result viewLecture(String id) {
-    Course course = Course.find().byId(id);
+    Course courseName = Course.find().byId(id);
     List<Lecture> lectures = LectureDB.getLectures(id);
-    return ok(ListOfLectures.render(course.getId(), course, lectures));
+    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures));
+  }
+
+  /**
+   * Delete lecture from repository
+   * 
+   * @param course
+   * @param level
+   * @param videoId
+   * 
+   * @return the lecture list page.
+   */
+  public static Result deleteLecture(String id, String course, String level, String videoId) {
+    Course courseName = Course.find().byId(id);
+    List<Lecture> lectures = LectureDB.getLectures(id);
+    Lecture lecture = LectureDB.getLecture(course, level, videoId);
+    LectureDB.deleteLecture(lecture); 
+    
+    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures));
   }
 }

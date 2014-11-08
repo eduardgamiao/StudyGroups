@@ -48,6 +48,18 @@ public class LectureDB {
   }
   
   /**
+   * Delete a lecture from database with matching course, level, and videoId.
+   * 
+   * @param course course, e.g. ICS
+   * @param level level, e.g. 311
+   * @param videoId YouTube video ID
+   */
+  public static void deleteLecture(Lecture lecture) {
+    Lecture.find().where().and(Expr.and(Expr.eq("course", lecture.getCourse()), Expr.eq("level", lecture.getLevel())), 
+        Expr.eq("videoId", lecture.getVideoId())).findUnique().delete();
+  }
+  
+  /**
    * Return a lecture video associated with given course, level, and videoId.
    * 
    * @param course course, e.g. ICS

@@ -14,9 +14,12 @@
 <br />
 <div class="well">
 
-  <p><b>Number of Videos: <span class="badge">@lectures.size()</span></b>
-    <a id="addLecture" class="btn btn-default btn-xs pull-right" href="#addLecture">
-    <span class="glyphicon glyphicon-pencil"></span> Add</a>
+  <p>
+    <b>Number of Videos: <span class="badge">@lectures.size()</span></b>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#add">
+      <span class="glyphicon glyphicon-pencil"></span> Add
+    </button>
   </p>
 
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -24,28 +27,25 @@
     <div class="panel panel-default">
       <div class="panel-heading" role="tab" id="@lecture.getLevel()">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true"
-            aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic() </a>
-          <div class="pull-right">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-          </div>
+          <a data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true" aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic() </a>
+          <div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div>
         </h4>
       </div>
       <div id="@lecture.getVideoId()" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@lecture.getVideoId()">
         <div class="panel-body">
-          <p><b>Video: </b></p>
+          <p>
+            <b>Video: </b>
+          </p>
           <iframe width="560" height="315" src="http://www.youtube.com/embed/@lecture.getVideoId()" frameborder="0" allowfullscreen></iframe>
           <p><b>Description: </b></p>
           @lecture.getDescription() 
-          <br><br>
-          <a id="editLecture" class="btn btn-warning btn-xs" href="#">
-          <span class="glyphicon glyphicon-edit"></span> Edit</a> 
-          <a id="deleteLecture" data-toggle="modal" href="#delete" class="btn btn-danger btn-xs pull-right">
-          <span class="glyphicon glyphicon-trash"></span> Delete</a>
+          <br> <br> 
+          <a id="editLecture" class="btn btn-warning btn-xs" href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
+          <a id="deleteLecture" data-toggle="modal" href="#delete" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</a>
         </div>
       </div>
     </div>
-    
+
     <!-- delete modal -->
     <div id="delete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -62,12 +62,32 @@
           <div class="modal-footer">
             <button id="modalcancel" type="button" class="btn btn-default" data-dismiss="modal">No, cancel.</button>
             <a id="modaldelete" type="button" class="btn btn-danger" href="#">
-              <span class="glyphicon glyphicon-trash"></span> Yes, Delete.
-            </a>
+            <span class="glyphicon glyphicon-trash"></span> Yes, Delete.</a>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <!-- add modal -->
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Add Lecture for @course.getId()</h4>
+          </div>
+          <div class="modal-body">
+            form here
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <a id="modalAdd" type="button" class="btn btn-success" href="#">Add Lecture</a>
+          </div>
+        </div>
+      </div>
+    </div>
     }
   </div>
 

@@ -23,6 +23,7 @@ public class Lecture extends Model {
   private String topic;
   private String description;
   private String videoId;
+  private String uniqueId;
 
   /**
    * Empty constructor.
@@ -45,6 +46,7 @@ public class Lecture extends Model {
     this.setTopic(topic);
     this.setDescription(description);
     this.setVideoId(videoId.substring(videoId.length() - 11, videoId.length()));
+    this.setUniqueId(course.concat(level.concat(videoId.substring(videoId.length() - 11, videoId.length()))));
   }
 
   /**
@@ -124,6 +126,20 @@ public class Lecture extends Model {
    */
   public void setLevel(String level) {
     this.level = level;
+  }
+
+  /**
+   * @return the uniqueId
+   */
+  public String getUniqueId() {
+    return uniqueId;
+  }
+
+  /**
+   * @param uniqueId the uniqueId to set
+   */
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
 }

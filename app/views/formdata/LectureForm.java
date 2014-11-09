@@ -16,7 +16,7 @@ import play.data.validation.ValidationError;
  *
  */
 public class LectureForm {
-  private static final Integer VIDEO_ID_LENGTH = 11;
+  //private static final Integer VIDEO_ID_LENGTH = 11;
 
   @Id
   @GeneratedValue
@@ -35,6 +35,8 @@ public class LectureForm {
   public String videoId;
 
   public String description;
+  
+  public String uniqueId;
 
   /**
    * Empty constructor.
@@ -56,6 +58,8 @@ public class LectureForm {
     // this.videoId = lecture.getVideoId();
     this.videoId =
         lecture.getVideoId().substring(lecture.getVideoId().length() - 11, lecture.getVideoId().length());
+    this.uniqueId = 
+        lecture.getCourse().concat(lecture.getLevel().concat(lecture.getVideoId().substring(lecture.getVideoId().length() - 11, lecture.getVideoId().length())));
   }
 
   /**
@@ -67,12 +71,13 @@ public class LectureForm {
    * @param description optional description of video.
    * @param videoId YouTube video ID
    */
-  public LectureForm(String course, String level, String topic, String description, String videoId) {
+  public LectureForm(String course, String level, String topic, String description, String videoId, String uniqueId) {
     this.course = course;
     this.level = level;
     this.topic = topic;
     this.description = description;
     this.videoId = videoId.substring(videoId.length() - 11, videoId.length());
+    this.uniqueId = course.concat(level.concat(videoId.substring(videoId.length() - 11, videoId.length())));
   }
 
   public long getId() {
@@ -103,7 +108,7 @@ public class LectureForm {
    //   errors.add(new ValidationError("videoId", "The Video Id needs to be 11 characters long."));
    // }
 
-    if (LectureDB.isRepeatVideo(course, level, videoId)) {
+    if (LectureDB.isRepeatVideo(uniqueId)) {
       errors.add(new ValidationError("videoId", "Video with ID: " + videoId + " already exists for course: " + course
           + " " + level + "."));
     }

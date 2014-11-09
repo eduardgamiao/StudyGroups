@@ -25,6 +25,7 @@ create table lecture (
   topic                     varchar(255),
   description               varchar(255),
   video_id                  varchar(255),
+  unique_id                 varchar(255),
   constraint pk_lecture primary key (id))
 ;
 

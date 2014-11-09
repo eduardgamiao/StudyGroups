@@ -1,7 +1,6 @@
 package models;
 
 import java.util.List;
-import com.avaje.ebean.Expr;
 import views.formdata.LectureForm;
 
 /**
@@ -20,17 +19,18 @@ public class LectureDB {
    * @param data Lecture data
    */
   public static void addLecture(LectureForm data) {
-    if (!isRepeatVideo(data.course, data.level, data.videoId)) {
+    if (!isRepeatVideo(data.uniqueId)) {
       Lecture lecture = new Lecture(data.course.toUpperCase(), data.level, data.topic, data.description, data.videoId);
       lecture.save();
     }
     else {
-      Lecture lecture = getLecture(data.course.toUpperCase(), data.level, data.videoId);
+      Lecture lecture = getLecture(data.uniqueId);
       lecture.setCourse(data.course.toUpperCase());
       lecture.setLevel(data.level);
       lecture.setTopic(data.topic);
       lecture.setDescription(data.description);
       lecture.setVideoId(data.videoId);
+      lecture.setUniqueId(data.uniqueId);
       lecture.save();
     }
   }
@@ -43,8 +43,7 @@ public class LectureDB {
    * @param videoId YouTube video ID
    */
   public static void deleteLecture(Lecture lecture) {
-    Lecture.find().where().and(Expr.and(Expr.eq("course", lecture.getCourse()), Expr.eq("level", lecture.getLevel())), 
-        Expr.eq("videoId", lecture.getVideoId())).findUnique().delete();
+    Lecture.find().where().eq("uniqueId", lecture.getUniqueId()).findUnique().delete();
   }
   
   /**
@@ -56,9 +55,8 @@ public class LectureDB {
    * 
    * @return The retrieved lecture.
    */
-  public static Lecture getLecture(String course, String level, String videoId) {
-    return Lecture.find().where().and(Expr.and(Expr.eq("course", course), Expr.eq("level", level)), 
-        Expr.eq("videoId", videoId)).findUnique();
+  public static Lecture getLecture(String uniqueId) {
+    return Lecture.find().where().eq("uniqueId", uniqueId).findUnique();
   }
   
   /**
@@ -79,8 +77,7 @@ public class LectureDB {
    * 
    * @return true if it already exist, false otherwise.
    */
-  public static boolean isRepeatVideo(String course, String level, String videoId) {
-    return Lecture.find().where().and(Expr.and(Expr.eq("course", course), Expr.eq("level", level)), 
-        Expr.eq("videoId", videoId)).findUnique() != null;
+  public static boolean isRepeatVideo(String uniqueId) {
+    return Lecture.find().where().eq("uniqueId", uniqueId).findUnique() != null;
   }
 }

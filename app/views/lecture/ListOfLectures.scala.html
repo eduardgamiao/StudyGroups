@@ -75,7 +75,7 @@
           <div class="modal-footer">
             <button id="modalcancel" type="button" class="btn btn-default" data-dismiss="modal">No, cancel.</button>
             <a id="modaldelete" type="button" class="btn btn-danger" 
-                href="@routes.Lectures.deleteLecture(course.getId(), lecture.getCourse(), lecture.getLevel(), lecture.getVideoId())">
+                href="@routes.Lectures.deleteLecture(course.getId(), lecture.getUniqueId())">
             <span class="glyphicon glyphicon-trash"></span> Yes, Delete.</a>
           </div>
         </div><!-- /.modal-content -->

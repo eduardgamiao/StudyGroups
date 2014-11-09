@@ -11,7 +11,7 @@ GET     /course/:id                 controllers.Courses.viewCourse(id: String)
 
 # Lecture
 GET     /lecture/:id                controllers.Lectures.viewLecture(id: String)
-GET     /lecture/:id/delete         controllers.Lectures.deleteLecture(id: String, course: String, level: String, videoId: String)
+GET     /lecture/:id/delete         controllers.Lectures.deleteLecture(id: String, uniqueId: String)
 POST    /lecture/:id                controllers.Lectures.addLecture(id: String)
 
 # Study Group

@@ -70,9 +70,9 @@ public class Lectures extends Controller{
    * 
    * @return the lecture list page.
    */
-  public static Result deleteLecture(String id, String course, String level, String videoId) {
+  public static Result deleteLecture(String id, String uniqueId) {
     Course courseName = Course.find().byId(id);
-    Lecture lecture = LectureDB.getLecture(course, level, videoId);
+    Lecture lecture = LectureDB.getLecture(uniqueId);
     LectureDB.deleteLecture(lecture); 
     
     return redirect(routes.Lectures.viewLecture(courseName.getId()));

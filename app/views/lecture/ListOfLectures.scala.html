@@ -1,13 +1,23 @@
-@(title: String, course: models.Course, lectures: List[models.Lecture], lectureForm: Form[views.formdata.LectureForm]) 
+@(title: String, course: models.Course, lectures: List[models.Lecture], lectureForm: Form[views.formdata.LectureForm], showModal: Boolean) 
 
 @import helper._
 @import bootstrap3._
 
 @scripts = {
 <link rel="stylesheet" href="@routes.Assets.at("stylesheets/lectures.css")">
-} 
+}
 
-@Main(title, scripts) {
+@js = {
+    @if(showModal == true) {
+        <script type="text/javascript">
+        $(window).load(function() {
+             $('#add').modal('show');
+        });
+        </script>
+    }
+}
+
+@Main(title, scripts, js) {
 
 <div class="title">
   <h1>@course.getCourseName() (@course.getId()) - Lectures</h1>
@@ -96,7 +106,7 @@
                   placeholder = "311",
                   help = "")
             
-            @text(lectureForm("Topic"),
+            @text(lectureForm("topic"),
                   label = "Topic",
                   placeholder = "Topic 10A: Quicksort",
                   help = "")

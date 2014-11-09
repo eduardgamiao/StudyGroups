@@ -31,7 +31,7 @@ public class Lectures extends Controller{
     LectureForm data = new LectureForm();
     Form<LectureForm> formData = Form.form(LectureForm.class).fill(data);
     
-    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures, formData));
+    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures, formData, false));
   }
   
  
@@ -49,7 +49,7 @@ public class Lectures extends Controller{
     
     if (formData.hasErrors()) {
       flash("error", "Login credentials not valid.");
-      return badRequest(ListOfLectures.render(courseName.getId(), courseName, lectures, formData));
+      return badRequest(ListOfLectures.render(courseName.getId(), courseName, lectures, formData, true));
     }
     else {
       LectureForm data = formData.get();

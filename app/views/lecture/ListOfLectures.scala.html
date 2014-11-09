@@ -15,6 +15,15 @@
         });
         </script>
     }
+    
+    <script type="text/javascript">
+    $(document).on("click", ".open-delete", function() {
+        var url = $(this).attr('data-link');
+        $(".modal-footer #modaldelete").attr('href', url);
+    });
+    </script>
+    
+  
 }
 
 @Main(title, scripts, js) {
@@ -54,10 +63,12 @@
           @lecture.getDescription() 
           <br> <br> 
           <a id="editLecture" class="btn btn-warning btn-xs" href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
-          <a id="deleteLecture" data-toggle="modal" href="#delete" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+          <a id="deleteLecture" data-toggle="modal" href="#delete" class="open-delete btn btn-danger btn-xs pull-right" data-link="@routes.Lectures.deleteLecture(course.getId(), lecture.getCourse(), lecture.getLevel(), lecture.getVideoId())"><span class="glyphicon glyphicon-trash"></span> Delete</a>
         </div>
       </div>
     </div>
+    }
+  </div>
 
     <!-- delete modal -->
     <div id="delete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -75,14 +86,12 @@
           <div class="modal-footer">
             <button id="modalcancel" type="button" class="btn btn-default" data-dismiss="modal">No, cancel.</button>
             <a id="modaldelete" type="button" class="btn btn-danger" 
-                href="@routes.Lectures.deleteLecture(course.getId(), lecture.getCourse(), lecture.getLevel(), lecture.getVideoId())">
+                href="">
             <span class="glyphicon glyphicon-trash"></span> Yes, Delete.</a>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    }
-  </div>
   
   <!-- add modal -->
   @form(routes.Lectures.addLecture(course.getId()), 'class -> "form-horizontal") {

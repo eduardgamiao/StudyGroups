@@ -16,7 +16,7 @@ import play.data.validation.ValidationError;
  *
  */
 public class LectureForm {
-  private static final Integer VIDEO_ID_LENGTH = 11;
+  //private static final Integer VIDEO_ID_LENGTH = 11;
 
   @Id
   @GeneratedValue

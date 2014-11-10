@@ -27,15 +27,15 @@ public class Global extends GlobalSettings {
     }
 
     LectureDB.addLecture(new LectureForm("ICS", "311", "Topic 03 A: Asymtotic Notations", 
-        "Introduces asymptotic concepts and big-O notation.", "y86z2OrIYQQ"));
+        "Introduces asymptotic concepts and big-O notation.", "https://www.youtube.com/watch?v=y86z2OrIYQQ"));
     
     LectureDB.addLecture(new LectureForm("ICS", "311", "Topic 06 C: Hash Functions", 
-        "Examples of Hash Functions and Universal Hashing", "jW4wCfz3DwE"));
+        "Examples of Hash Functions and Universal Hashing", "https://www.youtube.com/watch?v=jW4wCfz3DwE"));
     
     LectureDB.addLecture(new LectureForm("KOR", "101", "How to Introduce Yourself in Korean",
         "In Korea, manners are important, and this step-by-step video teaches you some of the basics you need to"
         + " be polite while speaking Korean. A native Korean teacher will explain the simple phrases necessary.",
-        "x9_BmcUk_Xs"));
+        "https://www.youtube.com/watch?v=x9_BmcUk_Xs"));
   }
 
   public Promise<SimpleResult> onHandlerNotFound(RequestHeader request) {

@@ -27,3 +27,4 @@ dist
 /RUNNING_PID
 /.settings
 /.target
+*.checkstyle

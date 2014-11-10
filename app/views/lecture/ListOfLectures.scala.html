@@ -8,7 +8,7 @@
 }
 
 @js = {
-    @if(showModal == true) {
+    @if(showModal) {
         <script type="text/javascript">
         $(window).load(function() {
              $('#add').modal('show');
@@ -22,8 +22,6 @@
         $(".modal-footer #modaldelete").attr('href', url);
     });
     </script>
-    
-  
 }
 
 @Main(title, scripts, js) {

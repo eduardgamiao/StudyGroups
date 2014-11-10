@@ -9,6 +9,12 @@ import models.Course;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 
+/**
+ * Backing class for the study group form.
+ * 
+ * @author Alvin Prieto
+ *
+ */
 public class StudyGroupForm {
 
   @Id
@@ -46,22 +52,46 @@ public class StudyGroupForm {
   public int intMonth;
   public int intDay;
 
+  /**
+   * Returns an empty study group form.
+   */
   public StudyGroupForm() {
   }
 
+  /**
+   * Returns a study group form with the course info.
+   * 
+   * @param course the course
+   */
   public StudyGroupForm(String course) {
     this.course = course;
   }
 
+  /**
+   * Returns the study group form with course and level info.
+   * 
+   * @param course the course
+   * @param level the level
+   */
   public StudyGroupForm(String course, String level) {
     this.course = course;
     this.level = level;
   }
 
+  /**
+   * Returns the id of this study group form.
+   * 
+   * @return the id
+   */
   public long getId() {
     return id;
   }
 
+  /**
+   * Validation method.
+   * 
+   * @return a list containing any validation errors.
+   */
   public List<ValidationError> validate() {
 
     List<ValidationError> errors = new ArrayList<>();
@@ -176,6 +206,12 @@ public class StudyGroupForm {
 
   }
 
+  /**
+   * Checks to see if the given year is a leap year.
+   * 
+   * @param year the year
+   * @return true if year is leap year, false if not.
+   */
   private static boolean isLeapYear(int year) {
 
     if (year % 4 == 0) {

@@ -16,32 +16,70 @@ import views.html.studyGroup.ListStudyGroup;
 import views.html.studyGroup.StudyGroupsForClass;
 import views.html.studyGroup.ViewStudyGroup;
 
+/**
+ * The controller for the study groups.
+ * 
+ * @author Alvin Prieto
+ *
+ */
 public class StudyGroups extends Controller {
 
+  private static final int AMOUNT_OF_ENTRIES = 10;
+
+  /**
+   * Returns a page containing all the study groups for a course, i.e. ICS
+   * 
+   * @param course the course
+   * @return the page with the study groups
+   */
   public static Result listStudyGroups(String course) {
     Course courseName = Course.getCourse(course);
     List<ClassLevel> classes = courseName.getClassesAsList();
     return ok(ListStudyGroup.render(course.toUpperCase() + "- list of Study Groups", courseName, classes));
   }
 
+  /**
+   * Returns a page containing all the study groups for a specific class, i.e. ICS 311
+   * 
+   * @param classLevel the class level
+   * @param page the current page number
+   * @return the page containing the study groups for a class
+   */
   public static Result viewClassStudyGroup(String classLevel, int page) {
     ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
-    Page<StudyGroup> sg = cl.getStudyGroupPage(page, 10);
+    Page<StudyGroup> sg = cl.getStudyGroupPage(page, AMOUNT_OF_ENTRIES);
     return ok(StudyGroupsForClass.render(Misc.unSlugify(classLevel), cl, sg));
   }
 
+  /**
+   * Returns an empty form to create a study group.
+   * 
+   * @return the create study group page.
+   */
   public static Result createStudyGroup() {
     StudyGroupForm sgf = new StudyGroupForm();
     Form<StudyGroupForm> sgForm = Form.form(StudyGroupForm.class).fill(sgf);
     return ok(CreateStudyGroup.render("Create Study Group", sgForm));
   }
 
+  /**
+   * Returns a create study group form with the course field filled out.
+   * 
+   * @param courseName the courseName, ie ICS
+   * @return a create study group form.
+   */
   public static Result createSgForCourse(String courseName) {
     StudyGroupForm sgf = new StudyGroupForm(Misc.unSlugify(courseName));
     Form<StudyGroupForm> sgForm = Form.form(StudyGroupForm.class).fill(sgf);
     return ok(CreateStudyGroup.render("Create Study Group", sgForm));
   }
 
+  /**
+   * Returns a create study group form with the course, ie ICS and level ie 465 already filled out.
+   * 
+   * @param classLevel the classLevel
+   * @return a page with the create study group form.
+   */
   public static Result createSgForClass(String classLevel) {
     ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
     StudyGroupForm sgf = new StudyGroupForm(cl.getCourse(), Integer.toString(cl.getLevel()));
@@ -49,6 +87,11 @@ public class StudyGroups extends Controller {
     return ok(CreateStudyGroup.render("Create Study Group", sgForm));
   }
 
+  /**
+   * Adds a study group to a certain class level.
+   * 
+   * @return the page belonging to the added study group.
+   */
   public static Result addStudyGroup() {
 
     Form<StudyGroupForm> sgf = Form.form(StudyGroupForm.class).bindFromRequest();
@@ -86,6 +129,13 @@ public class StudyGroups extends Controller {
     }
   }
 
+  /**
+   * The page of a study group.
+   * 
+   * @param id the id of a study group
+   * @param courseId the id of a course
+   * @return the page of the study group
+   */
   public static Result viewStudyGroup(long id, String courseId) {
 
     StudyGroup sg = StudyGroup.getSG(id);

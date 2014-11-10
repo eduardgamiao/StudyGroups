@@ -1,5 +1,6 @@
 package models;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import org.joda.time.DateTime;
@@ -88,6 +89,16 @@ public class StudyGroup extends Model {
   public static Page<StudyGroup> getPage(String courseLevel, int page, int listSize) {
     return find().where().contains("courseLevel", courseLevel).orderBy("meetTime asc").findPagingList(listSize)
         .setFetchAhead(false).getPage(page);
+  }
+
+  /**
+   * Returns a list of study groups belonging to the given class level.
+   * 
+   * @param cl the class level
+   * @return study groups belonging to cl
+   */
+  public static List<StudyGroup> getStudyGroupsForClass(ClassLevel cl) {
+    return find().where().contains("courseLevel", cl.toString()).findList();
   }
 
   /**

@@ -7,14 +7,12 @@ create table class_level (
   course_level              varchar(255) not null,
   course                    varchar(255),
   level                     integer,
-  study_group_id            varchar(255),
   constraint pk_class_level primary key (course_level))
 ;
 
 create table course (
   id                        varchar(255) not null,
   course_name               varchar(255),
-  classes                   varchar(255),
   constraint pk_course primary key (id))
 ;
 

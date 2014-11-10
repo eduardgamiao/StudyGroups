@@ -1,6 +1,5 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,7 +26,6 @@ public class ClassLevel extends Model {
 
   private String course;
   private int level;
-  private String studyGroupId = "";
 
   /**
    * Constructor.
@@ -66,43 +64,12 @@ public class ClassLevel extends Model {
   }
 
   /**
-   * Adds a study group's id this class level's list of study groups.
-   * 
-   * @param id the id
-   */
-  public void addStudyGroup(long id) {
-    if (!getStudyGroupId().contains(Long.toString(id))) {
-      StringBuilder sb = new StringBuilder(getStudyGroupId());
-      sb.append(id + "|");
-      this.setStudyGroupId(sb.toString());
-    }
-  }
-
-  /**
-   * Returns the study groups string.
-   * 
-   * @return a string containing all the ids of study groups belonging to this classlevel
-   */
-  public String getStudyGroups() {
-    return getStudyGroupId();
-  }
-
-  /**
    * Returns the StudyGroups of this class in a List.
    * 
    * @return List containing all of the studyGroups.
    */
   public List<StudyGroup> getStudyGroupAsList() {
-
-    List<StudyGroup> studyGroups = new ArrayList<>();
-
-    String[] ids = getStudyGroupId().split("\\|");
-
-    for (int x = 0; x < ids.length; x++) {
-      StudyGroup sg = StudyGroup.getSG(Long.parseLong(ids[x]));
-      studyGroups.add(sg);
-    }
-    return studyGroups;
+    return StudyGroup.getStudyGroupsForClass(this);
   }
 
   /**
@@ -114,6 +81,16 @@ public class ClassLevel extends Model {
    */
   public Page<StudyGroup> getStudyGroupPage(int page, int listSize) {
     return StudyGroup.getPage(getCourseLevel(), page, listSize);
+  }
+
+  /**
+   * Returns a list of the different classes for the course.
+   * 
+   * @param id the id of the course
+   * @return list of different classes
+   */
+  public static List<ClassLevel> getClassesForCourse(String id) {
+    return find().where().eq("course", id).findList();
   }
 
   /**
@@ -156,20 +133,6 @@ public class ClassLevel extends Model {
    */
   public void setLevel(int level) {
     this.level = level;
-  }
-
-  /**
-   * @return the studyGroupId
-   */
-  public String getStudyGroupId() {
-    return studyGroupId;
-  }
-
-  /**
-   * @param studyGroupId the studyGroupId to set
-   */
-  public void setStudyGroupId(String studyGroupId) {
-    this.studyGroupId = studyGroupId;
   }
 
 }

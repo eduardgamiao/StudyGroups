@@ -1,6 +1,5 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +22,6 @@ public class Course extends Model {
   @Id
   private String id;
   private String courseName;
-  private String classes = "";
 
   /**
    * No args constructor.
@@ -98,43 +96,12 @@ public class Course extends Model {
   }
 
   /**
-   * Adds a class level to the course.
-   * 
-   * @param cl the class level
-   */
-  public void addClass(ClassLevel cl) {
-    if (!classes.contains(cl.toString())) {
-      StringBuilder sb = new StringBuilder(classes);
-      sb.append(cl.toString() + "|");
-      classes = sb.toString();
-    }
-  }
-
-  /**
-   * Returns classes.
-   * 
-   * @return classes
-   */
-  public String getClasses() {
-    return classes;
-  }
-
-  /**
    * Returns the different classes as a List.
    * 
    * @return ClassLevel in a List
    */
   public List<ClassLevel> getClassesAsList() {
-    List<ClassLevel> classes = new ArrayList<>();
-
-    String[] cl = this.classes.split("\\|");
-
-    for (int x = 0; x < cl.length; x++) {
-      ClassLevel cLevel = ClassLevel.getCL(cl[x]);
-      classes.add(cLevel);
-    }
-
-    return classes;
+    return ClassLevel.getClassesForCourse(this.id);
   }
 
 }

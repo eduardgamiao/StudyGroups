@@ -1,4 +1,5 @@
-@(title: String, course: models.Course, lectures: List[models.Lecture], lectureForm: Form[views.formdata.LectureForm], showModal: Boolean) 
+@(title: String, course: models.Course, lectures: List[models.Lecture], lectureForm: Form[views.formdata.LectureForm],
+         showAddModal: Boolean) 
 
 @import helper._
 @import bootstrap3._
@@ -8,7 +9,7 @@
 }
 
 @js = {
-    @if(showModal) {
+    @if(showAddModal) {
         <script type="text/javascript">
         $(window).load(function() {
              $('#add').modal('show');
@@ -36,12 +37,22 @@
 
   <p>
     <b>Number of Videos: <span class="badge">@lectures.size()</span></b>
+    @if(!lectures.isEmpty()) {
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#add">
+    <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#add">
       <span class="glyphicon glyphicon-pencil"></span> Add
     </button>
+    }
   </p>
-
+  
+  @if(lectures.isEmpty()) {
+  <div class="noLectures">
+    <h3>Currently there are no lectures for this course...</h3>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
+      <span class="glyphicon glyphicon-pencil"></span> Add One!
+    </button>
+  </div>
+  }
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     @for(lecture <- lectures) {
     <div class="panel panel-default">
@@ -60,7 +71,8 @@
           <p><b>Description: </b></p>
           @lecture.getDescription() 
           <br> <br> 
-          <a id="editLecture" class="btn btn-warning btn-xs" href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
+          <!-- Temporary, unsure whether or not to keep it in. -AW -->
+          <!-- <a id="editLecture" class="btn btn-warning btn-xs" href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> -->
           <a id="deleteLecture" data-toggle="modal" href="#delete" class="open-delete btn btn-danger btn-xs pull-right" data-link="@routes.Lectures.deleteLecture(course.getId(), lecture.getCourse(), lecture.getLevel(), lecture.getVideoId())"><span class="glyphicon glyphicon-trash"></span> Delete</a>
         </div>
       </div>

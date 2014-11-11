@@ -11,6 +11,10 @@
 }
 
 .sub {
-    font-size: 24px;
-    padding: 1px;
+  font-size: 24px;
+  padding: 1px;
+}
+
+.noLectures {
+  text-align: center;
 }

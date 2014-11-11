@@ -1,1 +1,0 @@
-web: target/universal/stage/bin/StudyGroups -Dhttp.port=${PORT} -DapplyEvolutions.default=true

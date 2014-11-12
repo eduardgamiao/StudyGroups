@@ -13,6 +13,8 @@ GET     /courses/:id                 controllers.Courses.viewCourse(id: String)
 GET     /courses/:id/lecture                controllers.Lectures.viewLecture(id: String)
 GET     /courses/:id/lecture/delete         controllers.Lectures.deleteLecture(id: String, course: String, level: String, videoId: String)
 POST    /courses/:id/lecture/add            controllers.Lectures.addLecture(id: String)
+POST    /add/lecture                        controllers.Lectures.addNewLecture()
+GET     /create/lecture                     controllers.Lectures.createLecture()
 
 # Study Group
 GET     /create/study-group                             controllers.StudyGroups.createStudyGroup()

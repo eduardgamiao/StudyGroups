@@ -49,7 +49,7 @@ public class LectureForm {
    * @param lecture an existing lecture
    */
   public LectureForm(Lecture lecture) {
-    this.course = lecture.getCourse();
+    this.course = lecture.getCourse().toUpperCase();
     this.level = lecture.getLevel();
     this.topic = lecture.getTopic();
     this.description = lecture.getDescription();
@@ -68,7 +68,7 @@ public class LectureForm {
    * @param videoId YouTube video ID
    */
   public LectureForm(String course, String level, String topic, String description, String videoId) {
-    this.course = course;
+    this.course = course.toUpperCase();
     this.level = level;
     this.topic = topic;
     this.description = description;
@@ -77,6 +77,10 @@ public class LectureForm {
 
   public long getId() {
     return id;
+  }
+  
+  public String getCourse() {
+    return course;
   }
 
   /**

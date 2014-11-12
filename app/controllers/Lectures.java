@@ -11,6 +11,7 @@ import views.formdata.FilterLectureForm;
 import views.formdata.LectureForm;
 import views.formdata.LectureLevels;
 import views.html.lecture.ListOfLectures;
+import views.html.lecture.CreateLecture;
 
 /**
  * Implements the controller for Lectures.
@@ -66,6 +67,28 @@ public class Lectures extends Controller{
       return redirect(routes.Lectures.viewLecture(courseName.getId()));
     }
   }
+  
+  /**
+   * Adds a new lecture.  Used in CreateLecture.scala.html
+   * 
+   * @return lecture list page.
+   */
+  public static Result addNewLecture() {
+    
+    Form<LectureForm> formData = Form.form(LectureForm.class).bindFromRequest();
+    
+    if (formData.hasErrors()) {
+      return badRequest(CreateLecture.render("Create Lecture", formData));
+    }
+    else {
+      LectureForm data = formData.get();
+      LectureDB.addLecture(data); 
+      
+      Course courseName = Course.find().byId(data.getCourse().toUpperCase());
+      
+      return redirect(routes.Lectures.viewLecture(courseName.getId()));
+    }
+  }
 
   /**
    * Delete lecture from repository
@@ -84,5 +107,16 @@ public class Lectures extends Controller{
     LectureDB.deleteLecture(lecture); 
     
     return redirect(routes.Lectures.viewLecture(courseName.getId()));
+  }
+  
+  /**
+   * Returns the create lecture page.
+   * 
+   * @return the create lecture page.
+   */
+  public static Result createLecture() {
+    LectureForm lf = new LectureForm();
+    Form<LectureForm> lectureForm = Form.form(LectureForm.class).fill(lf);
+    return ok(CreateLecture.render("Create Lecture", lectureForm));
   }
 }

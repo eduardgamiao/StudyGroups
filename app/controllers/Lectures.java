@@ -27,7 +27,7 @@ public class Lectures extends Controller{
    */
   public static Result viewLecture(String id) {
     Course courseName = Course.find().byId(id.toUpperCase());
-    List<Lecture> lectures = LectureDB.getLectures(id);
+    List<Lecture> lectures = LectureDB.getLectures(id.toUpperCase());
     LectureForm data = new LectureForm();
     Form<LectureForm> formData = Form.form(LectureForm.class).fill(data);
     
@@ -43,8 +43,8 @@ public class Lectures extends Controller{
    * @return lecture list page
    */
   public static Result addLecture(String id) {
-    Course courseName = Course.find().byId(id);
-    List<Lecture> lectures = LectureDB.getLectures(id);
+    Course courseName = Course.find().byId(id.toUpperCase());
+    List<Lecture> lectures = LectureDB.getLectures(id.toUpperCase());
     Form<LectureForm> formData = Form.form(LectureForm.class).bindFromRequest();
     
     if (formData.hasErrors()) {
@@ -71,7 +71,7 @@ public class Lectures extends Controller{
    * @return the lecture list page.
    */
   public static Result deleteLecture(String id, String course, String level, String videoId) {
-    Course courseName = Course.find().byId(id);
+    Course courseName = Course.find().byId(id.toUpperCase());
     Lecture lecture = LectureDB.getLecture(course, level, videoId);
     LectureDB.deleteLecture(lecture); 
     

@@ -32,10 +32,18 @@ public class Global extends GlobalSettings {
     LectureDB.addLecture(new LectureForm("ICS", "311", "Topic 06 C: Hash Functions", 
         "Examples of Hash Functions and Universal Hashing", "https://www.youtube.com/watch?v=jW4wCfz3DwE"));
     
+    LectureDB.addLecture(new LectureForm("ICS", "314", "Introduction to ICS 314, Fall 2013", 
+        "introduction to software engineering. See http://ics314f13.wordpress.com",
+        "https://www.youtube.com/watch?v=H_Oc1x-XdYo"));
+    
     LectureDB.addLecture(new LectureForm("KOR", "101", "How to Introduce Yourself in Korean",
         "In Korea, manners are important, and this step-by-step video teaches you some of the basics you need to"
         + " be polite while speaking Korean. A native Korean teacher will explain the simple phrases necessary.",
         "https://www.youtube.com/watch?v=x9_BmcUk_Xs"));
+    
+    LectureDB.addLecture(new LectureForm("KOR", "201", "Intermediate Korean Practice 1", 
+        "Create complex sentence(s)", "https://www.youtube.com/watch?v=ZRJ5QKqstTM"));
+    
   }
 
   public Promise<SimpleResult> onHandlerNotFound(RequestHeader request) {

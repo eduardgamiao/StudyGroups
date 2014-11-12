@@ -1,5 +1,5 @@
 @(title: String, course: models.Course, lectures: List[models.Lecture], lectureForm: Form[views.formdata.LectureForm],
-         showAddModal: Boolean, lecturelevels: Map[String, Boolean]) 
+         showAddModal: Boolean, filterForm: Form[views.formdata.FilterLectureForm], lectureLevels: Map[String, Boolean]) 
 
 @import helper._
 @import bootstrap3._
@@ -35,15 +35,18 @@
 <br />
 <div class="well">
 
-  <p>
-    <b>Number of Videos: <span class="badge">@lectures.size()</span></b>
-    @if(!lectures.isEmpty()) {
+  <b class="count">Number of Videos: <span class="badge">@lectures.size()</span></b>
+  @if(!lectures.isEmpty()) {
+    @filterLectures(filterForm("level"),
+                    filterType = "Level",
+                    optionMap = lectureLevels,
+                    isMultiple = false)
+    <a id="filterLecture" type="button" class="btn btn-default" href="">Filter</a>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#add">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
       <span class="glyphicon glyphicon-pencil"></span> Add
     </button>
-    }
-  </p>
+  }
   
   @if(lectures.isEmpty()) {
   <div class="noLectures">
@@ -53,6 +56,7 @@
     </button>
   </div>
   }
+  
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     @for(lecture <- lectures) {
     <div class="panel panel-default">

@@ -41,11 +41,12 @@ public class StudyGroups extends Controller {
   /**
    * Returns a page containing all the study groups for a specific class, i.e. ICS 311
    * 
+   * @param course the course
    * @param classLevel the class level
    * @param page the current page number
    * @return the page containing the study groups for a class
    */
-  public static Result viewClassStudyGroup(String classLevel, int page) {
+  public static Result viewClassStudyGroup(String course, String classLevel, int page) {
     ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
     Page<StudyGroup> sg = cl.getStudyGroupPage(page, AMOUNT_OF_ENTRIES);
     return ok(StudyGroupsForClass.render(Misc.unSlugify(classLevel), cl, sg));
@@ -77,10 +78,11 @@ public class StudyGroups extends Controller {
   /**
    * Returns a create study group form with the course, ie ICS and level ie 465 already filled out.
    * 
+   * @param course the course
    * @param classLevel the classLevel
    * @return a page with the create study group form.
    */
-  public static Result createSgForClass(String classLevel) {
+  public static Result createSgForClass(String course, String classLevel) {
     ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
     StudyGroupForm sgf = new StudyGroupForm(cl.getCourse(), Integer.toString(cl.getLevel()));
     Form<StudyGroupForm> sgForm = Form.form(StudyGroupForm.class).fill(sgf);
@@ -118,7 +120,8 @@ public class StudyGroups extends Controller {
       }
       cl.save();
 
-      return redirect(routes.StudyGroups.viewStudyGroup(sg.getId(), Misc.slugify(sg.classToString())));
+      return redirect(routes.StudyGroups.viewStudyGroup(sg.getId(), Misc.slugify(sg.getCourse()),
+          Misc.slugify(sg.classToString())));
     }
   }
 
@@ -126,10 +129,11 @@ public class StudyGroups extends Controller {
    * The page of a study group.
    * 
    * @param id the id of a study group
-   * @param courseId the id of a course
+   * @param course the course
+   * @param classLevel the class
    * @return the page of the study group
    */
-  public static Result viewStudyGroup(long id, String courseId) {
+  public static Result viewStudyGroup(long id, String course, String classLevel) {
 
     StudyGroup sg = StudyGroup.getSG(id);
 

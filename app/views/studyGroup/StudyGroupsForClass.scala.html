@@ -30,7 +30,7 @@
             @if(sg != null) {
             <tbody data-link="row" class="rowlink">
                 <tr class="tBody">
-                    <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.classToString))">@sg.getTopics()</a></td>
+                    <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.getCourse), Misc.slugify(sg.classToString))">@sg.getTopics()</a></td>
                     <td>@sg.getDay(), @sg.getDateString()</td>
                     <td>@sg.getTimeString()</td>
                     <td>@sg.getLocation()</td>
@@ -45,7 +45,7 @@
         <ul class="pagination">
             @if(currPage.hasPrev) {
                 <li class="prev">
-                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourseLevel, currPage.getPageIndex-1)">&laquo;</a>
+                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourse, cl.getCourseLevel, currPage.getPageIndex-1)">&laquo;</a>
                 </li>
             } else {
                 <li class="prev disabled">
@@ -54,12 +54,12 @@
             }
             @for(index <- 0 until currPage.getTotalPageCount()) {
                 <li class="current">
-                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourseLevel, index)">@(index+1)</a>
+                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourse, cl.getCourseLevel, index)">@(index+1)</a>
                 </li>
             }
             @if(currPage.hasNext) {
                 <li class="next">
-                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourseLevel, currPage.getPageIndex+1)">&raquo;</a>
+                    <a href="@routes.StudyGroups.viewClassStudyGroup(cl.getCourse, cl.getCourseLevel, currPage.getPageIndex+1)">&raquo;</a>
                 </li>
             } else {
                 <li class="next disabled">
@@ -69,6 +69,6 @@
         </ul>
     </div>
     
-    <h5>Want to create a new study group?  <a href="@routes.StudyGroups.createSgForClass(Misc.slugify(cl.getCourseLevel))">Go Here</a></h5>
+    <h5>Want to create a new study group?  <a href="@routes.StudyGroups.createSgForClass(Misc.slugify(cl.getCourse), Misc.slugify(cl.getCourseLevel))">Go Here</a></h5>
 </div>
 }

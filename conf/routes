@@ -4,24 +4,24 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /list                       controllers.Application.listOfCourses()
+GET     /courses                    controllers.Application.listOfCourses()
 
 # Course
-GET     /course/:id                 controllers.Courses.viewCourse(id: String)
+GET     /courses/:id                 controllers.Courses.viewCourse(id: String)
 
 # Lecture
-GET     /lecture/:id                controllers.Lectures.viewLecture(id: String)
-GET     /lecture/:id/delete         controllers.Lectures.deleteLecture(id: String, course: String, level: String, videoId: String)
-POST    /lecture/:id                controllers.Lectures.addLecture(id: String)
+GET     /courses/:id/lecture                controllers.Lectures.viewLecture(id: String)
+GET     /courses/:id/lecture/delete         controllers.Lectures.deleteLecture(id: String, course: String, level: String, videoId: String)
+POST    /courses/:id/lecture/add            controllers.Lectures.addLecture(id: String)
 
 # Study Group
-GET     /create/study-group          controllers.StudyGroups.createStudyGroup()
-GET		/create/study-group/course/:course	controllers.StudyGroups.createSgForCourse(course: String)
-GET		/create/study-group/class/:class	controllers.StudyGroups.createSgForClass(class: String)
-POST    /add/study-group      controllers.StudyGroups.addStudyGroup()
-GET     /view/:course/study-group/:id        controllers.StudyGroups.viewStudyGroup(id: Long, course: String)
-GET		/view/:course/study-group	controllers.StudyGroups.listStudyGroups(course: String)
-GET		/view/:class/study-group/list/	controllers.StudyGroups.viewClassStudyGroup(class: String, page: Integer)
+GET     /create/study-group                             controllers.StudyGroups.createStudyGroup()
+GET		/courses/:course/study-group/create             controllers.StudyGroups.createSgForCourse(course: String)
+GET		/courses/:course/study-group/:class/create	    controllers.StudyGroups.createSgForClass(course: String, class: String)
+POST    /add/study-group                                controllers.StudyGroups.addStudyGroup()
+GET     /courses/:course/study-group/:class/view/:id    controllers.StudyGroups.viewStudyGroup(id: Long, course: String, class: String)
+GET		/courses/:course/study-group	                controllers.StudyGroups.listStudyGroups(course: String)
+GET		/courses/:course/study-group/:class/	        controllers.StudyGroups.viewClassStudyGroup(course: String, class: String, page: Integer)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

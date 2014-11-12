@@ -26,7 +26,7 @@ public class Lectures extends Controller{
    * @return the lecture list page.
    */
   public static Result viewLecture(String id) {
-    Course courseName = Course.find().byId(id);
+    Course courseName = Course.find().byId(id.toUpperCase());
     List<Lecture> lectures = LectureDB.getLectures(id);
     LectureForm data = new LectureForm();
     Form<LectureForm> formData = Form.form(LectureForm.class).fill(data);

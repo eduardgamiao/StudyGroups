@@ -43,7 +43,7 @@
                                 <tbody data-link="row" class="rowlink">
                                     @for(sg <- classes.getStudyGroupPage(0, 5).getList()) {
                                         <tr class="tBody">
-                                          <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.classToString))">@sg.getTopics()</a></td>
+                                          <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.getCourse), Misc.slugify(sg.classToString))">@sg.getTopics()</a></td>
                                           <td>@sg.getDay(), @sg.getDateString()</td>
                                           <td>@sg.getTimeString()</td>
                                           <td>@sg.getLocation()</td>
@@ -53,8 +53,8 @@
                                 </tbody>
                               </table>
                               </div>
-                             <h6><a href="@routes.StudyGroups.viewClassStudyGroup(Misc.slugify(classes.getCourseLevel), 0)">View all study Groups</a></h6>
-                             <h6><a href="@routes.StudyGroups.createSgForClass(Misc.slugify(classes.getCourseLevel))">Create Another Study Group for this class</a></h6>
+                             <h6><a href="@routes.StudyGroups.viewClassStudyGroup(Misc.slugify(classes.getCourse), Misc.slugify(classes.getCourseLevel), 0)">View all study Groups</a></h6>
+                             <h6><a href="@routes.StudyGroups.createSgForClass(Misc.slugify(classes.getCourse), Misc.slugify(classes.getCourseLevel))">Create Another Study Group for this class</a></h6>
                               
                             </div>
                            </div>

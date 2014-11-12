@@ -8,6 +8,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.formdata.LectureForm;
+import views.formdata.LectureLevels;
 import views.html.lecture.ListOfLectures;
 
 /**
@@ -31,7 +32,8 @@ public class Lectures extends Controller{
     LectureForm data = new LectureForm();
     Form<LectureForm> formData = Form.form(LectureForm.class).fill(data);
     
-    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures, formData, false));
+    return ok(ListOfLectures.render(courseName.getId(), courseName, lectures, formData, false, 
+        LectureLevels.getLectureLevels(id.toUpperCase())));
   }
   
  
@@ -49,7 +51,8 @@ public class Lectures extends Controller{
     
     if (formData.hasErrors()) {
       flash("error", "Login credentials not valid.");
-      return badRequest(ListOfLectures.render(courseName.getId(), courseName, lectures, formData, true));
+      return badRequest(ListOfLectures.render(courseName.getId(), courseName, lectures, formData, true,
+          LectureLevels.getLectureLevels(id.toUpperCase())));
     }
     else {
       LectureForm data = formData.get();

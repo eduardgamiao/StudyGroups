@@ -18,3 +18,11 @@
 .noLectures {
   text-align: center;
 }
+
+.form-group-filter {
+  display: inline-block;
+}
+
+.top-section {
+  display:inline-block;
+}

@@ -1,18 +1,22 @@
-@(field: Field, filterType: String, optionMap: Map[String, Boolean], isMultiple: Boolean)
+@(field: Field, filterType: String, levelMap: Map[String, Boolean], isMultiple: Boolean, courseId: String)
 
-<div class="form-group">
-  <select 
-    class="form-control" 
-    id="@field.id" 
-    name="@if(isMultiple) {@(field.name + "[]")} else {@field.name}"
-    @if(isMultiple) {multiple="multiple"}> 
-    
+<form class="form-inline pull-right" role="filterLecture" action="@routes.Lectures.filterLectures(courseId)" method="post">
+
+  <div class="form-group-filter">
+    <select class="form-control-filter" 
+            id="@field.id" 
+            name="@if(isMultiple) {@(field.name + "[]")} else {@field.name}"
+            @if(isMultiple) {multiple="multiple"}> 
     @if(!isMultiple) {
-    <option class="blank" value="">@filterType</option>
-    } 
-    
-    @for((optionName, isSelected) <- optionMap) {
-    <option id="@optionName" value="@optionName"@if(isSelected) {selected}>@optionName</option>
+      <option class="blank" value="">@filterType</option>
     }
-  </select>
-</div>
+    
+    @for((level, isSelected) <- levelMap) {
+      <option id="@level" value="@level"@if(isSelected) {selected}>@level</option>
+    }
+    </select>
+  </div>
+  
+  <button id="filterLecture" type="submit" class="btn btn-default btn-sm">Filter</button>
+
+</form>

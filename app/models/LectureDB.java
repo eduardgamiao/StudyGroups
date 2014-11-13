@@ -62,12 +62,26 @@ public class LectureDB {
   }
   
   /**
-   * Returns a list of lectures.
+   * Returns a list of lectures of a course.
+   * 
+   * @param course the course
    * 
    * @return List of lectures.
    */
   public static List<Lecture> getLectures(String course) {
     return Lecture.find().where().eq("course", course).findList();
+  }
+  
+  /**
+   * Returns a list of lectures filtered by a level
+   * 
+   * @param course the course
+   * @param level the level
+   * 
+   * @return List of lectures of a certain level
+   */
+  public static List<Lecture> getLectures(String course, String level) {
+    return Lecture.find().where().and(Expr.eq("course", course), Expr.eq("level", level)).findList();
   }
   
   /**

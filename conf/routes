@@ -15,6 +15,7 @@ GET     /courses/:id/lecture/delete         controllers.Lectures.deleteLecture(i
 POST    /courses/:id/lecture/add            controllers.Lectures.addLecture(id: String)
 POST    /add/lecture                        controllers.Lectures.addNewLecture()
 GET     /create/lecture                     controllers.Lectures.createLecture()
+POST    /course/:id/lecture/filter          controllers.Lectures.filterLectures(id: String)
 
 # Study Group
 GET     /create/study-group                             controllers.StudyGroups.createStudyGroup()

@@ -119,4 +119,29 @@ public class Lectures extends Controller{
     Form<LectureForm> lectureForm = Form.form(LectureForm.class).fill(lf);
     return ok(CreateLecture.render("Create Lecture", lectureForm));
   }
+  
+  /**
+   * Returns a filtered lectures page.
+   * 
+   * @param id the course
+   * 
+   * @return the filtered lecture page.
+   */
+  public static Result filterLectures(String id) {
+    Course courseName = Course.find().byId(id.toUpperCase());
+    LectureForm data = new LectureForm();
+    Form<LectureForm> formData = Form.form(LectureForm.class).fill(data);
+    Form<FilterLectureForm> filterLectureForm = Form.form(FilterLectureForm.class).bindFromRequest();
+    FilterLectureForm filterData = filterLectureForm.get();
+    List<Lecture> lectures;
+    
+    if (filterData.level == null || filterData.level.length() == 0) {
+      return redirect(routes.Lectures.viewLecture(courseName.getId()));
+    }
+    else {
+      lectures = LectureDB.getLectures(id.toUpperCase(), filterData.level);
+      return ok(ListOfLectures.render(courseName.getId(), courseName, lectures, formData, false, filterLectureForm,
+          LectureLevels.getLectureLevels(id.toUpperCase())));
+    }
+  }
 }

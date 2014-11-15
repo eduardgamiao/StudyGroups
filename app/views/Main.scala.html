@@ -42,7 +42,6 @@
            <li><a data-toggle="modal" href="#create">Create</a></li>
            
         </ul>
-        <ul class="nav navbar-nav searchbar">
           <!-- To be uncommented after form is created. -->
           @form(routes.Application.search(request.path), 'class -> "form-inline") {
             
@@ -50,7 +49,6 @@
                 models.Search.getForm()("term"),
                 placeholder = "Search")
           }
-        </ul>
           <ul class="nav navbar-nav pull-right">
             <li><a data-toggle="modal" href="#login">Login</a></li>
           </ul>

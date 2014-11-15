@@ -41,15 +41,16 @@
            <!-- <li><a >Create A Study Group</a></li> -->
            <li><a data-toggle="modal" href="#create">Create</a></li>
            
-        </ul>
+        
           <!-- To be uncommented after form is created. -->
-          @form(routes.Application.search(request.path), 'class -> "form-inline") {
+          <li>@form(routes.Application.search(request.path), 'class -> "form-inline") {
             
             @bootstrap3.textButton(
                 models.Search.getForm()("term"),
                 placeholder = "Search")
-          }
-          <ul class="nav navbar-nav pull-right">
+          }</li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
             <li><a data-toggle="modal" href="#login">Login</a></li>
           </ul>
         </div>

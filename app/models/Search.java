@@ -50,13 +50,12 @@ public class Search {
     studyGroups = new ArrayList<>();
     lectures = new ArrayList<>();
 
-    term = "%" + term + "%";
     Set<Lecture> lectureResults = new HashSet<>();
 
-    List<Lecture> lectureTopics = Lecture.find().where().ilike("topic", term).findList();
-    List<Lecture> lectureDescriptions = Lecture.find().where().ilike("description", term).findList();
-    List<Lecture> lectureCourseLevel = Lecture.find().where().ilike("courseLevel", term).findList();
-    List<Lecture> lectureCourse = Lecture.find().where().ilike("course", term).findList();
+    List<Lecture> lectureTopics = Lecture.find().where().icontains("topic", term).findList();
+    List<Lecture> lectureDescriptions = Lecture.find().where().icontains("description", term).findList();
+    List<Lecture> lectureCourseLevel = Lecture.find().where().icontains("courseLevel", term).findList();
+    List<Lecture> lectureCourse = Lecture.find().where().icontains("course", term).findList();
 
     lectureResults.addAll(lectureTopics);
     lectureResults.addAll(lectureDescriptions);
@@ -67,9 +66,9 @@ public class Search {
 
     Set<StudyGroup> sgResults = new HashSet<>();
 
-    List<StudyGroup> sgTopics = StudyGroup.find().where().ilike("topics", term).findList();
-    List<StudyGroup> sgCourse = StudyGroup.find().where().ilike("course", term).findList();
-    List<StudyGroup> sgCourseLevel = StudyGroup.find().where().ilike("courseLevel", term).findList();
+    List<StudyGroup> sgTopics = StudyGroup.find().where().icontains("topics", term).findList();
+    List<StudyGroup> sgCourse = StudyGroup.find().where().icontains("course", term).findList();
+    List<StudyGroup> sgCourseLevel = StudyGroup.find().where().icontains("courseLevel", term).findList();
 
     sgResults.addAll(sgTopics);
     sgResults.addAll(sgCourse);

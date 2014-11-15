@@ -1,5 +1,5 @@
 body {
-  padding-top: 60px;
+  padding-top: 65px;
 }
 .well-color {
   padding: 40px;
@@ -31,4 +31,11 @@ h1 {
   float: left;
   width: 1px;
   background-color: black;
+}
+
+.searchBar {
+  margin-top: 7px;
+  width: 320px;
+  padding: 0px;
+  margin-left: 3px;
 }

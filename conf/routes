@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /courses                    controllers.Application.listOfCourses()
+POST    /search                     controllers.Application.search(currUrl: String)
 
 # Course
 GET     /courses/:id                 controllers.Courses.viewCourse(id: String)

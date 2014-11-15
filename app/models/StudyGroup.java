@@ -52,21 +52,12 @@ public class StudyGroup extends Model {
   public StudyGroup(long id, String course, int level, String location, int month, int day, int year, int hour,
       int min, String topics) {
     this.setId(id);
-    this.setCourse(course);
+    this.setCourse(course.toUpperCase());
     this.setLevel(level);
     this.setLocation(location);
     this.meetTime = new DateTime(year, month, day, hour, min);
     this.setTopics(topics);
-    this.setCourseLevel(course + " " + level);
-  }
-
-  /**
-   * Returns the class and level, combined as a string object.
-   * 
-   * @return string
-   */
-  public String classToString() {
-    return getCourse() + " " + getLevel();
+    this.setCourseLevel(course.toUpperCase() + " " + level);
   }
 
   /**

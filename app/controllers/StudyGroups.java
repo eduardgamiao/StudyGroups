@@ -121,7 +121,7 @@ public class StudyGroups extends Controller {
       cl.save();
 
       return redirect(routes.StudyGroups.viewStudyGroup(sg.getId(), Misc.slugify(sg.getCourse()),
-          Misc.slugify(sg.classToString())));
+          Misc.slugify(sg.getCourseLevel())));
     }
   }
 
@@ -141,7 +141,7 @@ public class StudyGroups extends Controller {
       return ok(InvalidUrl.render("Error 404"));
     }
 
-    return ok(ViewStudyGroup.render(sg.classToString(), sg));
+    return ok(ViewStudyGroup.render(sg.getCourseLevel(), sg));
   }
 
 }

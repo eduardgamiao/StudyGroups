@@ -1,4 +1,8 @@
 @(title: String, scripts: Html = Html(""), js: Html = Html(""))(content: Html)
+
+@import helper._
+@import bootstrap3._
+
 <!DOCTYPE html>
 
 <html>
@@ -37,19 +41,17 @@
            <!-- <li><a >Create A Study Group</a></li> -->
            <li><a data-toggle="modal" href="#create">Create</a></li>
            
-          </ul>
+        </ul>
           <!-- To be uncommented after form is created. -->
-          <!--
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Keywords">
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-          </form>
-          -->
-          <ul class="nav navbar-nav navbar-right">
+          @form(routes.Application.search(request.path), 'class -> "form-inline") {
+            
+            @bootstrap3.textButton(
+                models.Search.getForm()("term"),
+                placeholder = "Search")
+          }
+ 
+          <ul class="nav navbar-nav pull-right">
             <li><a data-toggle="modal" href="#login">Login</a></li>
-            <li><a href="createProfile.html"></a></li>
           </ul>
         </div>
       </div>

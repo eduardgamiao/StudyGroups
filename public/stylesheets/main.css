@@ -16,3 +16,11 @@ h1 {
   background-color: beige;
 }
 
+.no_link {
+  color: black;
+}
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+  text-decoration: underline;
+}
+

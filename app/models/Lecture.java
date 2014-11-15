@@ -25,6 +25,8 @@ public class Lecture extends Model {
   @Lob
   private String description;
   private String videoId;
+  
+  private String courseLevel;
 
   /**
    * Empty constructor.
@@ -47,6 +49,8 @@ public class Lecture extends Model {
     this.setTopic(topic);
     this.setDescription(description);
     this.setVideoId(videoId.substring(videoId.length() - 11, videoId.length()));
+    
+    this.setCourseLevel(course + " " + level);
   }
 
   /**
@@ -126,6 +130,20 @@ public class Lecture extends Model {
    */
   public void setLevel(String level) {
     this.level = level;
+  }
+
+  /**
+   * @return the courseLevel
+   */
+  public String getCourseLevel() {
+    return courseLevel;
+  }
+
+  /**
+   * @param courseLevel the courseLevel to set
+   */
+  public void setCourseLevel(String courseLevel) {
+    this.courseLevel = courseLevel;
   }
 
 }

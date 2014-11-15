@@ -1,0 +1,78 @@
+@(message: String, term: String, lectures: List[models.Lecture], studyGroups: List[models.StudyGroup])
+
+@scripts = {}
+
+@js = {
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/rowlink.js")"></script>
+}
+
+@Main(message, scripts, js) {
+
+    <h1>Results for: "@term" </h1>
+    <hr>
+    
+    @if(lectures.isEmpty() && studyGroups.isEmpty()) {
+        <h2>Sorry, No results were found.</h2>
+        <br>
+        <br>
+    } else {
+    @if(!lectures.isEmpty()) {
+    <h3>Lectures</h3>
+    <hr>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    @for(lecture <- lectures) {
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="@lecture.getLevel()">
+        <h4 class="panel-title">
+          <a class="sub btn-block" data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true" aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic()
+          <div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div></a>
+        </h4>
+      </div>
+      <div id="@lecture.getVideoId()" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@lecture.getVideoId()">
+        <div class="panel-body">
+          <p>
+            <b>Video: </b>
+          </p>
+          <iframe width="560" height="315" src="http://www.youtube.com/embed/@lecture.getVideoId()" frameborder="0" allowfullscreen></iframe>
+          <p><b>Description: </b></p>
+          @lecture.getDescription() 
+          <br> <br> 
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+    
+  <hr>
+  <br>
+  }
+  @if(!studyGroups.isEmpty()) {
+  <h3>Study Groups</h3>
+  <br>
+  <table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Topics</th>
+            <th>Class</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Creator</th>
+        </tr>
+    </thead>
+    <tbody data-link="row" class="rowlink">
+        @for(sg <- studyGroups) {
+          <tr class="tBody">
+            <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.getCourse), Misc.slugify(sg.getCourseLevel))">@sg.getTopics()</a></td>
+            <td>@sg.getCourseLevel()</td>
+            <td>@sg.getDay(), @sg.getDateString()</td>
+            <td>@sg.getTimeString()</td>
+            <td>@sg.getLocation()</td>
+            <td>TO BE IMPLEMENTED</td>
+            </tr>
+        }      
+    </tbody>
+   </table>
+   }
+    }
+}

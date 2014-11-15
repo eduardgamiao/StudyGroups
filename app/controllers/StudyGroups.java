@@ -111,14 +111,13 @@ public class StudyGroups extends Controller {
 
       sg.save();
 
-      String courseLevel = form.course + " " + form.intLevel;
+      String courseLevel = form.course.toUpperCase() + " " + form.intLevel;
       ClassLevel cl = ClassLevel.getCL(courseLevel);
 
       if (cl == null) {
         cl = new ClassLevel(form.course, form.intLevel);
         cl.save();
       }
-      cl.save();
 
       return redirect(routes.StudyGroups.viewStudyGroup(sg.getId(), Misc.slugify(sg.getCourse()),
           Misc.slugify(sg.getCourseLevel())));

@@ -11,9 +11,56 @@
   </div>
   
   <hr>
-  <br/>
   <div class="well">
-  
+  <div class="row">
+    <div class="col-sm-4">
+    <h3>Information: </h3>
+    <ul>
+        <li><i><b>Day:</b></i>   @sg.getDay()</li>
+        <li><i><b>Date:</b></i>   @sg.getDateString()</li>    
+        <li><i><b>Time:</b></i>   @sg.getTimeString()</li>
+        <li><i><b>Location:</b></i>   @sg.getLocation()</li>
+        <li><i><b>People Attending:</b></i></li>
+            <ul>
+                <li>Person 1</li>
+                <li>Person 2</li>
+            </ul>
+    </ul>
+    
+    </div>
+    <div class="col-sm-8">
+    <h3>Related Lectures:</h3>
+        @if(sg.getRelatedLectures().size() == 1) {
+           <iframe width="560" height="315" src="http://www.youtube.com/embed/@sg.getRelatedLectures().get(0).getVideoId()" frameborder="0" allowfullscreen></iframe>
+           <p><b>Description: </b></p>
+           @sg.getRelatedLectures().get(0).getDescription() 
+        } else {
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                @for(lecture <- sg.getRelatedLectures()) {
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="@lecture.getLevel()">
+                            <h4 class="panel-title">
+                                <a class="sub btn-block" data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true" aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic()
+                                <div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div></a>
+                            </h4>
+                        </div>
+                    <div id="@lecture.getVideoId()" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@lecture.getVideoId()">
+                    <div class="panel-body">
+                        <p>
+                         <b>Video: </b>
+                        </p>
+                            <iframe width="560" height="315" src="http://www.youtube.com/embed/@lecture.getVideoId()" frameborder="0" allowfullscreen></iframe>
+                            <p><b>Description: </b></p>
+                            @lecture.getDescription() 
+                            <br> <br> 
+                   </div>
+                   </div>
+                    </div>
+                }
+             </div>
+        }
+    </div>
+  </div>
   </div>
 
 }

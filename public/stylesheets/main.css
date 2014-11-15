@@ -24,3 +24,8 @@ h1 {
   text-decoration: underline;
 }
 
+.vertical-line {
+  float: left;
+  width: 1px;
+  background-color: black;
+}

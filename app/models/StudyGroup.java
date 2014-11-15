@@ -1,6 +1,9 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import org.joda.time.DateTime;
@@ -147,6 +150,22 @@ public class StudyGroup extends Model {
     DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
     String timeString = fmt.print(meetTime);
     return timeString;
+  }
+
+  /**
+   * Returns the list of lectures related to the topics.
+   * 
+   * @return List of lectures.
+   */
+  public List<Lecture> getRelatedLectures() {
+    Set<Lecture> lectures = new HashSet<>();
+    String[] topics = this.topics.split(",");
+    for (String topic : topics) {
+      topic = "%" + topic + "%";
+      List<Lecture> lecture = Lecture.find().where().ilike("topic", topic).findList();
+      lectures.addAll(lecture);
+    }
+    return new ArrayList<Lecture>(lectures);
   }
 
   /**

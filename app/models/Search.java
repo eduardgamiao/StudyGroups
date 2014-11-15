@@ -49,7 +49,49 @@ public class Search {
 
     studyGroups = new ArrayList<>();
     lectures = new ArrayList<>();
+    
+    List<String> termList = termsToList(term);   
+    
+    Set<Lecture> lectureResults = new HashSet<>();
+    Set<StudyGroup> sgResults = new HashSet<>();
+    
+    List<Lecture> lectureTopics;
+    List<Lecture> lectureDescriptions;
+    List<Lecture> lectureCourseLevel;
+    List<Lecture> lectureCourse;
+    
+    List<StudyGroup> sgTopics;
+    List<StudyGroup> sgCourse;
+    List<StudyGroup> sgCourseLevel;
+    
+    for (int i = 0; i < termList.size(); i++) {
+      lectureTopics = Lecture.find().where().icontains("topic", termList.get(i)).findList();
+      lectureDescriptions = Lecture.find().where().icontains("description", termList.get(i)).findList();
+      lectureCourseLevel = Lecture.find().where().icontains("courseLevel", termList.get(i)).findList();
+      lectureCourse = Lecture.find().where().icontains("course", termList.get(i)).findList();
+      
+      if (!(lectures.containsAll(lectureTopics) || lectures.containsAll(lectureDescriptions) ||
+          lectures.containsAll(lectureCourseLevel) || lectures.containsAll(lectureCourse))) {
+        lectureResults.addAll(lectureTopics);
+        lectureResults.addAll(lectureDescriptions);
+        lectureResults.addAll(lectureCourseLevel);
+        lectureResults.addAll(lectureCourse);
+        
+        lectures.addAll(lectureResults);
+      }
+      
+      sgTopics = StudyGroup.find().where().icontains("topics", termList.get(i)).findList();
+      sgCourse = StudyGroup.find().where().icontains("course", termList.get(i)).findList();
+      sgCourseLevel = StudyGroup.find().where().icontains("courseLevel", termList.get(i)).findList();
+      
+      sgResults.addAll(sgTopics);
+      sgResults.addAll(sgCourse);
+      sgResults.addAll(sgCourseLevel);
 
+      studyGroups.addAll(sgResults);
+    }
+    
+    /**
     term = "%" + term + "%";
     Set<Lecture> lectureResults = new HashSet<>();
 
@@ -76,7 +118,15 @@ public class Search {
     sgResults.addAll(sgCourseLevel);
 
     studyGroups.addAll(sgResults);
-
+    */
+  }
+  
+  public static List<String> termsToList(String terms) {
+    List<String> termsList = new ArrayList<String>();
+    for(String word: terms.split(" ")) {
+      termsList.add(word);
+    }
+    return termsList;
   }
 
   /**

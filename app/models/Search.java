@@ -1,9 +1,7 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import play.data.Form;
 import play.data.validation.Constraints;
 
@@ -45,88 +43,66 @@ public class Search {
    * 
    * @param term the term to be searched for.
    */
-  public static void search(String term) {
+  public static void search(String keywords) {
 
     studyGroups = new ArrayList<>();
     lectures = new ArrayList<>();
     
-    List<String> termList = termsToList(term);   
+    List<String> keywordList = keysToList(keywords);   
     
-    Set<Lecture> lectureResults = new HashSet<>();
-    Set<StudyGroup> sgResults = new HashSet<>();
+    List<Lecture> currentLectures = Lecture.find().all();
+    List<StudyGroup> currentSGs = StudyGroup.find().all();
     
-    List<Lecture> lectureTopics;
-    List<Lecture> lectureDescriptions;
-    List<Lecture> lectureCourseLevel;
-    List<Lecture> lectureCourse;
-    
-    List<StudyGroup> sgTopics;
-    List<StudyGroup> sgCourse;
-    List<StudyGroup> sgCourseLevel;
-    
-    for (int i = 0; i < termList.size(); i++) {
-      lectureTopics = Lecture.find().where().icontains("topic", termList.get(i)).findList();
-      lectureDescriptions = Lecture.find().where().icontains("description", termList.get(i)).findList();
-      lectureCourseLevel = Lecture.find().where().icontains("courseLevel", termList.get(i)).findList();
-      lectureCourse = Lecture.find().where().icontains("course", termList.get(i)).findList();
-      
-      if (!(lectures.containsAll(lectureTopics) || lectures.containsAll(lectureDescriptions) ||
-          lectures.containsAll(lectureCourseLevel) || lectures.containsAll(lectureCourse))) {
-        lectureResults.addAll(lectureTopics);
-        lectureResults.addAll(lectureDescriptions);
-        lectureResults.addAll(lectureCourseLevel);
-        lectureResults.addAll(lectureCourse);
-        
-        lectures.addAll(lectureResults);
-      }
-      
-      sgTopics = StudyGroup.find().where().icontains("topics", termList.get(i)).findList();
-      sgCourse = StudyGroup.find().where().icontains("course", termList.get(i)).findList();
-      sgCourseLevel = StudyGroup.find().where().icontains("courseLevel", termList.get(i)).findList();
-      
-      sgResults.addAll(sgTopics);
-      sgResults.addAll(sgCourse);
-      sgResults.addAll(sgCourseLevel);
-
-      studyGroups.addAll(sgResults);
+    for (Lecture lecture: currentLectures) {
+      if (containsKeys(lecture.getTopic().concat(" ").concat(lecture.getDescription().concat(" ").
+          concat(lecture.getCourseLevel()).concat(" ").concat(lecture.getLevel())), keywordList)) {
+            lectures.add(lecture);
+          }
     }
     
-    /**
-    term = "%" + term + "%";
-    Set<Lecture> lectureResults = new HashSet<>();
-
-    List<Lecture> lectureTopics = Lecture.find().where().ilike("topic", term).findList();
-    List<Lecture> lectureDescriptions = Lecture.find().where().ilike("description", term).findList();
-    List<Lecture> lectureCourseLevel = Lecture.find().where().ilike("courseLevel", term).findList();
-    List<Lecture> lectureCourse = Lecture.find().where().ilike("course", term).findList();
-
-    lectureResults.addAll(lectureTopics);
-    lectureResults.addAll(lectureDescriptions);
-    lectureResults.addAll(lectureCourseLevel);
-    lectureResults.addAll(lectureCourse);
-
-    lectures.addAll(lectureResults);
-
-    Set<StudyGroup> sgResults = new HashSet<>();
-
-    List<StudyGroup> sgTopics = StudyGroup.find().where().ilike("topics", term).findList();
-    List<StudyGroup> sgCourse = StudyGroup.find().where().ilike("course", term).findList();
-    List<StudyGroup> sgCourseLevel = StudyGroup.find().where().ilike("courseLevel", term).findList();
-
-    sgResults.addAll(sgTopics);
-    sgResults.addAll(sgCourse);
-    sgResults.addAll(sgCourseLevel);
-
-    studyGroups.addAll(sgResults);
-    */
+    for (StudyGroup sg: currentSGs) {
+      if (containsKeys(sg.getTopics().concat(" ").concat(sg.getCourse().concat(" ").concat(sg.getCourseLevel())),
+          keywordList)) {
+            studyGroups.add(sg);
+          }
+    }
   }
   
-  public static List<String> termsToList(String terms) {
-    List<String> termsList = new ArrayList<String>();
-    for(String word: terms.split(" ")) {
-      termsList.add(word);
+  /**
+   * Puts search keys into List form.
+   * 
+   * @param keys the keywords
+   * 
+   * @return a list of keys
+   */
+  public static List<String> keysToList(String keys) {
+    List<String> keysList = new ArrayList<String>();
+    for(String word: keys.split(" ")) {
+      keysList.add(word);
     }
-    return termsList;
+    return keysList;
+  }
+  
+  /**
+   * Checks if keys match topic, descriptions, course, etc...
+   * 
+   * @param target giant String of topics, descriptions, etc...
+   * @param keys the keywords
+   * 
+   * @return false if target does not contain all the keys, true otherwise.
+   */
+  public static boolean containsKeys(String target, List<String> keys) {
+    boolean result = true;
+    for (int i = 0; i < keys.size(); i++) {
+      if (target.toLowerCase().contains(keys.get(i).toLowerCase())) {
+        result = true;
+      }
+      else {
+        result = false;
+        break;
+      }
+    }
+    return result;
   }
 
   /**

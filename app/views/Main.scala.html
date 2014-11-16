@@ -41,14 +41,15 @@
            <!-- <li><a >Create A Study Group</a></li> -->
            <li><a data-toggle="modal" href="#create">Create</a></li>
            
-        
-          <!-- To be uncommented after form is created. -->
-          <li>@form(routes.Application.search(request.path), 'class -> "form-inline") {
+           <li class="hidden-xs">
+            @form(routes.Application.search(request.path), 'class -> "form-inline") {
             
-            @bootstrap3.textButton(
-                models.Search.getForm()("term"),
-                placeholder = "Search")
-          }</li>
+                @bootstrap3.textButton(
+                    models.Search.getForm()("term"),
+                    placeholder = "Search")
+            }
+          </li>
+          <li class="visible-xs"><a data-toggle="modal" href="#search">Search</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a data-toggle="modal" href="#login">Login</a></li>
@@ -56,7 +57,8 @@
         </div>
       </div>
     </div>
-    
+  
+  <!--  "Create" modal -->  
   <div id="create" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -88,7 +90,31 @@
       </div>
     </div>
   </div>
+  
+  <!--  "Search" modal -->  
+  <div id="search" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create</h4>
+        </div>
+        <div class="modal-body">
+           @form(routes.Application.search(request.path), 'class -> "form-inline") {
+            
+            @bootstrap3.textButtonModal(
+                models.Search.getForm()("term"),
+                placeholder = "Search")
+          }
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Login modal -->
   <div id="login" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">

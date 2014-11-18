@@ -1,9 +1,22 @@
 @(message: String, term: String, lectures: List[models.Lecture], studyGroups: List[models.StudyGroup])
 
-@scripts = {}
+@scripts = {
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/search.css")">
+}
 
 @js = {
     <script type="text/javascript" src="@routes.Assets.at("javascripts/rowlink.js")"></script>
+    
+    <script type="text/javascript">
+    function toggleChevron(e) {
+        $(e.target)
+            .prev('.panel-heading')
+            .find("i.indicator")
+            .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+    }
+    $('#accordion').on('hidden.bs.collapse', toggleChevron);
+    $('#accordion').on('shown.bs.collapse', toggleChevron);
+    </script>
 }
 
 @Main(message, scripts, js) {
@@ -25,7 +38,7 @@
       <div class="panel-heading" role="tab" id="@lecture.getLevel()">
         <h4 class="panel-title">
           <a class="sub btn-block" data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true" aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic()
-          <div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div></a>
+          <div class="pull-right"><i class="indicator glyphicon glyphicon-chevron-down"></i></div></a>
         </h4>
       </div>
       <div id="@lecture.getVideoId()" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@lecture.getVideoId()">

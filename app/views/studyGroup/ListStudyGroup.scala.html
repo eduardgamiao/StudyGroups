@@ -43,7 +43,7 @@
                                 <tbody data-link="row" class="rowlink">
                                     @for(sg <- classes.getStudyGroupPage(0, 5).getList()) {
                                         <tr class="tBody">
-                                          <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.getCourse), Misc.slugify(sg.getCourseLevel))">@sg.getTopics()</a></td>
+                                          <td><a class="no_link" href="@routes.StudyGroups.viewStudyGroup(sg.getId, Misc.slugify(sg.getCourse), Misc.slugify(sg.getCourseLevel))#disqus_thread">@sg.getTopics()</a></td>
                                           <td>@sg.getDay(), @sg.getDateString()</td>
                                           <td>@sg.getTimeString()</td>
                                           <td>@sg.getLocation()</td>

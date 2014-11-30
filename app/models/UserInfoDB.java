@@ -9,39 +9,14 @@ package models;
 public class UserInfoDB {
 
   /**
-   * Defines the admin account.
-   * 
-   * @param name Admin name.
-   * @param email Admin email.
-   * @param password Admin password.
-   */
-  public static void defineAdmin(String name, String email, String password) {
-    if ((email != null) && (password != null) && (!adminDefined())) {
-      UserInfo userInfo = new UserInfo(name, email, password);
-      userInfo.setAdmin(true);
-      userInfo.save();
-    }
-  }
-
-  /**
-   * Returns true if admin is defined.
-   * 
-   * @return True if admin defined.
-   */
-  public static boolean adminDefined() {
-    UserInfo userInfo = UserInfo.find().where().eq("admin", true).findUnique();
-    return userInfo != null;
-  }
-
-  /**
    * Adds the specified user to the UserInfoDB.
    * 
    * @param name Their name.
    * @param email Their email.
    * @param password Their password.
    */
-  public static void addUserInfo(String name, String email, String password) {
-    UserInfo userInfo = new UserInfo(name, email, password);
+  public static void addUserInfo(String firstName, String lastName, String email, String password) {
+    UserInfo userInfo = new UserInfo(firstName, lastName, email, password);
     userInfo.save();
   }
 

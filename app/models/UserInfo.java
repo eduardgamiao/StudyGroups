@@ -15,10 +15,10 @@ public class UserInfo extends Model {
   
   @Id
   private long id;
-  private String name;
+  private String firstName;
+  private String lastName;
   private String email;
   private String password;
-  private boolean admin = false;
   
   /**
    * The EBean ORM finder method for database queries.
@@ -35,24 +35,13 @@ public class UserInfo extends Model {
    * @param email The email.
    * @param password The password.
    */
-  public UserInfo(String name, String email, String password) {
-    this.name = name;
+  public UserInfo(String firstName, String lastName, String email, String password) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
     this.password = password;
   }
   
-  /**
-   * @return the name
-   */
-  public String getName() {
-    return name;
-  }
-  /**
-   * @param name the name to set
-   */
-  public void setName(String name) {
-    this.name = name;
-  }
   /**
    * @return the email
    */
@@ -93,17 +82,30 @@ public class UserInfo extends Model {
   }
 
   /**
-   * @return the admin
+   * @return the firstName
    */
-  public boolean isAdmin() {
-    return admin;
+  public String getFirstName() {
+    return firstName;
   }
 
   /**
-   * @param admin the admin to set
+   * @param firstName the firstName to set
    */
-  public void setAdmin(boolean admin) {
-    this.admin = admin;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
+  /**
+   * @return the lastName
+   */
+  public String getLastName() {
+    return lastName;
+  }
+
+  /**
+   * @param lastName the lastName to set
+   */
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 }

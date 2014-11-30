@@ -5,9 +5,11 @@ import models.Course;
 import models.Lecture;
 import models.Search;
 import models.StudyGroup;
+import models.UserInfoDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.formdata.UserForm;
 import views.html.Index;
 import views.html.SearchResults;
 import views.html.course.ListOfCourses;
@@ -26,7 +28,9 @@ public class Application extends Controller {
    * @return the index page.
    */
   public static Result index() {
-    return ok(Index.render("Welcome"));
+
+    Form<UserForm> uf = UserForm.getForm();
+    return ok(Index.render("Welcome", uf, false));
   }
 
   /**
@@ -60,4 +64,15 @@ public class Application extends Controller {
     return redirect(currUrl);
   }
 
+  public static Result createAccount() {
+    Form<UserForm> userForm = Form.form(UserForm.class).bindFromRequest();
+
+    if (userForm.hasErrors()) {
+      return badRequest(Index.render("Welcome", userForm, true));
+    }
+
+    UserForm uf = userForm.get();
+    UserInfoDB.addUserInfo(uf.getFirstName(), uf.getLastName(), uf.getEmail(), uf.getPassword());
+    return redirect(routes.Application.index());
+  }
 }

@@ -1,10 +1,10 @@
-@(message: String)
+@(message: String, createAccount: Form[views.formdata.UserForm], showCreateAccountModal: Boolean)
 
 @scripts = {
 	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/index.css")">
 }
 
-@Main(message, scripts) {
+@Main(message, scripts, null, createAccount, showCreateAccountModal) {
     
     <div class="section-1">
       <h1>Welcome to Study Groups!</h1>

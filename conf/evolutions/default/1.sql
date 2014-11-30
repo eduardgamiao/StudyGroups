@@ -38,6 +38,15 @@ create table study_group (
   constraint pk_study_group primary key (id))
 ;
 
+create table user_info (
+  id                        bigint not null,
+  first_name                varchar(255),
+  last_name                 varchar(255),
+  email                     varchar(255),
+  password                  varchar(255),
+  constraint pk_user_info primary key (id))
+;
+
 create sequence class_level_seq;
 
 create sequence course_seq;
@@ -45,6 +54,8 @@ create sequence course_seq;
 create sequence lecture_seq;
 
 create sequence study_group_seq;
+
+create sequence user_info_seq;
 
 
 
@@ -61,6 +72,8 @@ drop table if exists lecture;
 
 drop table if exists study_group;
 
+drop table if exists user_info;
+
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists class_level_seq;
@@ -70,4 +83,6 @@ drop sequence if exists course_seq;
 drop sequence if exists lecture_seq;
 
 drop sequence if exists study_group_seq;
+
+drop sequence if exists user_info_seq;
 

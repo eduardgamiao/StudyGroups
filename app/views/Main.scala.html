@@ -1,4 +1,4 @@
-@(title: String, scripts: Html = Html(""), js: Html = Html(""))(content: Html)
+@(title: String, scripts: Html = Html(""), js: Html = Html(""), createUser: Form[views.formdata.UserForm] = views.formdata.UserForm.getForm(), showCreateAccountModal: Boolean = false)(content: Html)
 
 @import helper._
 @import bootstrap3._
@@ -53,6 +53,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a data-toggle="modal" href="#login">Login</a></li>
+            <li><a data-toggle="modal" href="#createAccount">Create Account</a></li>
           </ul>
         </div>
       </div>
@@ -124,9 +125,9 @@
         </div>
         <div class="modal-body">
 
-          <label class="col-sm-2 control-label">Username</label>
+          <label class="col-sm-2 control-label">Email</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" name="User Name" placeholder="username" />
+            <input type="text" class="form-control" name="User Name" placeholder="email" />
 
           </div>
           </br> </br> <label class="col-sm-2 control-label">Password</label>
@@ -139,6 +140,61 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           <a href="#" type="button" class="btn btn-success">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Create Account modal -->
+  <div id="createAccount" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create Account</h4>
+        </div>
+        <div class="modal-body">
+            @form(routes.Application.createAccount(), 'class -> "form-horizontal") {
+                
+             @bootstrap3.text(
+                createUser("firstName"),
+                label = "First Name",
+                placeholder = "", 
+                help = "")
+                
+             @bootstrap3.text(
+                createUser("lastName"),
+                label = "Last Name",
+                placeholder = "", 
+                help = "")
+                
+             @bootstrap3.text(
+                createUser("email"),
+                label = "Email",
+                placeholder = "", 
+                help = "")
+             
+                 
+             @bootstrap3.password(
+                createUser("password"),
+                label = "Password",
+                placeholder = "", 
+                help = "")
+                
+        
+     
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button id="submitButton" type="submit" class="btn btn-primary">
+                     Create Account
+                    </button>
+                 </div>
+            </div>
+           
+           }
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>
@@ -157,6 +213,14 @@
   <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   @js
+  
+  @if(showCreateAccountModal) {
+        <script type="text/javascript">
+        $(window).load(function() {
+             $('#createAccount').modal('show');
+        });
+        </script>
+  }
   
 </body>
 </html>

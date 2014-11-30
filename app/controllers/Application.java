@@ -9,6 +9,7 @@ import models.UserInfoDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.formdata.LoginForm;
 import views.formdata.UserForm;
 import views.html.Index;
 import views.html.SearchResults;
@@ -28,9 +29,7 @@ public class Application extends Controller {
    * @return the index page.
    */
   public static Result index() {
-
-    Form<UserForm> uf = UserForm.getForm();
-    return ok(Index.render("Welcome", uf, false));
+    return ok(Index.render("Welcome", LoginForm.getForm(), UserForm.getForm(), false));
   }
 
   /**
@@ -64,11 +63,16 @@ public class Application extends Controller {
     return redirect(currUrl);
   }
 
+  /**
+   * Creates a user account.
+   * 
+   * @return a page
+   */
   public static Result createAccount() {
     Form<UserForm> userForm = Form.form(UserForm.class).bindFromRequest();
 
     if (userForm.hasErrors()) {
-      return badRequest(Index.render("Welcome", userForm, true));
+      return badRequest(Index.render("Welcome", LoginForm.getForm(), userForm, true));
     }
 
     UserForm uf = userForm.get();

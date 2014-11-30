@@ -12,7 +12,7 @@ public class Users extends Controller{
   public static Result postLogin() {
     Form<LoginForm> loginData = Form.form(LoginForm.class).bindFromRequest();
     if (loginData.hasErrors()) {
-      return badRequest(Index.render("Login Error", UserForm.getForm(), false));
+      return badRequest(Index.render("Login Error", loginData, UserForm.getForm(), false));
     }
     else {
       session().clear();

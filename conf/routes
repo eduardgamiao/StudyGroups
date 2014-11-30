@@ -8,6 +8,10 @@ GET     /courses                    controllers.Application.listOfCourses()
 POST    /search                     controllers.Application.search(currUrl: String)
 POST    /create/user                controllers.Application.createAccount()
 
+# Users
+GET     /login                      controllers.Users.postLogin()
+GET     /logout                     controllers.Users.logout()
+
 # Course
 GET     /courses/:id                 controllers.Courses.viewCourse(id: String)
 

@@ -1,4 +1,4 @@
-@(title: String, scripts: Html = Html(""), js: Html = Html(""), createUser: Form[views.formdata.UserForm] = views.formdata.UserForm.getForm(), showCreateAccountModal: Boolean = false)(content: Html)
+@(title: String, scripts: Html = Html(""), js: Html = Html(""), login: Form[views.formdata.LoginForm] = views.formdata.LoginForm.getForm(), createUser: Form[views.formdata.UserForm] = views.formdata.UserForm.getForm(), showCreateAccountModal: Boolean = false)(content: Html)
 
 @import helper._
 @import bootstrap3._
@@ -52,8 +52,13 @@
           <li class="visible-xs"><a data-toggle="modal" href="#search">Search</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a data-toggle="modal" href="#login">Login</a></li>
-            <li><a data-toggle="modal" href="#createAccount">Create Account</a></li>
+            @if(!controllers.Secured.isLoggedIn(ctx())) {
+                <li><a data-toggle="modal" href="#login">Login</a></li>
+                <li><a data-toggle="modal" href="#createAccount">Create Account</a></li>
+            } else {
+                <li><a href="#">@Secured.getUserInfo(ctx()).getFirstName()</a></li>
+                <li><a href="@routes.Users.logout()">Logout</a></li>
+            }
           </ul>
         </div>
       </div>
@@ -64,7 +69,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span></button>
           <h4 class="modal-title">Create</h4>
         </div>
         <div class="modal-body">
@@ -85,9 +90,6 @@
            </div>
            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        </div>
       </div>
     </div>
   </div>
@@ -97,8 +99,8 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Create</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span></button>
+          <h4 class="modal-title">Search</h4>
         </div>
         <div class="modal-body">
            @form(routes.Application.search(request.path), 'class -> "form-inline") {
@@ -120,26 +122,33 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span></button>
           <h4 class="modal-title">Login</h4>
         </div>
         <div class="modal-body">
-
-          <label class="col-sm-2 control-label">Email</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" name="User Name" placeholder="email" />
-
-          </div>
-          </br> </br> <label class="col-sm-2 control-label">Password</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" name="Password" placeholder="password" />
-
-          </div>
-          </br>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <a href="#" type="button" class="btn btn-success">Login</a>
+            @form(routes.Users.postLogin(), 'class -> "form-horizontal") {
+            
+                @bootstrap3.text(
+                    login("email"),
+                    label = "Email", 
+                    placeholder = "",
+                    help = "")
+                
+                @bootstrap3.password(
+                    login("password"),
+                    label = "Password",
+                    placeholder = "",
+                    help = "")
+ 
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button id="submitButton" type="submit" class="btn btn-primary">
+                     Login
+                    </button>
+                 </div>
+            </div>
+            }
+          
         </div>
       </div>
     </div>
@@ -150,7 +159,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span></button>
           <h4 class="modal-title">Create Account</h4>
         </div>
         <div class="modal-body">
@@ -192,9 +201,6 @@
             </div>
            
            }
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>

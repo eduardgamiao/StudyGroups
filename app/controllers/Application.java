@@ -29,7 +29,7 @@ public class Application extends Controller {
    * @return the index page.
    */
   public static Result index() {
-    return ok(Index.render("Welcome", LoginForm.getForm(), UserForm.getForm(), false));
+    return ok(Index.render("Welcome", LoginForm.getForm(), false, UserForm.getForm(), false));
   }
 
   /**
@@ -72,7 +72,7 @@ public class Application extends Controller {
     Form<UserForm> userForm = Form.form(UserForm.class).bindFromRequest();
 
     if (userForm.hasErrors()) {
-      return badRequest(Index.render("Welcome", LoginForm.getForm(), userForm, true));
+      return badRequest(Index.render("Welcome", LoginForm.getForm(), false, userForm, true));
     }
 
     UserForm uf = userForm.get();

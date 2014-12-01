@@ -1,4 +1,7 @@
-@(title: String, scripts: Html = Html(""), js: Html = Html(""), login: Form[views.formdata.LoginForm] = views.formdata.LoginForm.getForm(), createUser: Form[views.formdata.UserForm] = views.formdata.UserForm.getForm(), showCreateAccountModal: Boolean = false)(content: Html)
+@(title: String, scripts: Html = Html(""), js: Html = Html(""), 
+  login: Form[views.formdata.LoginForm] = views.formdata.LoginForm.getForm(), showLoginModal: Boolean = false, 
+  createUser: Form[views.formdata.UserForm] = views.formdata.UserForm.getForm(), showCreateAccountModal: Boolean = false
+  )(content: Html)
 
 @import helper._
 @import bootstrap3._
@@ -222,12 +225,20 @@
   @js
   
   @if(showCreateAccountModal) {
-        <script type="text/javascript">
-        $(window).load(function() {
-             $('#createAccount').modal('show');
-        });
-        </script>
-  }
+    <script type="text/javascript">
+      $(window).load(function() {
+         $('#createAccount').modal('show');
+      });
+    </script>
+   }
+  
+  @if(showLoginModal) {
+    <script type="text/javascript">
+    $(window).load(function() {
+       $('#login').modal('show');
+    });
+    </script>
+  } 
   
 </body>
 </html>

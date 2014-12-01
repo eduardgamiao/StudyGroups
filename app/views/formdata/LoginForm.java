@@ -5,6 +5,7 @@ import play.data.validation.ValidationError;
 import java.util.ArrayList;
 import java.util.List;
 import models.UserInfoDB;
+import play.data.validation.Constraints;
 
 /**
  * Backing class for the login form.
@@ -17,8 +18,10 @@ public class LoginForm {
   public static final String ERROR_CHECK = "Login is not valid.";
 
   /** The submitted email. */
+  @Constraints.Required(message = "")
   public String email = "";
   /** The submitted password. */
+  @Constraints.Required(message = "")
   public String password = "";
 
   /** Required for form instantiation. */
@@ -46,9 +49,11 @@ public class LoginForm {
 
     List<ValidationError> errors = new ArrayList<>();
 
-    if (!UserInfoDB.isValid(email, password)) {
-      errors.add(new ValidationError("email", ""));
-      errors.add(new ValidationError("password", ""));
+    if (UserInfoDB.getUser(email) == null) {
+      errors.add(new ValidationError("email", "Not a valid email adress."));
+    }
+    else if (!UserInfoDB.getUser(email).getPassword().equals(password)) {
+      errors.add(new ValidationError("password", "Incorrect password."));
     }
 
     return (errors.size() > 0) ? errors : null;

@@ -30,7 +30,7 @@
         <br>
     } else {
     @if(!lectures.isEmpty()) {
-    <h3>Lectures</h3>
+    <h3>Lectures: <span class="badge">@lectures.size()</span></h3>
     <hr>
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     @for(lecture <- lectures) {
@@ -60,7 +60,7 @@
   <br>
   }
   @if(!studyGroups.isEmpty()) {
-  <h3>Study Groups</h3>
+  <h3>Study Groups: <span class="badge">@studyGroups.size()</span></h3>
   <br>
   <table class="table table-striped table-hover">
     <thead>

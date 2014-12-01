@@ -39,3 +39,9 @@ h1 {
   padding: 0px;
   margin-left: 3px;
 }
+
+.disqus {
+  background: url('../images/disqus.png') no-repeat;
+  background-position: center;
+  height: 50px;
+}

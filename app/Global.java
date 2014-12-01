@@ -29,7 +29,7 @@ public class Global extends GlobalSettings {
     }
 
     if (UserInfo.find().all().isEmpty()) {
-      UserInfoDB.addUserInfo("admin", "admin", "admin@admin.com", "admin");
+      UserInfoDB.addUserInfo("Administrative", "User", "admin@admin.com", "admin");
     }
 
     LectureDB.addLecture(new LectureForm("ICS", "311", "Topic 03 A: Asymtotic Notations",

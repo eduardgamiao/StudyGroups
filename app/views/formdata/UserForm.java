@@ -30,6 +30,9 @@ public class UserForm {
   @Constraints.Required(message = "A password is required.")
   private String password;
 
+  @Constraints.Required(message = "Please enter the password again.")
+  private String password2;
+
   /**
    * Constructor.
    */
@@ -55,8 +58,11 @@ public class UserForm {
     // Password must be between 4 and 8 characters long
     // Password must contain at least one number
     if (!password.matches("^(?=.*\\d).{4,8}$")) {
-      errors.add(new ValidationError("password",
-          "Password must be 4 to 8 characters long and contain a number."));
+      errors.add(new ValidationError("password", "Password must be 4 to 8 characters long and contain a number."));
+    }
+
+    if (!password.equals(getPassword2())) {
+      errors.add(new ValidationError("password2", "Passwords do not match."));
     }
 
     return errors.isEmpty() ? null : errors;
@@ -141,6 +147,14 @@ public class UserForm {
    */
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getPassword2() {
+    return password2;
+  }
+
+  public void setPassword2(String password2) {
+    this.password2 = password2;
   }
 
 }

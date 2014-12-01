@@ -9,7 +9,7 @@ import views.formdata.UserForm;
 import views.html.Index;
 
 public class Users extends Controller {
-  
+
   /**
    * Creates a user account.
    * 
@@ -24,6 +24,10 @@ public class Users extends Controller {
 
     UserForm uf = userForm.get();
     UserInfoDB.addUserInfo(uf.getFirstName(), uf.getLastName(), uf.getEmail(), uf.getPassword());
+
+    // Login user after creating account
+    session().clear();
+    session("email", uf.getEmail());
     return redirect(routes.Application.index());
   }
 

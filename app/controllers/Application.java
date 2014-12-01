@@ -5,7 +5,6 @@ import models.Course;
 import models.Lecture;
 import models.Search;
 import models.StudyGroup;
-import models.UserInfoDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -67,7 +66,7 @@ public class Application extends Controller {
    * Creates a user account.
    * 
    * @return a page
-   */
+   *
   public static Result createAccount() {
     Form<UserForm> userForm = Form.form(UserForm.class).bindFromRequest();
 
@@ -78,5 +77,5 @@ public class Application extends Controller {
     UserForm uf = userForm.get();
     UserInfoDB.addUserInfo(uf.getFirstName(), uf.getLastName(), uf.getEmail(), uf.getPassword());
     return redirect(routes.Application.index());
-  }
+  }*/
 }

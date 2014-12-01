@@ -1,5 +1,6 @@
 package controllers;
 
+import models.UserInfoDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -8,6 +9,23 @@ import views.formdata.UserForm;
 import views.html.Index;
 
 public class Users extends Controller {
+  
+  /**
+   * Creates a user account.
+   * 
+   * @return a page
+   */
+  public static Result createAccount() {
+    Form<UserForm> userForm = Form.form(UserForm.class).bindFromRequest();
+
+    if (userForm.hasErrors()) {
+      return badRequest(Index.render("Welcome", LoginForm.getForm(), false, userForm, true));
+    }
+
+    UserForm uf = userForm.get();
+    UserInfoDB.addUserInfo(uf.getFirstName(), uf.getLastName(), uf.getEmail(), uf.getPassword());
+    return redirect(routes.Application.index());
+  }
 
   public static Result postLogin(String url) {
     Form<LoginForm> loginData = Form.form(LoginForm.class).bindFromRequest();

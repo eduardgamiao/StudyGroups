@@ -6,10 +6,10 @@
 GET     /                           controllers.Application.index()
 GET     /courses                    controllers.Application.listOfCourses()
 POST    /search                     controllers.Application.search(currUrl: String)
-POST    /create/user                controllers.Application.createAccount()
 
 # Users
-POST     /login                      controllers.Users.postLogin(url: String)
+POST    /create/user                controllers.Users.createAccount()
+POST    /login                      controllers.Users.postLogin(url: String)
 GET     /logout                     controllers.Users.logout()
 
 # Course

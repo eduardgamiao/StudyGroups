@@ -5,21 +5,22 @@ import javax.persistence.Id;
 import play.db.ebean.Model;
 
 /**
- * A simple representation of a user. 
+ * A simple representation of a user.
+ * 
  * @author Philip Johnson
  */
 @Entity
 public class UserInfo extends Model {
- 
+
   private static final long serialVersionUID = 1L;
-  
+
   @Id
   private long id;
   private String firstName;
   private String lastName;
   private String email;
   private String password;
-  
+
   /**
    * The EBean ORM finder method for database queries.
    * 
@@ -31,6 +32,7 @@ public class UserInfo extends Model {
 
   /**
    * Creates a new UserInfo instance.
+   * 
    * @param name The name.
    * @param email The email.
    * @param password The password.
@@ -41,25 +43,28 @@ public class UserInfo extends Model {
     this.email = email;
     this.password = password;
   }
-  
+
   /**
    * @return the email
    */
   public String getEmail() {
     return email;
   }
+
   /**
    * @param email the email to set
    */
   public void setEmail(String email) {
     this.email = email;
   }
+
   /**
    * @return the password
    */
   public String getPassword() {
     return password;
   }
+
   /**
    * @param password the password to set
    */
@@ -107,5 +112,14 @@ public class UserInfo extends Model {
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
+  }
+
+  /**
+   * Returns the user's full name.
+   * 
+   * @return user's full name
+   */
+  public String getFullName() {
+    return firstName + " " + lastName;
   }
 }

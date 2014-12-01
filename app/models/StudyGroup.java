@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import com.avaje.ebean.Page;
+import controllers.Secured;
 import play.db.ebean.Model;
 
 /**
@@ -38,6 +40,11 @@ public class StudyGroup extends Model {
 
   private String courseLevel;
 
+  @OneToOne
+  private UserInfo user;
+
+  private DateTime dateCreated;
+
   /**
    * Constructs a study group object.
    * 
@@ -53,7 +60,7 @@ public class StudyGroup extends Model {
    * @param topics topics to be covered.
    */
   public StudyGroup(long id, String course, int level, String location, int month, int day, int year, int hour,
-      int min, String topics) {
+      int min, String topics, UserInfo user) {
     this.setId(id);
     this.setCourse(course.toUpperCase());
     this.setLevel(level);
@@ -61,6 +68,9 @@ public class StudyGroup extends Model {
     this.meetTime = new DateTime(year, month, day, hour, min);
     this.setTopics(topics);
     this.setCourseLevel(course.toUpperCase() + " " + level);
+    this.setUser(user);
+
+    this.setDateCreated(new DateTime());
   }
 
   /**
@@ -129,27 +139,63 @@ public class StudyGroup extends Model {
   }
 
   /**
-   * Returns the date formatted. ex. 11-9-2014
+   * Returns a formatted meettime date string.
    * 
-   * @return the date in a formatted string.
+   * @return formatted meettime string
    */
-  public String getDateString() {
-    String pattern = "MM-dd-yy";
-    DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
-    String dateString = fmt.print(meetTime);
-    return dateString;
+  public String getMeetDateString() {
+    return getDateString(meetTime);
   }
 
   /**
-   * Returns the time in a formatted string.
+   * Returns a formatted meetime time string.
    * 
-   * @return time in the format of hh: mm aa;
+   * @return formatted meettime string
    */
-  public String getTimeString() {
+  public String getMeetTimeString() {
+    return getTimeString(meetTime);
+  }
+
+  /**
+   * Returns a formatted created date string.
+   * 
+   * @return formatted create time string
+   */
+  public String getCreateDateString() {
+    return getDateString(dateCreated);
+  }
+
+  /**
+   * Returns a formatted created time string.
+   * 
+   * @return formatted create time string
+   */
+  public String getCreateTimeString() {
+    return getTimeString(dateCreated);
+  }
+
+  /**
+   * Formats the date part.
+   * 
+   * @param time the time
+   * @return the formatted date
+   */
+  private String getDateString(DateTime time) {
+    String pattern = "MM-dd-yy";
+    DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
+    return fmt.print(time);
+  }
+
+  /**
+   * Formats the time part.
+   * 
+   * @param time the time
+   * @return the formatted time
+   */
+  private String getTimeString(DateTime time) {
     String pattern = "hh : mm aa";
     DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
-    String timeString = fmt.print(meetTime);
-    return timeString;
+    return fmt.print(time);
   }
 
   /**
@@ -250,6 +296,34 @@ public class StudyGroup extends Model {
    */
   public void setId(long id) {
     this.id = id;
+  }
+
+  /**
+   * @return the user
+   */
+  public UserInfo getUser() {
+    return user;
+  }
+
+  /**
+   * @param user the user to set
+   */
+  public void setUser(UserInfo user) {
+    this.user = user;
+  }
+
+  /**
+   * @return the dateCreated
+   */
+  public DateTime getDateCreated() {
+    return dateCreated;
+  }
+
+  /**
+   * @param dateCreated the dateCreated to set
+   */
+  public void setDateCreated(DateTime dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
 }

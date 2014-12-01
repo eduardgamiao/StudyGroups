@@ -35,6 +35,8 @@ create table study_group (
   location                  varchar(255),
   topics                    varchar(255),
   course_level              varchar(255),
+  user_id                   bigint,
+  date_created              timestamp,
   constraint pk_study_group primary key (id))
 ;
 
@@ -57,6 +59,8 @@ create sequence study_group_seq;
 
 create sequence user_info_seq;
 
+alter table study_group add constraint fk_study_group_user_1 foreign key (user_id) references user_info (id) on delete restrict on update restrict;
+create index ix_study_group_user_1 on study_group (user_id);
 
 
 

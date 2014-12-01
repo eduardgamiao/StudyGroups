@@ -6,6 +6,7 @@ import models.ClassLevel;
 import models.Course;
 import models.Misc;
 import models.StudyGroup;
+import models.UserInfo;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -109,10 +110,12 @@ public class StudyGroups extends Controller {
     else {
 
       StudyGroupForm form = sgf.get();
+      
+      UserInfo user = Secured.getUserInfo(ctx());
 
       StudyGroup sg =
           new StudyGroup(form.id, form.course, form.intLevel, form.location, form.intMonth, form.intDay, form.year,
-              form.intHours, form.intMinutes, form.topics);
+              form.intHours, form.intMinutes, form.topics, user);
 
       sg.save();
 

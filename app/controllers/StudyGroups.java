@@ -9,6 +9,7 @@ import models.StudyGroup;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.formdata.StudyGroupForm;
 import views.html.InvalidUrl;
 import views.html.studyGroup.CreateStudyGroup;
@@ -57,6 +58,7 @@ public class StudyGroups extends Controller {
    * 
    * @return the create study group page.
    */
+  @Security.Authenticated(Secured.class)
   public static Result createStudyGroup() {
     StudyGroupForm sgf = new StudyGroupForm();
     Form<StudyGroupForm> sgForm = Form.form(StudyGroupForm.class).fill(sgf);
@@ -69,6 +71,7 @@ public class StudyGroups extends Controller {
    * @param courseName the courseName, ie ICS
    * @return a create study group form.
    */
+  @Security.Authenticated(Secured.class)
   public static Result createSgForCourse(String courseName) {
     StudyGroupForm sgf = new StudyGroupForm(Misc.unSlugify(courseName));
     Form<StudyGroupForm> sgForm = Form.form(StudyGroupForm.class).fill(sgf);
@@ -82,6 +85,7 @@ public class StudyGroups extends Controller {
    * @param classLevel the classLevel
    * @return a page with the create study group form.
    */
+  @Security.Authenticated(Secured.class)
   public static Result createSgForClass(String course, String classLevel) {
     ClassLevel cl = ClassLevel.getCL(Misc.unSlugify(classLevel));
     StudyGroupForm sgf = new StudyGroupForm(cl.getCourse(), Integer.toString(cl.getLevel()));
@@ -94,6 +98,7 @@ public class StudyGroups extends Controller {
    * 
    * @return the page belonging to the added study group.
    */
+  @Security.Authenticated(Secured.class)
   public static Result addStudyGroup() {
 
     Form<StudyGroupForm> sgf = Form.form(StudyGroupForm.class).bindFromRequest();

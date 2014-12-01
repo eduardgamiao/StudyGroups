@@ -9,7 +9,7 @@ import views.html.Index;
 
 public class Users extends Controller{
 
-  public static Result postLogin() {
+  public static Result postLogin(String url) {
     Form<LoginForm> loginData = Form.form(LoginForm.class).bindFromRequest();
     if (loginData.hasErrors()) {
       return badRequest(Index.render("Login Error", loginData, UserForm.getForm(), false));
@@ -17,7 +17,7 @@ public class Users extends Controller{
     else {
       session().clear();
       session("email", loginData.get().email);
-      return redirect(routes.Application.index());
+      return redirect(url);
     }
   }
   

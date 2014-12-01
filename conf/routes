@@ -9,7 +9,7 @@ POST    /search                     controllers.Application.search(currUrl: Stri
 POST    /create/user                controllers.Application.createAccount()
 
 # Users
-GET     /login                      controllers.Users.postLogin()
+POST     /login                      controllers.Users.postLogin(url: String)
 GET     /logout                     controllers.Users.logout()
 
 # Course

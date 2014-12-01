@@ -18,6 +18,14 @@
     <div class="well">
      <!--  AP -->
         <div class="panel-group" id="accordian" role="tablist" aria-multiselectable="true">
+          @if(list.isEmpty()) {
+              <h3>Currently there are no study groups for this course...</h3>
+                  @if(Secured.isLoggedIn(ctx())) {
+                      <a href="@routes.StudyGroups.createSgForCourse(Misc.slugify(course.getId))">Create a study group for it.</a>
+                  } else {
+                    <a data-toggle="modal" href="#login">Login</a> then create one.
+                  }
+          } else {
             @for(classes <- list) {
                 @if(classes != null) {
                     <div class="panel panel-default">
@@ -54,17 +62,21 @@
                               </table>
                               </div>
                              <h6><a href="@routes.StudyGroups.viewClassStudyGroup(Misc.slugify(classes.getCourse), Misc.slugify(classes.getCourseLevel), 0)">View all study Groups</a></h6>
-                             <h6><a href="@routes.StudyGroups.createSgForClass(Misc.slugify(classes.getCourse), Misc.slugify(classes.getCourseLevel))">Create Another Study Group for this class</a></h6>
-                              
+                             @if(Secured.isLoggedIn(ctx())) {
+                                <h6><a href="@routes.StudyGroups.createSgForClass(Misc.slugify(classes.getCourse), Misc.slugify(classes.getCourseLevel))">Create Another Study Group for this class</a></h6>
+                             }
                             </div>
                            </div>
                  }
                  
+        }
         }    
         </div>
         <hr>
         <div>
-            <h5>Can't find your class?  <a href="@routes.StudyGroups.createSgForCourse(Misc.slugify(course.getId))">Create a study group for it.</a></h5>                           
+            @if(Secured.isLoggedIn(ctx())) {
+                <h5>Can't find your class?  <a href="@routes.StudyGroups.createSgForCourse(Misc.slugify(course.getId))">Create a study group for it.</a></h5> 
+            }                          
         </div>
         </div>           
 }

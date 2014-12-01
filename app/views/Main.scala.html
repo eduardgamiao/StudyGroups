@@ -39,8 +39,9 @@
 
             <li><a href="@routes.Application.listOfCourses()">Courses</a></li>
            <!-- <li><a >Create A Study Group</a></li> -->
-           <li><a data-toggle="modal" href="#create">Create</a></li>
-           
+           @if(Secured.isLoggedIn(ctx())) {
+            <li><a data-toggle="modal" href="#create">Create</a></li>
+           }
            <li class="hidden-xs">
             @form(routes.Application.search(request.path), 'class -> "form-inline") {
             
@@ -52,7 +53,7 @@
           <li class="visible-xs"><a data-toggle="modal" href="#search">Search</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            @if(!controllers.Secured.isLoggedIn(ctx())) {
+            @if(!Secured.isLoggedIn(ctx())) {
                 <li><a data-toggle="modal" href="#login">Login</a></li>
                 <li><a data-toggle="modal" href="#createAccount">Create Account</a></li>
             } else {
@@ -126,7 +127,7 @@
           <h4 class="modal-title">Login</h4>
         </div>
         <div class="modal-body">
-            @form(routes.Users.postLogin(), 'class -> "form-horizontal") {
+            @form(routes.Users.postLogin(request.path), 'class -> "form-horizontal") {
             
                 @bootstrap3.text(
                     login("email"),

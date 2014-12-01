@@ -69,6 +69,8 @@
         </ul>
     </div>
     
-    <h5>Want to create a new study group?  <a href="@routes.StudyGroups.createSgForClass(Misc.slugify(cl.getCourse), Misc.slugify(cl.getCourseLevel))">Go Here</a></h5>
+    @if(Secured.isLoggedIn(ctx())) {
+        <h5>Want to create a new study group?  <a href="@routes.StudyGroups.createSgForClass(Misc.slugify(cl.getCourse), Misc.slugify(cl.getCourseLevel))">Go Here</a></h5>
+    }
 </div>
 }

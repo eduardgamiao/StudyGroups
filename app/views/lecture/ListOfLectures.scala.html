@@ -64,9 +64,13 @@
   @if(lectures.isEmpty()) {
   <div class="noLectures">
     <h3>Currently there are no lectures for this course...</h3>
+    @if(Secured.isLoggedIn(ctx())) {
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
       <span class="glyphicon glyphicon-pencil"></span> Add One!
     </button>
+    } else {
+        <a data-toggle="modal" href="#login">Login</a> then create one.
+    }
   </div>
   }
   

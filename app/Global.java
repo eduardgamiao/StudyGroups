@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import models.Course;
 import models.LectureDB;
+import models.UserInfo;
+import models.UserInfoDB;
 import play.Application;
 import play.GlobalSettings;
 import play.libs.F.Promise;
@@ -22,28 +24,32 @@ public class Global extends GlobalSettings {
 
   public void onStart(Application app) {
 
-    if (Course.find().all().size() == 0) {
+    if (Course.find().all().isEmpty()) {
       loadCourses(courses);
     }
 
-    LectureDB.addLecture(new LectureForm("ICS", "311", "Topic 03 A: Asymtotic Notations", 
+    if (UserInfo.find().all().isEmpty()) {
+      UserInfoDB.addUserInfo("admin", "admin", "admin@admin.com", "admin");
+    }
+
+    LectureDB.addLecture(new LectureForm("ICS", "311", "Topic 03 A: Asymtotic Notations",
         "Introduces asymptotic concepts and big-O notation.", "https://www.youtube.com/watch?v=y86z2OrIYQQ"));
-    
-    LectureDB.addLecture(new LectureForm("ICS", "311", "Topic 06 C: Hash Functions", 
+
+    LectureDB.addLecture(new LectureForm("ICS", "311", "Topic 06 C: Hash Functions",
         "Examples of Hash Functions and Universal Hashing", "https://www.youtube.com/watch?v=jW4wCfz3DwE"));
-    
-    LectureDB.addLecture(new LectureForm("ICS", "314", "Introduction to ICS 314, Fall 2013", 
+
+    LectureDB.addLecture(new LectureForm("ICS", "314", "Introduction to ICS 314, Fall 2013",
         "introduction to software engineering. See http://ics314f13.wordpress.com",
         "https://www.youtube.com/watch?v=H_Oc1x-XdYo"));
-    
+
     LectureDB.addLecture(new LectureForm("KOR", "101", "How to Introduce Yourself in Korean",
         "In Korea, manners are important, and this step-by-step video teaches you some of the basics you need to"
-        + " be polite while speaking Korean. A native Korean teacher will explain the simple phrases necessary.",
+            + " be polite while speaking Korean. A native Korean teacher will explain the simple phrases necessary.",
         "https://www.youtube.com/watch?v=x9_BmcUk_Xs"));
-    
-    LectureDB.addLecture(new LectureForm("KOR", "201", "Intermediate Korean Practice 1", 
-        "Create complex sentence(s)", "https://www.youtube.com/watch?v=ZRJ5QKqstTM"));
-    
+
+    LectureDB.addLecture(new LectureForm("KOR", "201", "Intermediate Korean Practice 1", "Create complex sentence(s)",
+        "https://www.youtube.com/watch?v=ZRJ5QKqstTM"));
+
   }
 
   public Promise<SimpleResult> onHandlerNotFound(RequestHeader request) {

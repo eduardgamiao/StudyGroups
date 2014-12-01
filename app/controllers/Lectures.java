@@ -12,6 +12,7 @@ import views.formdata.LectureForm;
 import views.formdata.LectureLevels;
 import views.html.lecture.ListOfLectures;
 import views.html.lecture.CreateLecture;
+import play.mvc.Security;
 
 /**
  * Implements the controller for Lectures.
@@ -48,6 +49,7 @@ public class Lectures extends Controller{
    * 
    * @return lecture list page
    */
+  @Security.Authenticated(Secured.class)
   public static Result addLecture(String id) {
     Course courseName = Course.find().byId(id.toUpperCase());
     List<Lecture> lectures = LectureDB.getLectures(id.toUpperCase());
@@ -73,6 +75,7 @@ public class Lectures extends Controller{
    * 
    * @return lecture list page.
    */
+  @Security.Authenticated(Secured.class)
   public static Result addNewLecture() {
     
     Form<LectureForm> formData = Form.form(LectureForm.class).bindFromRequest();
@@ -101,6 +104,7 @@ public class Lectures extends Controller{
    * 
    * @return the lecture list page.
    */
+  @Security.Authenticated(Secured.class)
   public static Result deleteLecture(String id, String course, String level, String videoId) {
     Course courseName = Course.find().byId(id.toUpperCase());
     Lecture lecture = LectureDB.getLecture(course, level, videoId);
@@ -114,6 +118,7 @@ public class Lectures extends Controller{
    * 
    * @return the create lecture page.
    */
+  @Security.Authenticated(Secured.class)
   public static Result createLecture() {
     LectureForm lf = new LectureForm();
     Form<LectureForm> lectureForm = Form.form(LectureForm.class).fill(lf);

@@ -11,7 +11,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import com.avaje.ebean.Page;
-import controllers.Secured;
 import play.db.ebean.Model;
 
 /**

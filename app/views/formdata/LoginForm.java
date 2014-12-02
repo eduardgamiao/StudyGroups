@@ -50,7 +50,7 @@ public class LoginForm {
     List<ValidationError> errors = new ArrayList<>();
 
     if (UserInfoDB.getUser(email) == null) {
-      errors.add(new ValidationError("email", "Not a valid email adress."));
+      errors.add(new ValidationError("email", "Incorrect email address."));
     }
     else if (!UserInfoDB.getUser(email).getPassword().equals(password)) {
       errors.add(new ValidationError("password", "Incorrect password."));

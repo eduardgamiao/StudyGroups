@@ -2,6 +2,8 @@ package views.formdata;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.persistence.Id;
 import models.UserInfoDB;
 import play.data.Form;
@@ -14,6 +16,10 @@ import play.data.validation.ValidationError;
  *
  */
 public class UserForm {
+  
+  /** Simple e-mail regex */
+  public static final Pattern VALID_EMAIl_REGEX = 
+      Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
   @Id
   private long id;
@@ -51,10 +57,10 @@ public class UserForm {
       errors.add(new ValidationError("email", "Email already exists."));
     }
 
-    if (!email.contains("@") || !email.endsWith(".com")) {
-      errors.add(new ValidationError("email", "Not a valid Email adress."));
+    if (!isValidEmail(email)) {
+      errors.add(new ValidationError("email", "Invalid e-mail address. Example: xxx@xxx.xxx"));
     }
-
+    
     // Password must be between 4 and 8 characters long
     // Password must contain at least one number
     if (!password.matches("^(?=.*\\d).{4,8}$")) {
@@ -157,4 +163,14 @@ public class UserForm {
     this.password2 = password2;
   }
 
+  /**
+   * Crude validation of an email address using a regex.
+   * 
+   * @param email the email
+   * @return true if valid, otherwise false.
+   */
+  public static boolean isValidEmail(String email) {
+    Matcher matcher = VALID_EMAIl_REGEX.matcher(email);
+    return matcher.find();
+}
 }

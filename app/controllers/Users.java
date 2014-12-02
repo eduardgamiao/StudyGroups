@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.List;
+import models.Misc;
+import models.StudyGroup;
+import models.UserInfo;
 import models.UserInfoDB;
 import play.data.Form;
 import play.mvc.Controller;
@@ -7,6 +11,7 @@ import play.mvc.Result;
 import views.formdata.LoginForm;
 import views.formdata.UserForm;
 import views.html.Index;
+import views.html.user.Profile;
 
 public class Users extends Controller {
 
@@ -51,5 +56,11 @@ public class Users extends Controller {
   public static Result logout() {
     session().clear();
     return redirect(routes.Application.index());
+  }
+
+  public static Result profile(long id, String name) {
+    UserInfo user = UserInfoDB.getUser(id);
+    List<StudyGroup> sg = user.userStudyGroups();
+    return ok(Profile.render("View Profile: " + Misc.unSlugifyName(name), user, sg));
   }
 }

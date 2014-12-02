@@ -1,6 +1,5 @@
 package models;
 
-
 /**
  * Provides an in-memory repository for UserInfo. Storing credentials in the clear is kind of bogus.
  * 
@@ -38,6 +37,10 @@ public class UserInfoDB {
    */
   public static UserInfo getUser(String email) {
     return UserInfo.find().where().eq("email", email).findUnique();
+  }
+
+  public static UserInfo getUser(long id) {
+    return UserInfo.find().where().eq("id", id).findUnique();
   }
 
   /**

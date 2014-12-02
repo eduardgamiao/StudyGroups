@@ -34,6 +34,7 @@ create table study_group (
   level                     integer,
   location                  varchar(255),
   topics                    varchar(255),
+  user_ids                  varchar(255),
   course_level              varchar(255),
   user_id                   bigint,
   date_created              timestamp,

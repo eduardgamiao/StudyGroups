@@ -32,4 +32,18 @@ public class Misc {
     return url.replace('-', ' ').toUpperCase();
   }
 
+  /**
+   * Unslugifies a name.
+   * 
+   * @param name the name
+   * @return a name
+   */
+  public static String unSlugifyName(String name) {
+    name = name.replace('-', ' ');
+    String[] names = name.split("\\s+");
+    names[0] = names[0].substring(0, 1).toUpperCase() + names[0].substring(1, names[0].length());
+    names[1] = names[1].substring(0, 1).toUpperCase() + names[1].substring(1, names[1].length());
+    return names[0] + " " + names[1];
+  }
+
 }

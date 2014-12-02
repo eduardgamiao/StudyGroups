@@ -11,6 +11,7 @@ POST    /search                     controllers.Application.search(currUrl: Stri
 POST    /create/user                controllers.Users.createAccount()
 POST    /login                      controllers.Users.postLogin(url: String)
 GET     /logout                     controllers.Users.logout()
+GET     /view/profile/:id/:name     controllers.Users.profile(id: Long, name: String)
 
 # Course
 GET     /courses/:id                 controllers.Courses.viewCourse(id: String)

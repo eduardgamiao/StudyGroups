@@ -37,6 +37,8 @@ public class StudyGroup extends Model {
   private String location;
   private String topics;
 
+  private String userIds;
+
   private String courseLevel;
 
   @OneToOne
@@ -112,6 +114,16 @@ public class StudyGroup extends Model {
    */
   public static StudyGroup getSG(long id) {
     return find().where().eq("id", id).findUnique();
+  }
+
+  /**
+   * Returns a list of study groups belonging to the user.
+   * 
+   * @param user the user
+   * @return list
+   */
+  public static List<StudyGroup> getUserStudyGroups(UserInfo user) {
+    return find().where().eq("user", user).findList();
   }
 
   /**

@@ -1,5 +1,6 @@
 package models;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.db.ebean.Model;
@@ -42,6 +43,15 @@ public class UserInfo extends Model {
     this.lastName = lastName;
     this.email = email;
     this.password = password;
+  }
+
+  /**
+   * Returns a list of study groups that this user has created.
+   * 
+   * @return list
+   */
+  public List<StudyGroup> userStudyGroups() {
+    return StudyGroup.getUserStudyGroups(this);
   }
 
   /**

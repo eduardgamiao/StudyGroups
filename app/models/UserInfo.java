@@ -21,6 +21,7 @@ public class UserInfo extends Model {
   private String lastName;
   private String email;
   private String password;
+  private String profilePic;
 
   /**
    * The EBean ORM finder method for database queries.
@@ -38,11 +39,12 @@ public class UserInfo extends Model {
    * @param email The email.
    * @param password The password.
    */
-  public UserInfo(String firstName, String lastName, String email, String password) {
+  public UserInfo(String firstName, String lastName, String email, String password, String profilePic) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
+    this.profilePic = profilePic;
   }
 
   /**
@@ -131,5 +133,19 @@ public class UserInfo extends Model {
    */
   public String getFullName() {
     return firstName + " " + lastName;
+  }
+
+  /**
+   * @return the profilePic
+   */
+  public String getProfilePic() {
+    return profilePic;
+  }
+
+  /**
+   * @param profilePic the profilePic to set
+   */
+  public void setProfilePic(String profilePic) {
+    this.profilePic = profilePic;
   }
 }

@@ -60,7 +60,7 @@
                 <li><a data-toggle="modal" href="#login">Login</a></li>
                 <li><a data-toggle="modal" href="#createAccount">Create Account</a></li>
             } else {
-                <li><a href="@routes.Users.profile(Secured.getUserInfo(ctx()).getId(), Misc.slugify(Secured.getUserInfo(ctx()).getFullName()))">@Secured.getUserInfo(ctx()).getFirstName()</a></li>
+                <li><a href="@routes.Users.profile(Secured.getUserInfo(ctx()).getId(), Misc.slugify(Secured.getUserInfo(ctx()).getFullName()))"><img src="@Secured.getUserInfo(ctx()).getProfilePic()" class="profileThumbnail">  @Secured.getUserInfo(ctx()).getFirstName()</a></li>
                 <li><a href="@routes.Users.logout()">Logout</a></li>
             }
           </ul>
@@ -186,8 +186,7 @@
                 label = "Email",
                 placeholder = "", 
                 help = "")
-             
-                 
+                             
              @bootstrap3.password(
                 createUser("password"),
                 label = "Password",
@@ -199,6 +198,12 @@
                 label = "Confirm Password",
                 placeholder = "", 
                 help = "Enter your password again.")
+                
+            @bootstrap3.text(
+                createUser("profilePic"),
+                label = "Profile Picture",
+                placeholder = "http://www.example.com/me.jpg", 
+                help = "Optional")
              
              <div class="well">
                <div class="disqus"></div>

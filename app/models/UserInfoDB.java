@@ -14,8 +14,8 @@ public class UserInfoDB {
    * @param email Their email.
    * @param password Their password.
    */
-  public static void addUserInfo(String firstName, String lastName, String email, String password) {
-    UserInfo userInfo = new UserInfo(firstName, lastName, email, password);
+  public static void addUserInfo(String firstName, String lastName, String email, String password, String profilePic) {
+    UserInfo userInfo = new UserInfo(firstName, lastName, email, password, profilePic);
     userInfo.save();
   }
 

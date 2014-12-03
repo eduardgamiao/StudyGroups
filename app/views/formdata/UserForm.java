@@ -1,5 +1,7 @@
 package views.formdata;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -38,6 +40,8 @@ public class UserForm {
 
   @Constraints.Required(message = "Please enter the password again.")
   private String password2;
+  
+  private String profilePic;
 
   /**
    * Constructor.
@@ -58,7 +62,7 @@ public class UserForm {
     }
 
     if (!isValidEmail(email)) {
-      errors.add(new ValidationError("email", "Invalid e-mail address. Example: xxx@xxx.xxx"));
+      errors.add(new ValidationError("email", "Invalid e-mail address. Example: example@example.com"));
     }
     
     // Password must be between 4 and 8 characters long
@@ -71,6 +75,14 @@ public class UserForm {
       errors.add(new ValidationError("password2", "Passwords do not match."));
     }
 
+    if (!exists(profilePic)) {
+      errors.add(new ValidationError("profilePic", "Invalid URL. Example: http://www.example.com/me.jpg"));
+    }
+    
+    if (!(profilePic.endsWith(".jpg") || profilePic.endsWith(".png") || profilePic.endsWith(".gif"))) {
+      errors.add(new ValidationError("profilePic", "Invalid image URL. Must end with .jpg, .png, or .gif"));
+    }
+    
     return errors.isEmpty() ? null : errors;
   }
 
@@ -161,8 +173,22 @@ public class UserForm {
 
   public void setPassword2(String password2) {
     this.password2 = password2;
+  } 
+
+  /**
+   * @return the profilePic
+   */
+  public String getProfilePic() {
+    return profilePic;
   }
 
+  /**
+   * @param profilePic the profilePic to set
+   */
+  public void setProfilePic(String profilePic) {
+    this.profilePic = profilePic;
+  }
+  
   /**
    * Crude validation of an email address using a regex.
    * 
@@ -172,5 +198,21 @@ public class UserForm {
   public static boolean isValidEmail(String email) {
     Matcher matcher = VALID_EMAIl_REGEX.matcher(email);
     return matcher.find();
-}
+  }
+  
+  public static boolean exists(String URLName){
+    try {
+      HttpURLConnection.setFollowRedirects(false);
+      // note : you may also need
+      //        HttpURLConnection.setInstanceFollowRedirects(false)
+      HttpURLConnection con =
+         (HttpURLConnection) new URL(URLName).openConnection();
+      con.setRequestMethod("HEAD");
+      return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+    }
+    catch (Exception e) {
+       e.printStackTrace();
+       return false;
+    }
+  }  
 }

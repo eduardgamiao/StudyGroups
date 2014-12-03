@@ -45,3 +45,8 @@ h1 {
   background-position: center;
   height: 50px;
 }
+
+.profileThumbnail {
+  height: 21px;
+  width: 25px;
+}

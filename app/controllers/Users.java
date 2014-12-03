@@ -28,7 +28,10 @@ public class Users extends Controller {
     }
 
     UserForm uf = userForm.get();
-    UserInfoDB.addUserInfo(uf.getFirstName(), uf.getLastName(), uf.getEmail(), uf.getPassword());
+    if (uf.getProfilePic() == null || uf.getProfilePic().length() == 0) {
+      uf.setProfilePic("https://raw.githubusercontent.com/StudyGroupsUH/StudyGroups/dev-v1/public/images/book.png");
+    }
+    UserInfoDB.addUserInfo(uf.getFirstName(), uf.getLastName(), uf.getEmail(), uf.getPassword(), uf.getProfilePic());
 
     // Login user after creating account
     session().clear();

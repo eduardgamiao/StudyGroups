@@ -47,27 +47,32 @@ public class Search {
 
     studyGroups = new ArrayList<>();
     lectures = new ArrayList<>();
-    
-    List<String> keywordList = keysToList(keywords);   
-    
+
+    List<String> keywordList = keysToList(keywords);
+
     List<Lecture> currentLectures = Lecture.find().all();
     List<StudyGroup> currentSGs = StudyGroup.find().all();
-    
-    for (Lecture lecture: currentLectures) {
-      if (containsKeys(lecture.getTopic().concat(" ").concat(lecture.getDescription().concat(" ").
-          concat(lecture.getCourseLevel()).concat(" ").concat(lecture.getLevel())), keywordList)) {
-            lectures.add(lecture);
-          }
+
+    for (Lecture lecture : currentLectures) {
+      if (containsKeys(
+          lecture
+              .getTopic()
+              .concat(" ")
+              .concat(
+                  lecture.getDescription().concat(" ").concat(lecture.getCourseLevel()).concat(" ")
+                      .concat(lecture.getLevel())), keywordList)) {
+        lectures.add(lecture);
+      }
     }
-    
-    for (StudyGroup sg: currentSGs) {
+
+    for (StudyGroup sg : currentSGs) {
       if (containsKeys(sg.getTopics().concat(" ").concat(sg.getCourse().concat(" ").concat(sg.getCourseLevel())),
           keywordList)) {
-            studyGroups.add(sg);
-          }
+        studyGroups.add(sg);
+      }
     }
   }
-  
+
   /**
    * Puts search keys into List form.
    * 
@@ -75,14 +80,10 @@ public class Search {
    * 
    * @return a list of keys
    */
-  public static List<String> keysToList(String keys) {
-    List<String> keysList = new ArrayList<String>();
-    for(String word: keys.split(" ")) {
-      keysList.add(word);
-    }
-    return keysList;
+  private static List<String> keysToList(String keys) {
+    return java.util.Arrays.asList(keys.split("\\s+"));
   }
-  
+
   /**
    * Checks if keys match topic, descriptions, course, etc...
    * 
@@ -91,13 +92,10 @@ public class Search {
    * 
    * @return false if target does not contain all the keys, true otherwise.
    */
-  public static boolean containsKeys(String target, List<String> keys) {
+  private static boolean containsKeys(String target, List<String> keys) {
     boolean result = true;
-    for (int i = 0; i < keys.size(); i++) {
-      if (target.toLowerCase().contains(keys.get(i).toLowerCase())) {
-        result = true;
-      }
-      else {
+    for (String key : keys) {
+      if (!target.toLowerCase().contains(key.toLowerCase())) {
         result = false;
         break;
       }

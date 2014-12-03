@@ -14,7 +14,7 @@
     @form(routes.StudyGroups.addStudyGroup(), 'class -> "form-horizontal") {
     
     <!--  Still need to add other required parts of the form -->
-        @bootstrap3.textTime(
+        @bootstrap3.textTwoBoxes(
             sgf("course"),
             label = "Course",
             placeholder = "ICS",
@@ -42,7 +42,9 @@
             help = "HH",
             sgf("min"),
             placeholder2 = Integer.toString(models.DateTimeInfo.getMinute()),
-            help2 = "mm")
+            help2 = "mm",
+            sgf("amPm"),
+            buttonNameList = models.DateTimeInfo.getAmPm())
             
         @bootstrap3.textShort(
             sgf("location"),

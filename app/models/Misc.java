@@ -1,7 +1,7 @@
 package models;
 
 /**
- * Used to slugify and unslugify urls.
+ * Handles url stuff.
  * 
  * @author Alvin Prieto
  *

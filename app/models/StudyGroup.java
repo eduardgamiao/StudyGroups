@@ -31,13 +31,12 @@ public class StudyGroup extends Model {
   private long id;
 
   private DateTime meetTime;
+  private String amPm;
 
   private String course;
   private int level;
   private String location;
   private String topics;
-
-  private String userIds;
 
   private String courseLevel;
 
@@ -58,15 +57,18 @@ public class StudyGroup extends Model {
    * @param year the year
    * @param hour the hour
    * @param min the minute
+   * @param amPm am pm
    * @param topics topics to be covered.
+   * @param user who created study group
    */
   public StudyGroup(long id, String course, int level, String location, int month, int day, int year, int hour,
-      int min, String topics, UserInfo user) {
+      int min, String amPm, String topics, UserInfo user) {
     this.setId(id);
     this.setCourse(course.toUpperCase());
     this.setLevel(level);
     this.setLocation(location);
     this.meetTime = new DateTime(year, month, day, hour, min);
+    this.amPm = amPm;
     this.setTopics(topics);
     this.setCourseLevel(course.toUpperCase() + " " + level);
     this.setUser(user);
@@ -155,7 +157,7 @@ public class StudyGroup extends Model {
    * @return formatted meettime string
    */
   public String getMeetDateString() {
-    return getDateString(meetTime);
+    return DateTimeInfo.getDateString(meetTime);
   }
 
   /**
@@ -164,7 +166,7 @@ public class StudyGroup extends Model {
    * @return formatted meettime string
    */
   public String getMeetTimeString() {
-    return getTimeString(meetTime);
+    return DateTimeInfo.getTimeString(meetTime) + " " + getAmPm();
   }
 
   /**
@@ -173,7 +175,7 @@ public class StudyGroup extends Model {
    * @return formatted create time string
    */
   public String getCreateDateString() {
-    return getDateString(dateCreated);
+    return DateTimeInfo.getDateString(dateCreated);
   }
 
   /**
@@ -182,31 +184,7 @@ public class StudyGroup extends Model {
    * @return formatted create time string
    */
   public String getCreateTimeString() {
-    return getTimeString(dateCreated);
-  }
-
-  /**
-   * Formats the date part.
-   * 
-   * @param time the time
-   * @return the formatted date
-   */
-  private String getDateString(DateTime time) {
-    String pattern = "MM-dd-yy";
-    DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
-    return fmt.print(time);
-  }
-
-  /**
-   * Formats the time part.
-   * 
-   * @param time the time
-   * @return the formatted time
-   */
-  private String getTimeString(DateTime time) {
-    String pattern = "hh : mm aa";
-    DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
-    return fmt.print(time);
+    return DateTimeInfo.getTimeString(dateCreated);
   }
 
   /**
@@ -335,6 +313,20 @@ public class StudyGroup extends Model {
    */
   public void setDateCreated(DateTime dateCreated) {
     this.dateCreated = dateCreated;
+  }
+
+  /**
+   * @return the amPm
+   */
+  public String getAmPm() {
+    return amPm;
+  }
+
+  /**
+   * @param amPm the amPm to set
+   */
+  public void setAmPm(String amPm) {
+    this.amPm = amPm;
   }
 
 }

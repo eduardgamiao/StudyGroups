@@ -81,9 +81,9 @@
           <p><b>Description: </b></p>
           @lecture.getDescription() 
           <br> <br> 
-          <!-- Temporary, unsure whether or not to keep it in. -AW -->
-          <!-- <a id="editLecture" class="btn btn-warning btn-xs" href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> -->
+          @if(Secured.isLoggedIn(ctx())) {  
           <a id="deleteLecture" data-toggle="modal" href="#delete" class="open-delete btn btn-danger btn-xs pull-right" data-link="@routes.Lectures.deleteLecture(course.getId(), lecture.getCourse(), lecture.getLevel(), lecture.getVideoId())"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+          }
         </div>
       </div>
     </div>

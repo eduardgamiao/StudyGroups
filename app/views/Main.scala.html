@@ -20,6 +20,29 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
 @scripts
 
+<!-- Load Bootstrap JavaScript components. HTMLUnit (used in testing) requires JQuery 1.8.3 or below). --> 
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+@js
+
+  
+  @if(showCreateAccountModal) {
+    <script type="text/javascript">
+      $(window).load(function() {
+         $('#createAccount').modal('show');
+      });
+    </script>
+   }
+  
+  @if(showLoginModal) {
+    <script type="text/javascript">
+    $(window).load(function() {
+       $('#login').modal('show');
+    });
+    </script>
+  } 
+  
+
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
           <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -233,28 +256,6 @@
   <div class="container">
     <hr>
   </div>
-  
-  <!-- Load Bootstrap JavaScript components. HTMLUnit (used in testing) requires JQuery 1.8.3 or below). -->
-  
-  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  @js
-  
-  @if(showCreateAccountModal) {
-    <script type="text/javascript">
-      $(window).load(function() {
-         $('#createAccount').modal('show');
-      });
-    </script>
-   }
-  
-  @if(showLoginModal) {
-    <script type="text/javascript">
-    $(window).load(function() {
-       $('#login').modal('show');
-    });
-    </script>
-  } 
-  
+
 </body>
 </html>

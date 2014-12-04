@@ -1,0 +1,71 @@
+@(title: String, sgf: Form[views.formdata.StudyGroupForm])
+
+@import helper._
+@import bootstrap3._
+
+
+@Main(title) {
+
+
+<h2>Create A Study Group</h2>
+<hr>
+
+<div class="well">  
+    @form(routes.StudyGroups.addStudyGroup(), 'class -> "form-horizontal") {
+    
+    <!--  Still need to add other required parts of the form -->
+        @bootstrap3.textTwoBoxes(
+            sgf("course"),
+            label = "Course",
+            placeholder = "ICS",
+            help = "Course abbreviation",
+            sgf("level"),
+            placeholder2 = "311",
+            help2 = "")
+            
+        @bootstrap3.textDate(
+            sgf("month"),
+            label = "Date",
+            placeholder = Integer.toString(models.DateTimeInfo.getMonth()),
+            help = "MM",
+            sgf("day"),
+            placeholder2 = Integer.toString(models.DateTimeInfo.getDay()),
+            help2 = "dd",
+            sgf("year"),
+            placeholder3 = Integer.toString(models.DateTimeInfo.getYear()),
+            help3 = "YYYY")
+            
+        @bootstrap3.textTime(
+            sgf("hour"),
+            label = "Time",
+            placeholder = Integer.toString(models.DateTimeInfo.getHour()),
+            help = "HH",
+            sgf("min"),
+            placeholder2 = Integer.toString(models.DateTimeInfo.getMinute()),
+            help2 = "mm",
+            sgf("amPm"),
+            buttonNameList = models.DateTimeInfo.getAmPm())
+            
+        @bootstrap3.textShort(
+            sgf("location"),
+            label = "Location",
+            placeholder = "Over the rainbow", 
+            help = "")
+        
+        @bootstrap3.textareaShort(
+            sgf("topics"),
+            label = "Topics",
+            placeholder = "BFS, DFS",
+            help = "Please separate topics with a comma")
+        
+     
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="submitButton" type="submit" class="btn btn-primary">
+                Create
+                </button>
+            </div>
+        </div>
+        </div>
+    }
+}

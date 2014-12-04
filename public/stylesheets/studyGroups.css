@@ -1,0 +1,25 @@
+.title {
+	text-align: center;
+}
+
+.sub {
+	font-size: 24px;
+	padding: 1px;
+}
+
+.sg {
+  font-size: 20px;
+  padding: 1px;
+}
+
+h6 {
+  margin-left: 20px;
+}
+
+.no_link {
+  color: black;
+}
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+  text-decoration: underline;
+}

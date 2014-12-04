@@ -1,0 +1,13 @@
+.list-page {
+	padding: 20px;
+}
+
+.list-page h1 {
+	font-size: 60px;
+	font-weight: bold;
+}
+
+.sub {
+	font-size: 20px;
+	padding: 1px;
+}

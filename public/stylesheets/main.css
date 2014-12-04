@@ -1,0 +1,52 @@
+body {
+  padding-top: 65px;
+}
+.well-color {
+  padding: 40px;
+}
+
+h1 {
+  margin: 0;
+}
+
+.listHeader {
+  text-align: center;
+  background-size: cover;
+  padding: 20px;
+}
+
+.chat {
+  background-color: beige;
+}
+
+.no_link {
+  color: black;
+}
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+  text-decoration: underline;
+}
+
+.vertical-line {
+  float: left;
+  width: 1px;
+  background-color: black;
+}
+
+.searchBar {
+  margin-top: 7px;
+  width: 320px;
+  padding: 0px;
+  margin-left: 3px;
+}
+
+.disqus {
+  background: url('../images/disqus.png') no-repeat;
+  background-position: center;
+  height: 50px;
+}
+
+.profileThumbnail {
+  height: 21px;
+  width: 25px;
+}

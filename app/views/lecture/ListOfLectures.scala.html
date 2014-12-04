@@ -1,0 +1,183 @@
+@(title: String, course: models.Course, lectures: List[models.Lecture], lectureForm: Form[views.formdata.LectureForm],
+         showAddModal: Boolean, filterForm: Form[views.formdata.FilterLectureForm], lectureLevels: Map[String, Boolean]) 
+
+@import helper._
+@import bootstrap3._
+
+@scripts = {
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/lectures.css")">
+}
+
+@js = {
+    @if(showAddModal) {
+        <script type="text/javascript">
+        $(window).load(function() {
+             $('#add').modal('show');
+        });
+        </script>
+    }
+    
+    <script type="text/javascript">
+    $(document).on("click", ".open-delete", function() {
+        var url = $(this).attr('data-link');
+        $(".modal-footer #modaldelete").attr('href', url);
+    });
+    </script>
+    
+    <script type="text/javascript">
+    function toggleChevron(e) {
+        $(e.target)
+            .prev('.panel-heading')
+            .find("i.indicator")
+            .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+    }
+    $('#accordion').on('hidden.bs.collapse', toggleChevron);
+    $('#accordion').on('shown.bs.collapse', toggleChevron);
+    </script>
+}
+
+@Main(title, scripts, js) {
+
+<div class="title">
+  <h1>@course.getCourseName() (@course.getId()) - Lectures</h1>
+</div>
+
+<hr>
+<br />
+<div class="well">
+
+  <b class="count">Number of Videos: <span class="badge">@lectures.size()</span></b>
+  @if(!lectures.isEmpty()) {    
+    @if(Secured.isLoggedIn(ctx())) {               
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
+      <span class="glyphicon glyphicon-pencil"></span> Add
+    </button>
+    }
+  }
+  @filterLectures(filterForm("level"),
+                  filterType = "All Levels",
+                  levelMap = lectureLevels,
+                  isMultiple = false,
+                  courseId = course.getId())                 
+  <br>
+  <br>
+  
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    @for(lecture <- lectures) {
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="@lecture.getLevel()">
+        <h4 class="panel-title">
+          <a class="sub btn-block" data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true" aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic()
+          <div class="pull-right"><i class="indicator glyphicon glyphicon-chevron-down"></i></div></a>
+        </h4>
+      </div>
+      <div id="@lecture.getVideoId()" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@lecture.getVideoId()">
+        <div class="panel-body">
+          <p>
+            <b>Video: </b>
+          </p>
+          <iframe width="560" height="315" src="http://www.youtube.com/embed/@lecture.getVideoId()" frameborder="0" allowfullscreen></iframe>
+          <p><b>Description: </b></p>
+          @lecture.getDescription() 
+          <br> <br> 
+          @if(Secured.isLoggedIn(ctx())) {  
+          <a id="deleteLecture" data-toggle="modal" href="#delete" class="open-delete btn btn-danger btn-xs pull-right" data-link="@routes.Lectures.deleteLecture(course.getId(), lecture.getCourse(), lecture.getLevel(), lecture.getVideoId())"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  
+  @if(lectures.isEmpty()) {
+  <div class="noLectures">
+    <h3>Currently there are no lectures for this course...</h3>
+    @if(Secured.isLoggedIn(ctx())) {
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
+      <span class="glyphicon glyphicon-pencil"></span> Add One!
+    </button>
+    } else {
+        <a data-toggle="modal" href="#login">Login</a> to add videos.
+    }
+  </div>
+  }
+  @if(!lectures.isEmpty() && !Secured.isLoggedIn(ctx())) {
+  <div class="noLectures">
+    <a data-toggle="modal" href="#login">Login</a> to add videos.
+  </div>
+  }
+  
+    <!-- delete modal -->
+    <div id="delete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">
+              <span class="glyphicon glyphicon-warning-sign"></span> Do you really want to delete this video?
+            </h4>
+          </div>
+          <div class="modal-body">
+            <p>This change cannot be undone!</p>
+          </div>
+          <div class="modal-footer">
+            <button id="modalcancel" type="button" class="btn btn-default" data-dismiss="modal">No, cancel.</button>
+            <a id="modaldelete" type="button" class="btn btn-danger" 
+                href="">
+            <span class="glyphicon glyphicon-trash"></span> Yes, Delete.</a>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  
+  <!-- add modal -->
+  @form(routes.Lectures.addLecture(course.getId()), 'class -> "form-horizontal") {
+  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Add Lecture for @course.getId()</h4>
+        </div>
+        <div class="modal-body">      
+            @text(lectureForm("course"),
+                  label = "Course",
+                  placeholder = "ICS",
+                  help = "")
+            
+            @text(lectureForm("level"),
+                  label = "Level",
+                  placeholder = "311",
+                  help = "")
+            
+            @text(lectureForm("topic"),
+                  label = "Topic",
+                  placeholder = "Topic 10A: Quicksort",
+                  help = "")
+            
+            @bootstrap3.textarea(lectureForm("description"),
+                  label = "Description",
+                  placeholder = "In this video, we will be going over quicksort....",
+                  help = "Optional")
+                  
+            @text(lectureForm("videoId"),
+                  label = "Video ID",
+                  placeholder = "http://www.youtube.com/watch?v=v1ghdc_hwMI",
+                  help = "The YouTube URL of the video")
+            
+                     
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button id="submitLecture "type="submit" class="btn btn-success">Add Lecture</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+}

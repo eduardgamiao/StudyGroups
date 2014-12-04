@@ -1,0 +1,100 @@
+@(title: String, sg: models.StudyGroup)
+
+@scripts = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/studyGroups.css")">
+}
+
+@Main(title, scripts) {
+    
+  <div class="title">
+  	<h1>@sg.getCourseLevel() - @sg.getTopics()</h1>
+  </div>
+  
+  <hr>
+  <div class="well">
+  <div class="row">
+    <div class="col-sm-4">
+    <h3>Information: </h3>
+    <ul>
+        <li><i><b>Day:</b></i>&nbsp;&nbsp;&nbsp;@sg.getDay()</li>
+        <li><i><b>Date:</b></i>&nbsp;&nbsp;&nbsp;@sg.getMeetDateString()</li>    
+        <li><i><b>Time:</b></i>&nbsp;&nbsp;&nbsp;@sg.getMeetTimeString()</li>
+        <li><i><b>Location:</b></i>&nbsp;&nbsp;&nbsp;@sg.getLocation()</li>
+        <li><i><b>People Attending:</b></i></li>
+            <ul>
+                <li>Person 1</li>
+                <li>Person 2</li>
+            </ul>
+            
+        </br>
+        </br>
+        <li><i><b>Created By:</b></i>&nbsp;&nbsp;&nbsp;@sg.getUser().getFullName()</li>
+        <li><i><b>Date Created:</b></i>&nbsp;&nbsp;&nbsp;@sg.getCreateDateString(), @sg.getCreateTimeString()</li>
+    </ul>
+    
+    </div>
+    <div class="col-sm-8">
+    <h3>Related Lectures:</h3>
+        @if(sg.getRelatedLectures().size() == 1) {
+           <iframe width="560" height="315" src="http://www.youtube.com/embed/@sg.getRelatedLectures().get(0).getVideoId()" frameborder="0" allowfullscreen></iframe>
+           <p><b>Description: </b></p>
+           @sg.getRelatedLectures().get(0).getDescription() 
+        } else {
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                @for(lecture <- sg.getRelatedLectures()) {
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="@lecture.getLevel()">
+                            <h4 class="panel-title">
+                                <a class="sub btn-block" data-toggle="collapse" data-parent="#accordion" href="#@lecture.getVideoId()" aria-expanded="true" aria-controls="collapseOne">@lecture.getCourse() @lecture.getLevel() - @lecture.getTopic()
+                                <div class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span></div></a>
+                            </h4>
+                        </div>
+                    <div id="@lecture.getVideoId()" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@lecture.getVideoId()">
+                    <div class="panel-body">
+                        <p>
+                         <b>Video: </b>
+                        </p>
+                            <iframe width="560" height="315" src="http://www.youtube.com/embed/@lecture.getVideoId()" frameborder="0" allowfullscreen></iframe>
+                            <p><b>Description: </b></p>
+                            @lecture.getDescription() 
+                            <br> <br> 
+                   </div>
+                   </div>
+                    </div>
+                }
+             </div>
+        }
+    </div>
+  </div>
+  
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'studygroupsuh'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+   <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'studygroupsuh'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    
+  </div>
+
+}

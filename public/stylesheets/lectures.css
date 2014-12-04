@@ -1,0 +1,28 @@
+.title {
+  text-align: center;
+}
+
+.panel-title {
+  font-weight: bold;
+}
+
+.panel-body {
+  padding-left: 70px;
+}
+
+.sub {
+  font-size: 24px;
+  padding: 1px;
+}
+
+.noLectures {
+  text-align: center;
+}
+
+.form-group-filter {
+  display: inline-block;
+}
+
+.top-section {
+  display:inline-block;
+}

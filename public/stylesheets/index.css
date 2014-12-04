@@ -1,0 +1,19 @@
+.section-1 {
+  text-align: center;
+  background-size: cover;
+  padding: 100px;
+}
+
+.section-1 h1 {
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.section-2 > h1 {
+  margin: 10px 20px 20px 20px;
+}
+
+.section-2 {
+  padding: 20px;
+  
+}

@@ -34,7 +34,7 @@ public class Global extends GlobalSettings {
      * 
      * @SuppressWarnings("unchecked") Map<String, List<Object>> all = (Map<String, List<Object>>)
      * Yaml.load("initial-data.yml"); Ebean.save(all.get("subject")); }
-     **/
+     
 
     if (UserInfo.find().all().isEmpty()) {
       UserInfoDB
@@ -65,6 +65,7 @@ public class Global extends GlobalSettings {
       LectureDB.addLecture(new LectureForm("KOR", "201", "Intermediate Korean Practice 1",
           "Create complex sentence(s)", "https://www.youtube.com/watch?v=ZRJ5QKqstTM"));
     }
+    **/
   }
 
   public Promise<SimpleResult> onHandlerNotFound(RequestHeader request) {

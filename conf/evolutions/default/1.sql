@@ -21,7 +21,7 @@ create table lecture (
   course                    varchar(255),
   level                     varchar(255),
   topic                     varchar(255),
-  description               text,
+  description               clob,
   video_id                  varchar(255),
   course_level              varchar(255),
   constraint pk_lecture primary key (id))
